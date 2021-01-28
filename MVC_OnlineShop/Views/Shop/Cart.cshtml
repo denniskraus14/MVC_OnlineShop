@@ -1,5 +1,10 @@
-﻿
+﻿@using MVC_OnlineShop.Models
+@using System.Web.Optimization
+@model Product
 
+@{
+    Layout = null;
+}
 
 <!DOCTYPE html>
 
@@ -8,8 +13,24 @@
     <meta name="viewport" content="width=device-width" />
     <title>Cart</title>
 </head>
+
 <body>
-    <div> 
+    <div>
+        img {
+            border: 1px solid #ddd;
+            border - radius: 4px;
+            padding: 5px;
+            width: 150px;
+        }
+
+        @{
+            foreach (var product in ViewBag.Products)
+            {
+
+                <img src=product._image_url alt="Product Image"> <h1>@product._name</h1>
+
+            }
+        }
     </div>
 </body>
 </html>
