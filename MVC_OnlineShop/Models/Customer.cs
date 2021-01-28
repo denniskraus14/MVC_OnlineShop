@@ -8,10 +8,11 @@ using System.Web;
 namespace MVC_OnlineShop.Models {
     public class Customer {
         [DisplayName("Id: ")]
-        [Required(ErrorMessage = "required.")] // Maybe make tihs auto-increment?wewerewfewfwfef
+        [Required(ErrorMessage = "required.")] // Maybe make tihs auto-increment?
         public int Id { get; set; }
 
         [DisplayName("User Id: ")]
+        [Key]
         [Required(ErrorMessage = "required.")]
         public string UserId { get; set; }
 
@@ -34,7 +35,9 @@ namespace MVC_OnlineShop.Models {
         [Required(ErrorMessage = "Required.")]
         [EmailAddress(ErrorMessage = "Invalid email address.")]
         public string Email { get; set; }
-
+        [Display(Name = "Security Question")]
+        [Required(ErrorMessage = "Required.")]
+        public int SecurityQuestion { get; set; }
         public System.DateTime CreatedDate { get; set; }
 
         public Nullable<System.DateTime> LastLoginDate { get; set; }
