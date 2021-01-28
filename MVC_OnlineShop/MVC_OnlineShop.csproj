@@ -137,6 +137,12 @@
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\CustomerContext.cs" />
     <Compile Include="Models\Exceptions\ProductNotFoundException.cs" />
+    <Compile Include="Migrations\202101281850045_initial.cs" />
+    <Compile Include="Migrations\202101281850045_initial.designer.cs">
+      <DependentUpon>202101281850045_initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -293,6 +299,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Alien\" />
+    <Folder Include="Views\Laptop\" />
+    <Folder Include="Views\Mobile\" />
+    <Folder Include="Views\TV\" />
     <Folder Include="Views\UserManagement\" />
   </ItemGroup>
   <ItemGroup>
@@ -305,6 +315,11 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202101281850045_initial.resx">
+      <DependentUpon>202101281850045_initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
