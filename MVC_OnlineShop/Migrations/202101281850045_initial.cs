@@ -52,7 +52,26 @@
             Sql("Insert into Products(name,price,quantity,image_url,type) values ('Chromebook',100,1000,'google.com','laptop')");
             Sql("Insert into Products(name,price,quantity,image_url,type) values ('Lenovo',400,1000,'google.com','laptop')");
             
-            //Sql("Insert into Products(id,name,price,quantity,image,type) values (1,'Acer',150,1000,'google.com','laptop')");
+            //Mobiles
+            Sql("Insert into Products(name,price,quantity,image,type) values ('Samsung',400,1000,'google.com','mobile')");
+            Sql("Insert into Products(name,price,quantity,image,type) values ('IPhone',1000,1000,'google.com','mobile')");
+            Sql("Insert into Products(name,price,quantity,image,type) values ('Tracfone',100,100,'google.com','mobile')");
+            Sql("Insert into Products(name,price,quantity,image,type) values ('Nokia',300,1000,'google.com','mobile')");
+            Sql("Insert into Products(name,price,quantity,image,type) values ('Motorola',350,999,'google.com','mobile')");
+
+            //Tvs
+            Sql("Insert into Products(name,price,quantity,image,type) values ('Vizio',100,1000,'google.com','tv')");
+            Sql("Insert into Products(name,price,quantity,image,type) values ('Samsung',200,200,'google.com','tv')");
+            Sql("Insert into Products(name,price,quantity,image,type) values ('Sony',300,10,'google.com','tv')");
+            Sql("Insert into Products(name,price,quantity,image,type) values ('Toshiba',400,9999,'google.com','tv')");
+            Sql("Insert into Products(name,price,quantity,image,type) values ('JVC',500,999,'google.com','tv')");
+
+            //aliens
+            Sql("Insert into Products(name,price,quantity,image,type) values ('Niblonians',400000,10000,'google.com','alien')");
+            Sql("Insert into Products(name,price,quantity,image,type) values ('Ewoks',1000,1000000,'google.com','alien')");
+            Sql("Insert into Products(name,price,quantity,image,type) values ('Tralfamadorians',100000,100,'google.com','alien')");
+            Sql("Insert into Products(name,price,quantity,image,type) values ('Martians',300,1000,'google.com','alien')");
+            Sql("Insert into Products(name,price,quantity,image,type) values ('Spiders from Mars',350000,999,'google.com','alien')");
 
 
         }
