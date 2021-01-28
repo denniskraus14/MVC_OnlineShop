@@ -5,6 +5,9 @@ using System.Web;
 using System.Web.Mvc;
 
 namespace MVC_OnlineShop.Controllers {
+
+    [RoutePrefix("")]
+    [Route("{action=Index}")]
     public class HomeController : Controller {
 
         public ActionResult Index() {
