@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using MVC_OnlineShop.Models;
 
 namespace MVC_OnlineShop.Controllers {
 
@@ -24,7 +23,7 @@ namespace MVC_OnlineShop.Controllers {
             if (!ModelState.IsValid) return View(model);
             else
             {
-                using (var context = new CostumerContext())
+                using (var context = new CustomerContext())
                 {
                     Customer user = context.Customers.Where(u => u.UserId == model.UserId).FirstOrDefault();
                     if (user == null)
@@ -74,8 +73,8 @@ namespace MVC_OnlineShop.Controllers {
             {
                 using (var context = new CustomerContext())
                 {
-                    model.Role = context.Roles.Where(r => r.Name.ToLower().Equals("user")).FirstOrDefault();
-                    User match = context.Customers.Where(u => u.UserId == model.UserId || u.UserName == model.UserName).FirstOrDefault();
+                    model.RoleId = context.Roles.Where(r => r.Name.ToLower().Equals("user")).FirstOrDefault().Id;
+                    Customer match = context.Customers.Where(u => u.UserId == model.UserId || u.UserName == model.UserName).FirstOrDefault();
                     if (match != null)
                     {
                         ModelState.AddModelError("ExistingUser", "User Already Exists");
@@ -85,7 +84,7 @@ namespace MVC_OnlineShop.Controllers {
                     {
                         model.CreatedDate = DateTime.Today;
                         model.LastLoginDate = DateTime.Today;
-                        context.Users.Add(model);
+                        context.Customers.Add(model);
                         context.SaveChanges();
                         return RedirectToAction("Login", "User");
                     }
@@ -100,7 +99,7 @@ namespace MVC_OnlineShop.Controllers {
         [HttpPost]
         public ActionResult ForgotPassword(ForgotPasswordViewModel model)
         {
-            User match;
+            Customer match;
             using (var context = new CustomerContext())
             {
                 match = context.Customers.Find(model.UserId);
@@ -108,7 +107,7 @@ namespace MVC_OnlineShop.Controllers {
             if (match != null && match.SecurityQuestion == model.QuestionId && match.QuestionAnswer.ToLower() == model.Answer.ToLower())
             {
                 Session["UserId"] = model.UserId;
-                Session["UserName"] = match.Username;
+                Session["UserName"] = match.UserName;
                 return RedirectToAction("ChangePassword", "User");
             }
             else
@@ -127,7 +126,7 @@ namespace MVC_OnlineShop.Controllers {
         {
             if (model.NewPass == model.NewPassValidation && Session["UserId"] != null)
             {
-                using (var context = new UserContext())
+                using (var context = new CustomerContext())
                 {
                     Customer match = context.Customers.Find(Session["UserId"]);
                     context.Customers.Remove(match);

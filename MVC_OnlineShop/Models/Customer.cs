@@ -38,6 +38,9 @@ namespace MVC_OnlineShop.Models {
         [Display(Name = "Security Question")]
         [Required(ErrorMessage = "Required.")]
         public int SecurityQuestion { get; set; }
+        [Display(Name = "Answer")]
+        [Required(ErrorMessage = "Required.")]
+        public string QuestionAnswer { get; set; }
         public System.DateTime CreatedDate { get; set; }
 
         public Nullable<System.DateTime> LastLoginDate { get; set; }
