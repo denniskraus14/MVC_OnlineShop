@@ -300,6 +300,8 @@
     <Content Include="Views\Shop\Cart.cshtml" />
     <Content Include="Views\UserManagement\Login.cshtml" />
     <Content Include="Views\UserManagement\Register.cshtml" />
+    <Content Include="Views\UserManagement\ForgotPassword.cshtml" />
+    <Content Include="Views\UserManagement\ChangePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
