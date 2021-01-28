@@ -4,13 +4,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace MVC_OnlineShop.Controllers
-{
-    public class ShopController : Controller
-    {
+namespace MVC_OnlineShop.Controllers {
+
+    [RoutePrefix("Shop")]
+    [Route("{action=Index}")]
+    public class ShopController : Controller {
+
         // GET: Shop
-        public ActionResult Index()
-        {
+        public ActionResult Index() {
             return View();
         }
     }
