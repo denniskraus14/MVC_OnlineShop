@@ -14,5 +14,10 @@ namespace MVC_OnlineShop.Controllers {
         public ActionResult Index() {
             return View();
         }
+
+        public ActionResult Cart()
+        {
+            return View();
+        }
     }
 }

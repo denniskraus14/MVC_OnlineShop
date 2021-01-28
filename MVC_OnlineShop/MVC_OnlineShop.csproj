@@ -132,13 +132,16 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Bill.cs" />
+    <Compile Include="Models\Cart.cs" />
+    <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\CustomerContext.cs" />
+    <Compile Include="Models\Exceptions\ProductNotFoundException.cs" />
     <Compile Include="Migrations\202101281850045_initial.cs" />
     <Compile Include="Migrations\202101281850045_initial.designer.cs">
       <DependentUpon>202101281850045_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\Customer.cs" />
-    <Compile Include="Models\CustomerContext.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -292,6 +295,7 @@
     <Content Include="Views\Shop\Page3.cshtml" />
     <Content Include="Views\Shop\Page4.cshtml" />
     <Content Include="Views\Shop\GenerateBill.cshtml" />
+    <Content Include="Views\Shop\Cart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
