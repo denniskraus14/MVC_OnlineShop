@@ -304,7 +304,6 @@
     <Folder Include="Views\Alien\" />
     <Folder Include="Views\Laptop\" />
     <Folder Include="Views\Mobile\" />
-    <Folder Include="Views\TV\" />
     <Folder Include="Views\UserManagement\" />
   </ItemGroup>
   <ItemGroup>
