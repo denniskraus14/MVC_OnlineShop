@@ -8,15 +8,15 @@ using System.Web;
 namespace MVC_OnlineShop.Models {
     public class Customer {
         [DisplayName("Id: ")]
-        [Required(ErrorMessage = "Id is required.")] // Maybe make tihs auto-increment?
+        [Required(ErrorMessage = "required.")] // Maybe make tihs auto-increment?
         public int Id { get; set; }
 
         [DisplayName("User Id: ")]
-        [Required(ErrorMessage = "User Id is required.")]
+        [Required(ErrorMessage = "required.")]
         public string UserId { get; set; }
 
         [DisplayName("Username: ")]
-        [Required(ErrorMessage = "Username is required.")]
+        [Required(ErrorMessage = "required.")]
         public string UserName { get; set; }
 
         [DisplayName("Password: ")]
@@ -25,8 +25,24 @@ namespace MVC_OnlineShop.Models {
         [Required(ErrorMessage = "Password is required.")]
         public string Password { get; set; }
 
+        [DisplayName("Confirm Password: ")]
+        [Required(ErrorMessage = "Required.")]
+        [Compare("Password", ErrorMessage = "Passwords do nbot match.")]
+        public string ConfirmPassword { get; set; }
+
+        [DisplayName("Email: ")]
+        [Required(ErrorMessage = "Required.")]
+        [EmailAddress(ErrorMessage = "Invalid email address.")]
+        public string Email { get; set; }
+
+        public System.DateTime CreatedDate { get; set; }
+
+        public Nullable<System.DateTime> LastLoginDate { get; set; }
+
+        public bool RememberMe { get; set; }
+
         [DisplayName("RoleId: ")]
-        [Required(ErrorMessage = "Role Id is required.")]
+        [Required(ErrorMessage = "required.")]
         public int RoleId { get; set; }
     }
 }

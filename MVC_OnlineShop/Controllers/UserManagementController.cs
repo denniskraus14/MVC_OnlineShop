@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MVC_OnlineShop.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,9 +10,19 @@ namespace MVC_OnlineShop.Controllers
     public class UserManagementController : Controller
     {
         // GET: UserManagement
-        public ActionResult Index()
-        {
+        public ActionResult Login(){
             return View();
+        }
+
+        public ActionResult Login(Customer customer) {
+            return View(customer);
+        }
+
+        public ActionResult Logout() {
+            Session.Clear();
+            Session.RemoveAll();
+            Session.Abandon();
+            return RedirectToAction("Index");
         }
     }
 }
