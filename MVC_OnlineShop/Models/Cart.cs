@@ -34,6 +34,3 @@ namespace MVC_OnlineShop.Models
         }
     }
 }
-
-// To Be Deleted....
-public class Product { }
