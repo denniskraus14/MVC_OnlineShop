@@ -45,7 +45,16 @@
                         Name = c.String(),
                     })
                 .PrimaryKey(t => t.Id);
+            //Laptops
+            Sql("Insert into Products(name,price,quantity,image_url,type) values ('Acer',150,1000,'google.com','laptop')");
+            Sql("Insert into Products(name,price,quantity,image_url,type) values ('Dell',200,1000,'google.com','laptop')");
+            Sql("Insert into Products(name,price,quantity,image_url,type) values ('Mac',300,1000,'google.com','laptop')");
+            Sql("Insert into Products(name,price,quantity,image_url,type) values ('Chromebook',100,1000,'google.com','laptop')");
+            Sql("Insert into Products(name,price,quantity,image_url,type) values ('Lenovo',400,1000,'google.com','laptop')");
             
+            //Sql("Insert into Products(id,name,price,quantity,image,type) values (1,'Acer',150,1000,'google.com','laptop')");
+
+
         }
         
         public override void Down()

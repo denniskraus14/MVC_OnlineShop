@@ -14,13 +14,13 @@ namespace MVC_OnlineShop.Models
         public string _image_url;
         public string _type;
 
-        public Product(int id, string name, float price, int quantity, string image, string type)
+        public Product(int id, string name, float price, int quantity, string image_url, string type)
         {
             _id = id;
             _name = name;
             _price = price;
             _quantity = quantity;
-            _image_url = image;
+            _image_url = image_url;
             _type = type;
         }
 
