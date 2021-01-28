@@ -1,54 +1,31 @@
-﻿<!--<div class="navbar navbar-inverse navbar-fixed-top">
+﻿<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
     <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                <li>@Html.ActionLink("About", "About", "Home")</li>
-                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-            </ul>
-        </div>
-    </div>
-</div>-->
-<!-- Needs to reformated along with proper classes with the bootstrap -->
-<div class="navbar navbar-inverse navbar-fixed-top navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            @Html.ActionLink("Alpha App", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li>
-                    @Html.ActionLink("Home", "Index", "Home")
+        <!-- Company Name -->
+        @Html.ActionLink("Alpha Website", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item active">
+                    <!-- <a class="nav-link" href="#">Home <span class="sr-onl9y">(current)</span></a> -->
+                    @Html.ActionLink("Home", "Index", "Home", new { @class = "nav-link" })
                 </li>
-                <li>
-                    @Html.ActionLink("About", "About", "Home")
+                <li class="nav-item">
+                    <!-- <a class="nav-link disabled" href="#">Disabled</a> -->
+                    @Html.ActionLink("Shop", "Index", "Shop", new { @class = "nav-link" })
                 </li>
-                <li>
-                    @Html.ActionLink("Create", "Create", "Home")
-                </li>
-                <li>
-                    @Html.ActionLink("Contact", "Contact", "Home")
+                <li class="nav-item">
+                    <!-- <a class="nav-link disabled" href="#">Disabled</a> -->
+                    <!-- Maybe change this, just putting her as an example -->
+                    @Html.ActionLink("Profile", "Index", "UserManagement", new { @class = "nav-link" })
                 </li>
             </ul>
         </div>
 
         <!-- If statement to see if use is logged in -->
         @Html.Partial("_LoginPartial")
-
     </div>
-</div>
+</nav>
