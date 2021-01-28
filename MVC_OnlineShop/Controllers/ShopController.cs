@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MVC_OnlineShop.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -30,6 +31,29 @@ namespace MVC_OnlineShop.Controllers {
 
             //ViewBag["Products"] = ShoppingCart.Products;
             return View();
+        }
+
+        //locahost/shop/page1
+
+        public ViewResult Page1() {
+
+            List<Product> productList = new List<Product>();
+
+            using(var context = new CustomerContext()) {
+
+                var products = context.Products
+                                        .Select(laptops => laptops)
+                                        .Where(p => p.Type == "laptop").ToList();
+
+                ViewData["productList"] = products;
+
+                //return RedirectToAction("Index", "Shop");
+                return View("Page1");
+               
+            }
+            
+
+            //return View()
         }
     }
 }

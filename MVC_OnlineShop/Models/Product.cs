@@ -14,6 +14,8 @@ namespace MVC_OnlineShop.Models
         public string _image_url;
         public string _type;
 
+        public Product() { }
+
         public Product(int id, string name, float price, int quantity, string image_url, string type)
         {
             _id = id;
