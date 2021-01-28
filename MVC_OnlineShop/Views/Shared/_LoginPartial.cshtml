@@ -1,0 +1,24 @@
+﻿
+@if (!string.IsNullOrEmpty(Convert.ToString(Session[ "UserName" ]))) {
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" })) {
+        @Html.AntiForgeryToken()
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a href="#">Welcome: @Session[ "UserName" ]</a>
+            </li>
+            <li>
+                <!-- JS needs to be updated to latest syntax -->
+                <a href="javascript:document.GetElementById('logoutForm').submit()">Logout</a>
+            </li>
+        </ul>
+
+        @Html.Partial("_ShoppingCartPartial")
+    }
+} else {
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+            @Html.ActionLink("Login", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+        </li>
+
+    </ul>
+}
