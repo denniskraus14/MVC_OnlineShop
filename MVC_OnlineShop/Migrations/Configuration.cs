@@ -5,11 +5,11 @@
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<MVC_OnlineShop.Models.CustomerContext>
+    /*internal sealed class Configuration : DbMigrationsConfiguration<MVC_OnlineShop.Models.CustomerContext>
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            //AutomaticMigrationsEnabled = false;
         }
 
         protected override void Seed(MVC_OnlineShop.Models.CustomerContext context)
@@ -19,5 +19,5 @@
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method
             //  to avoid creating duplicate seed data.
         }
-    }
+    } */
 }

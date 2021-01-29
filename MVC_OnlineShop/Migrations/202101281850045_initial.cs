@@ -3,7 +3,7 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class initial : DbMigration
+    /*public partial class initial : DbMigration
     {
         public override void Up()
         {
@@ -82,5 +82,5 @@
             DropTable("dbo.Products");
             DropTable("dbo.Customers");
         }
-    }
+    } */
 }

@@ -1,0 +1,65 @@
+﻿@model MVC_OnlineShop.Models.Customer
+@using MVC_OnlineShop.Models;
+@{
+    ViewBag.Title = "Register";
+}
+<br />
+<br />
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <h3>Register:</h3>
+        <br />
+        @Html.ValidationSummary(true, "Registration Failed", new { @class = "text-warning" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.UserId, htmlAttributes: new { @class = "control" })
+                @Html.ValidationMessageFor(model => model.UserId, "", htmlAttributes: new { @class = "text-warning" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.UserName, htmlAttributes: new { @class = "control" })
+                @Html.ValidationMessageFor(model => model.UserName, "", htmlAttributes: new { @class = "text-warning" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.PasswordFor(model => model.Password, htmlAttributes: new { @class = "control" })
+                @Html.ValidationMessageFor(model => model.Password, "", htmlAttributes: new { @class = "text-warning" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Repeat Password", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.Password("PasswordValidate", "", htmlAttributes: new { @class = "control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.SecurityQuestion, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @using (var context = new CustomerContext())
+                {
+                    @Html.DropDownListFor(model => model.SecurityQuestion, context.SecurityQuestions.ToList().Select(sq => new SelectListItem() { Text = sq.Question, Value = sq.Id.ToString() }), htmlAttributes: new { @class = "control" })
+                }
+                @Html.ValidationMessageFor(model => model.SecurityQuestion, "", htmlAttributes: new { @class = "text-warning" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.QuestionAnswer, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.QuestionAnswer, htmlAttributes: new { @class = "control" })
+                @Html.ValidationMessageFor(model => model.QuestionAnswer, "", htmlAttributes: new { @class = "text-warning" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Register" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
