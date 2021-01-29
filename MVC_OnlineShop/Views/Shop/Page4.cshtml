@@ -1,7 +1,26 @@
 ﻿
 @{
-    ViewBag.Title = "Page4";
+    ViewBag.name = "Aliens";
 }
 
-<h2>Page4</h2>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    @Styles.Render("~/Content/css")
+    <title></title>
+</head>
+<body>
+    @Html.Partial("_bannerPartial")
+    @Html.Partial("_ProductsView")
 
+    <div class="navigation">
+        <div class="pagination">
+            <span>Page 4 of 4</span>
+            <a href='~/Shop/Page1' class="inactive">1</a>
+            <a href='~/Shop/Page2' class="inactive">2</a>
+            <a href='~/Shop/Page3' class="inactive">3</a>
+            <span class="current">4</span>
+            <a href='~/Shop/Page3'>Last &laquo;</a>
+        </div>
+    </div>
+</body>
+</html>
