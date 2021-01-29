@@ -14,7 +14,7 @@ namespace MVC_OnlineShop.Models
 
             foreach (var p in cart.Products)
             {
-                total += p._price;
+                total += p.Price;
             }
 
             return total;

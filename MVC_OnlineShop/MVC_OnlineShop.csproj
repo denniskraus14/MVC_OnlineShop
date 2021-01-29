@@ -132,11 +132,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\CustomerContextMigrations.cs" />
     <Compile Include="Models\Bill.cs" />
     <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\ChangePasswordViewModel.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\CustomerContext.cs" />
+    <Compile Include="Models\Enums\ProductType.cs" />
     <Compile Include="Models\Exceptions\ProductNotFoundException.cs" />
     <Compile Include="Migrations\202101281850045_initial.cs" />
     <Compile Include="Migrations\202101281850045_initial.designer.cs">
@@ -312,7 +314,6 @@
     <Folder Include="Views\Laptop\" />
     <Folder Include="Views\Mobile\" />
     <Folder Include="Views\TV\" />
-    <Folder Include="Views\UserManagement\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

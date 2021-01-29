@@ -7,31 +7,31 @@ namespace MVC_OnlineShop.Models
 {
     public class Product
     {
-        public int _id;
+        /* public int _id;
         public string _name;
         public float _price;
         public int _quantity;
         public string _image_url;
-        public string _type;
+        public string _type; */
 
         public Product() { }
 
-        public Product(int id, string name, float price, int quantity, string image_url, string type)
+        /*public Product(int id, string name, float price, int quantity, string image_url, string type)
         {
-            _id = id;
-            _name = name;
-            _price = price;
-            _quantity = quantity;
-            _image_url = image_url;
-            _type = type;
-        }
+            Id = id;
+            Name = name;
+            Price = price;
+            Quantity = quantity;
+            Image_Url = image_url;
+            Type = type;
+        } */
 
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Price { get; set; }
-        public string Quantity { get; set; }
+        public float Price { get; set; }
+        public int Quantity { get; set; }
         public string Image_Url { get; set; }
-        public string Type { get; set; }
+        public ProductType Type { get; set; }
 
 
 
