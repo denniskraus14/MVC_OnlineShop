@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using MVC_OnlineShop.Models;
 using MVC_OnlineShop.Models.Exceptions;
 
 namespace MVC_OnlineShop.Models
@@ -35,5 +36,3 @@ namespace MVC_OnlineShop.Models
     }
 }
 
-// To Be Deleted....
-public class Product { }

@@ -159,6 +159,8 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Resources\alfredo.jpg" />
+    <Content Include="Resources\carrotcake.jpeg" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -310,6 +312,7 @@
     <Folder Include="Views\Laptop\" />
     <Folder Include="Views\Mobile\" />
     <Folder Include="Views\TV\" />
+    <Folder Include="Views\UserManagement\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
