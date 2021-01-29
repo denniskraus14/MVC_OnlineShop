@@ -58,40 +58,20 @@ namespace MVC_OnlineShop.Controllers {
         }
 
         //Paging of All Products - delete if not preferred
-        public ViewResult Page2(int? page)
+        public ViewResult Page2()
         {
-            var pageNumber = page ?? 1;
-            var pageSize = 5;
+            List<Product> productList = new List<Product>();
 
             using (var context = new CustomerContext())
             {
 
                 var products = context.Products
                                         .Select(x => x)
-                                        .OrderByDescending(x => x.Type);
+                                        .Where(x => x.Type == "Mobile").ToList();
 
+                ViewData["productList"] = products;
 
-                switch (page)
-                {
-                    case 1:
-                        ViewBag.name = "TV";
-                        break;
-                    case 2:
-                        ViewBag.name = "Phones";
-                        break;
-                    case 3:
-                        ViewBag.name = "Laptops";
-                        break;
-                    case 4:
-                        ViewBag.name = "Aliens";
-                        break;
-                    default:
-                        ViewBag.name = "TV";
-                        break;
-
-                }
-
-                return View(products.ToPagedList(pageNumber, pageSize));
+                return View();
 
             }
         }
