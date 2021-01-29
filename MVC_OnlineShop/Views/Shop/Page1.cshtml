@@ -2,25 +2,37 @@
 @model MVC_OnlineShop.Models.Product
 
 @{
-    ViewBag.Title = "Page1";
+    ViewBag.Name = "Laptops";
 }
 
-<h2>Page1</h2>
 
-<table>
-    @{
-        var pList = ViewData[ "productList" ] as List<Product>;
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    @Styles.Render("~/Content/css")
+    <title></title>
+</head>
+<body>
+    @Html.Partial("_bannerPartial")
+    @Html.Partial("_ProductsView")
 
-        foreach (var p in pList) {
-            <tr>                
-                <td>@p.Name</td>
-                <td>@p.Price</td>
-            </tr>
-        }
-    }
+    <div class="navigation">
+        <div class="pagination">
+            <span>Page 1 of 4</span>
+            <span class="current">1</span>
+            <a href='~/Shop/Page2' class="inactive">2</a>
+            <a href='~/Shop/Page3' class="inactive">3</a>
+            <a href='~/Shop/Page4' class="inactive">4</a>
+            <a href='~/Shop/Page2'>Next &rsaquo;</a>
+            <a href='~/Shop/Page4'>Last &raquo;</a>
+        </div>
+    </div>
+</body>
+</html>
+
+    
 
 
 
-</table>
+
 
 
