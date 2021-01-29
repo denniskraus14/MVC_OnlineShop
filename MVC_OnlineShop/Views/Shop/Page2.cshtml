@@ -1,7 +1,30 @@
-﻿
+﻿@using MVC_OnlineShop.Models
+@model MVC_OnlineShop.Models.Product
+
 @{
-    ViewBag.Title = "Page2";
+    ViewBag.Name = "Mobile";
 }
 
-<h2>Page2</h2>
 
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    @Styles.Render("~/Content/css")
+    <title></title>
+</head>
+<body>
+    @Html.Partial("_bannerPartial")
+    @Html.Partial("_ProductsView")
+
+    <div class="navigation">
+        <div class="pagination">
+            <span>Page 2 of 4</span>
+            <a href='~/Shop/Page2' class="inactive">1</a>
+            <span class="current">2</span>
+            <a href='~/Shop/Page3' class="inactive">3</a>
+            <a href='~/Shop/Page4' class="inactive">4</a>
+            <a href='~/Shop/Page3'>Next &rsaquo;</a>
+            <a href='~/Shop/Page4'>Last &raquo;</a>
+        </div>
+    </div>
+</body>
+</html>

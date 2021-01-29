@@ -16,21 +16,27 @@
 
 <body>
     <div>
-        img {
-            border: 1px solid #ddd;
-            border - radius: 4px;
-            padding: 5px;
-            width: 150px;
-        }
-
-        @{
-            foreach (var product in ViewBag.Products)
+        <h3>Shopping Cart</h3>
+        <table cellpadding="2" cellspacing="2" border="1">
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Image</th>
+                <th>Price</th>
+            </tr>
+            @foreach (Product product in ViewBag.Products)
             {
-
-                <img src=product._image_url alt="Product Image"> <h1>@product._name</h1>
-
+                <tr>
+                    <td>@product._id</td>
+                    <td>@product._name</td>
+                    <td><img src=@product._image_url width="60" /> </td>
+                    <td>@product._price</td>
+                </tr>
             }
-        }
+        </table>
+
+        <br /><br />
+        <h2><a href="/Shop/ViewBill">Purchase</a></h2>
     </div>
 </body>
 </html>
