@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MVC_OnlineShop.Models;
+using PagedList;
 
 namespace MVC_OnlineShop.Controllers {
 
@@ -13,6 +14,7 @@ namespace MVC_OnlineShop.Controllers {
     public class ShopController : Controller {
 
         Cart ShoppingCart = new Cart();
+
 
         // GET: Shop
         public ActionResult Index() {
@@ -35,6 +37,7 @@ namespace MVC_OnlineShop.Controllers {
 
         //locahost/shop/page1
 
+        //Single Page of Laptop Results
         public ViewResult Page1() {
 
             List<Product> productList = new List<Product>();
@@ -51,9 +54,95 @@ namespace MVC_OnlineShop.Controllers {
                 return View("Page1");
                
             }
-            
+         
+        }
 
-            //return View()
+        //Paging of All Products - delete if not preferred
+        public ViewResult Page2(int? page)
+        {
+            var pageNumber = page ?? 1;
+            var pageSize = 5;
+
+            using (var context = new CustomerContext())
+            {
+
+                var products = context.Products
+                                        .Select(x => x)
+                                        .OrderByDescending(x => x.Type);
+
+
+                switch (page)
+                {
+                    case 1:
+                        ViewBag.name = "TV";
+                        break;
+                    case 2:
+                        ViewBag.name = "Phones";
+                        break;
+                    case 3:
+                        ViewBag.name = "Laptops";
+                        break;
+                    case 4:
+                        ViewBag.name = "Aliens";
+                        break;
+                    default:
+                        ViewBag.name = "TV";
+                        break;
+
+                }
+
+                return View(products.ToPagedList(pageNumber, pageSize));
+
+            }
+        }
+
+        public ViewResult Page3()
+        {
+
+            List<Product> productList = new List<Product>();
+
+            using (var context = new CustomerContext())
+            {
+
+                var products = context.Products
+                                        .Select(x => x)
+                                        .Where(x => x.Type == "TV").ToList();
+
+                ViewData["productList"] = products;
+
+                return View();
+
+            }
+
+        }
+
+        public ViewResult Page4()
+        {
+            List<Product> productList = new List<Product>();
+            using (var context = new CustomerContext())
+            {
+                var products = context.Products
+                                        .Select(x => x)
+                                        .Where(x => x.Type == "Alien").ToList();
+                ViewData["productList"] = products;
+                return View();
+            }
+
+        }
+        //Individual Product Page
+        [Route("Product/{Id}")]
+        public ActionResult Product(int Id)
+        {
+            List<Product> product = new List<Product>();
+            using (var context = new CustomerContext())
+            {
+                var products = context.Products
+                                        .Select(x => x)
+                                        .Where(x => x.Id == Id)
+                                        .FirstOrDefault();
+                ViewBag.Item = products;
+            }
+            return View();
         }
     }
 }
