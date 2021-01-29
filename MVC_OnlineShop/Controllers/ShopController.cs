@@ -22,14 +22,19 @@ namespace MVC_OnlineShop.Controllers {
         public ActionResult Cart()
         {
             // TO DELETE
-            List<Product> products = new List<Product>();
-            Product p = new Product(1, "Big HP Laptop", 10,1, "~/Resources/carrotcake.jpeg", "Laptop");
-            Product p2 = new Product(1, "Big HP Laptop", 10, 1, "~/Resources/alfredo.jpeg", "Laptop");
-            products.Add(p);
-            products.Add(p2);
-            ViewBag.Products = products;
+            //List<Product> products = new List<Product>();
+            //Product p = new Product(1, "Big HP Laptop", 10,1, "carrotcake.jpeg", "Laptop");
+            //Product p2 = new Product(1, "Big HP Laptop", 10, 1, "alfredo.jpg", "Laptop");
+            //products.Add(p);
+            //products.Add(p2);
+            //ViewBag.Products = products;
 
-            //ViewBag["Products"] = ShoppingCart.Products;
+            ViewBag["Products"] = ShoppingCart.Products;
+            return View();
+        }
+
+        public ActionResult ViewBill()
+        {
             return View();
         }
 
