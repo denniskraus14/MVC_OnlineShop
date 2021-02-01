@@ -123,7 +123,7 @@ namespace MVC_OnlineShop.Controllers
             }
          
         }
-
+        /*
         //Paging of All Products - delete if not preferred
         public ViewResult Page2()
         {
@@ -191,5 +191,6 @@ namespace MVC_OnlineShop.Controllers
             }
             return View();
         }
+        */
     }
 }
