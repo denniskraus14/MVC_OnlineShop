@@ -11,7 +11,7 @@ namespace MVC_OnlineShop.Controllers
 {
 
     [RoutePrefix("Shop")]
-    [Route("{action=Index}")]
+    [Route("{action=Page1}")]
     public class ShopController : Controller
     {
 

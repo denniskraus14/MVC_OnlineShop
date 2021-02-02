@@ -11,16 +11,19 @@
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item active">
                     <!-- <a class="nav-link" href="#">Home <span class="sr-onl9y">(current)</span></a> -->
-                    @Html.ActionLink("Home", "Index", "Home", new { @class = "nav-link" })
+                    @*@Html.ActionLink("Home", "Index", "Home", new { @class = "nav-link" })*@
+                    @Html.RouteLink("Home", "Index", "Home", new { @class = "nav-link" })
                 </li>
                 <li class="nav-item">
                     <!-- <a class="nav-link disabled" href="#">Disabled</a> -->
-                    @Html.ActionLink("Shop", "Index", "Shop", new { @class = "nav-link" })
+                    @*@Html.ActionLink("Shop", "Page1", "Shop", new { @class = "nav-link" })*@
+                    @Html.RouteLink("Shop", "Page1", "Shop", new { @class = "nav-link" })
                 </li>
                 <li class="nav-item">
                     <!-- <a class="nav-link disabled" href="#">Disabled</a> -->
                     <!-- Maybe change this, just putting her as an example -->
-                    @Html.ActionLink("Login", "Login", "UserManagement", new { @class = "nav-link" })
+                    @*@Html.ActionLink("Login", "Login", "UserManagement", new { @class = "nav-link" })*@
+                    @Html.RouteLink("Login", "Login", "UserManagement", new { @class = "nav-link" })
                 </li>
             </ul>
         </div>

@@ -12,11 +12,29 @@ namespace MVC_OnlineShop {
 
             routes.MapMvcAttributeRoutes();
 
-            /*routes.MapRoute(
-                name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
-            );*/
+            //routes.MapRoute(
+            //    name: "Default",
+            //    url: "{controller}/{action}/{id}",
+            //    defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+            //);
+
+            routes.MapRoute(
+                name: "Page1",
+                url: "Shop/Page1",
+                defaults: new { controller = "Shop", action = "Page1"}
+            );
+
+            routes.MapRoute(
+                name: "Login",
+                url: "User/Login",
+                defaults: new { controller = "UserManagement", action = "Login" }
+            );
+
+            routes.MapRoute(
+                name: "Index",
+                url: "Index",
+                defaults: new { controller = "Home", action = "Index" }
+            );
         }
     }
 }

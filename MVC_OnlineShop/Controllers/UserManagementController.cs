@@ -17,6 +17,7 @@ namespace MVC_OnlineShop.Controllers {
         {
             return View();
         }
+
         [HttpPost]
         public ActionResult Login(Customer model)
         {
