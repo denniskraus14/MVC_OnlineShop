@@ -8,7 +8,7 @@ using System.Web;
 namespace MVC_OnlineShop.Models {
     public class Customer {
         [DisplayName("Id: ")]
-        [Required(ErrorMessage = "required.")] // Maybe make tihs auto-increment?
+        //[Required(ErrorMessage = "required.")] // Maybe make tihs auto-increment?
         public int Id { get; set; }
 
         [DisplayName("User Id: ")]
@@ -48,7 +48,7 @@ namespace MVC_OnlineShop.Models {
         public bool RememberMe { get; set; }
 
         [DisplayName("RoleId: ")]
-        [Required(ErrorMessage = "required.")]
+        //[Required(ErrorMessage = "required.")]
         public int RoleId { get; set; }
     }
 }
