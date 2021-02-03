@@ -8,31 +8,34 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    <div class="form-horizontal">
-        <h3>Login:</h3>
-        <br />
-        @Html.ValidationSummary(true, "Login Failed", new { @class = "text-warning" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.UserId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.UserId, htmlAttributes: new { @class = "control" })
-                @Html.ValidationMessageFor(model => model.UserId, "", htmlAttributes: new { @class = "text-warning" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.PasswordFor(model => model.Password, htmlAttributes: new { @class = "control" })
-                @Html.ValidationMessageFor(model => model.Password, "", htmlAttributes: new { @class = "text-warning" })
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Log in" class="btn btn-default" />
-            </div>
-        </div>
-        <div class="danger">
-            <a href="/User/ForgotPassword">Forgot Password?</a>
+<div class="form-horizontal">
+    <h3>Login:</h3>
+    <br />
+    @Html.ValidationSummary(true, "Login Failed", new { @class = "text-warning" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.UserId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.UserId, htmlAttributes: new { @class = "control" })
+            @Html.ValidationMessageFor(model => model.UserId, "", htmlAttributes: new { @class = "text-warning" })
         </div>
     </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.PasswordFor(model => model.Password, htmlAttributes: new { @class = "control" })
+            @Html.ValidationMessageFor(model => model.Password, "", htmlAttributes: new { @class = "text-warning" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Log in" class="btn btn-default" />
+        </div>
+    </div>
+    <div class="danger">
+        <a href="/User/ForgotPassword">Forgot Password?</a>
+    </div>
+    <div class="register">
+        <a href="/User/register">New user?</a>
+    </div>
+</div>
 }

@@ -49,7 +49,7 @@ namespace MVC_OnlineShop.Controllers {
             }
         }
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken] 
         public ActionResult Logout()
         {
             Session.Clear();
@@ -74,7 +74,8 @@ namespace MVC_OnlineShop.Controllers {
             {
                 using (var context = new CustomerContext())
                 {
-                    model.RoleId = context.Roles.Where(r => r.Name.ToLower().Equals("user")).FirstOrDefault().Id;
+                    //model.RoleId = context.Roles.Where(r => r.Name.ToLower().Equals("user")).FirstOrDefault().Id;
+                    model.RoleId = 1;
                     Customer match = context.Customers.Where(u => u.UserId == model.UserId || u.UserName == model.UserName).FirstOrDefault();
                     if (match != null)
                     {
@@ -87,7 +88,7 @@ namespace MVC_OnlineShop.Controllers {
                         model.LastLoginDate = DateTime.Today;
                         context.Customers.Add(model);
                         context.SaveChanges();
-                        return RedirectToAction("Login", "User");
+                        return Redirect("Login");
                     }
                 }
             }
