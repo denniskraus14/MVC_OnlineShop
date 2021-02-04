@@ -11,7 +11,7 @@ using System.Web.Mvc;
 namespace MVC_OnlineShop.Controllers
 {
     [RoutePrefix("Shop")]
-    //[IsAuthenticationFilter]
+    [IsAuthenticationFilter]
     //[Route("{action=Portal}")]
     public class ShopController : Controller
     {

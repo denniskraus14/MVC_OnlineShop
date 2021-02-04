@@ -7,8 +7,8 @@ using System.Web.Mvc;
 namespace MVC_OnlineShop.Controllers {
 
     //[RoutePrefix("")]
-    //[RoutePrefix("Home")]
-    [Route("{action=Index}")]
+    [RoutePrefix("Home")]
+    //[Route("{action=Index}")]
     public class HomeController : Controller {
 
         [HttpGet]

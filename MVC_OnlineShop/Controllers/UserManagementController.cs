@@ -21,10 +21,10 @@ namespace MVC_OnlineShop.Controllers {
         }
 
         [HttpPost]
-        [Route("Login/{model}")]
+        //[Route("Login/{model}")]
         public ActionResult Login(Customer model)
         {
-            if (!ModelState.IsValid) return View(model);
+            if (ModelState.IsValid) return View(model);
             else
             {
                 using (var context = new CustomerContext())
