@@ -21,7 +21,6 @@ namespace MVC_OnlineShop.Controllers {
         //[Route]
         public ActionResult Contact() {
             ViewBag.Message = "Your contact page.";
-
             return View();
         }
     }

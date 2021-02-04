@@ -59,9 +59,6 @@ namespace MVC_OnlineShop.Controllers
         [Route("Page1", Name = "Page1")]
         [IsAuthorized("Normal")]
         public ViewResult Page1(Customer model) {
-
-
-
             List<Product> productList = new List<Product>();
 
             using (var context = new CustomerContext())
@@ -84,11 +81,9 @@ namespace MVC_OnlineShop.Controllers
                                         .Select(laptops => laptops)
                                         .Where(p => p.Type == ProductType.Laptop).ToList();
 
-                ViewData[ "productList" ] = products;
+                ViewData["productList"] = products;
 
                 return View("Page1");
-
-
             }
         }
 
@@ -156,7 +151,7 @@ namespace MVC_OnlineShop.Controllers
                 return View("Page4");
 
             }
-         
+
         }
 
         [Route("UnAuthorized")]
