@@ -12,7 +12,7 @@ namespace MVC_OnlineShop.Controllers
 {
     [RoutePrefix("Shop")]
     [IsAuthenticationFilter]
-    //[Route("{action=Portal}")]
+    [Route("{action=Portal}")]
     public class ShopController : Controller
     {
 

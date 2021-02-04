@@ -61,7 +61,7 @@ namespace MVC_OnlineShop.Migrations
                 //Sql("Insert into Products(name,price,quantity,image_url,type) values ('Spiders from Mars',350000,999,'google.com','alien')");
                 context.Products.Add(new Product { Name = "Spiders from Mars", Price = 350000, Quantity = 99, Type = ProductType.Alien,Image_Url= "https://render.fineartamerica.com/images/images-profile-flow/400/images-medium-large-5/spiders-from-mars-carl-salonen.jpg" });
 
-                context.Roles.Add(new Role { Name = "normal" });
+                context.Roles.Add(new Role { Name = "Normal" });
 
                 context.SecurityQuestions.Add(new SecurityQuestion { Question = "What is your mother's maiden name?" });
 
