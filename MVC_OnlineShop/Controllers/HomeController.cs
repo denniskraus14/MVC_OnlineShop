@@ -6,14 +6,19 @@ using System.Web.Mvc;
 
 namespace MVC_OnlineShop.Controllers {
 
-    [RoutePrefix("")]
+    //[RoutePrefix("")]
+    //[RoutePrefix("Home")]
     [Route("{action=Index}")]
     public class HomeController : Controller {
 
+        [HttpGet]
+        [Route("Index", Name = "Index")]
         public ActionResult Index() {
             return View();
         }
 
+        [HttpGet]
+        //[Route]
         public ActionResult Contact() {
             ViewBag.Message = "Your contact page.";
 

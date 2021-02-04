@@ -138,6 +138,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\IsAuthenticationFilter.cs" />
+    <Compile Include="Infrastructure\IsAuthorizedAttribute.cs" />
     <Compile Include="Migrations\CustomerContextMigrations.cs" />
     <Compile Include="Models\Bill.cs" />
     <Compile Include="Models\Cart.cs" />
@@ -145,6 +147,7 @@
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\CustomerContext.cs" />
     <Compile Include="Models\Enums\ProductType.cs" />
+    <Compile Include="Models\Enums\RoleType.cs" />
     <Compile Include="Models\Exceptions\ProductNotFoundException.cs" />
     <Compile Include="Migrations\202101281850045_initial.cs" />
     <Compile Include="Migrations\202101281850045_initial.designer.cs">
@@ -304,13 +307,14 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_NavBarPartial.cshtml" />
     <Content Include="Views\Shared\_ShoppingCarPartial.cshtml" />
+    <Content Include="Views\Shared\_ProductsView.cshtml" />
+    <Content Include="Views\Shop\Portal.cshtml" />
     <Content Include="Views\Shop\Page1.cshtml" />
     <Content Include="Views\Shop\Page2.cshtml" />
     <Content Include="Views\Shop\Page3.cshtml" />
     <Content Include="Views\Shop\Page4.cshtml" />
     <Content Include="Views\Shop\GenerateBill.cshtml" />
     <Content Include="Views\Shop\Cart.cshtml" />
-    <Content Include="Views\Shared\_ProductsView.cshtml" />
     <Content Include="Views\Shop\Product.cshtml" />
     <Content Include="Views\UserManagement\Login.cshtml" />
     <Content Include="Views\UserManagement\Register.cshtml" />
@@ -320,6 +324,7 @@
     <Content Include="Views\Shared\_ProductsView2.cshtml" />
     <Content Include="Views\Shared\_ProductsView3.cshtml" />
     <Content Include="Views\Shared\_ProductsView4.cshtml" />
+    <Content Include="Views\Shop\UnAuthorized.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

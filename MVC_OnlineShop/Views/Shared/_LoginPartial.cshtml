@@ -25,8 +25,8 @@ else
 {
     <ul class="nav navbar-nav navbar-right">
         <li>
-            <!--, htmlAttributes: new { id = "loginLink" }-->
-            @Html.RouteLink("Login", "Login", "Usermanagement")
+            @* @Html.ActionLink("Login", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" }) *@
+            @Html.RouteLink("Login", "Login", "Account", new { @class = "nav-link", id = "loginLink" })
         </li>
 
     </ul>

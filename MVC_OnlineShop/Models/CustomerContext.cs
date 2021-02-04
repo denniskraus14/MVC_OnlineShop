@@ -19,6 +19,7 @@ namespace MVC_OnlineShop.Models {
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             Database.SetInitializer<CustomerContext>(new DropCreateDatabaseAlways<CustomerContext>());
+            //Database.SetInitializer<CustomerContext>(new CreateDatabaseIfNotExists<CustomerContext>());
             base.OnModelCreating(modelBuilder);
         }
     }

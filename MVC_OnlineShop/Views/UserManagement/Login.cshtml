@@ -32,10 +32,12 @@
         </div>
     </div>
     <div class="danger">
-        <a href="/User/ForgotPassword">Forgot Password?</a>
+        <!-- <a href="/User/ForgotPassword">Forgot Password?</a> -->
+        @Html.RouteLink("Forgot Password?", "Register", "Account", new { @class = "a" })
     </div>
-    <div class="register">
-        <a href="/User/register">New user?</a>
-    </div>
+    <!-- <div class="register"> -->
+        @Html.RouteLink("New User?", "Register", "Account", new { @class = "a register"})
+        <!-- <a href="/User/register">New user?</a> -->
+    <!-- </div> -->
 </div>
 }
