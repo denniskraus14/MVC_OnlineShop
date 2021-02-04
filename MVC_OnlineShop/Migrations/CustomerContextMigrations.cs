@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using MVC_OnlineShop.Models;
+using MVC_OnlineShop.Models.Enums;
 
 namespace MVC_OnlineShop.Migrations
 {
@@ -60,7 +61,10 @@ namespace MVC_OnlineShop.Migrations
                 //Sql("Insert into Products(name,price,quantity,image_url,type) values ('Spiders from Mars',350000,999,'google.com','alien')");
                 context.Products.Add(new Product { Name = "Spiders from Mars", Price = 350000, Quantity = 99, Type = ProductType.Alien });
 
+                context.Roles.Add(new Role { Name = "normal" });
+
                 context.SecurityQuestions.Add(new SecurityQuestion { Question = "What is your mother's maiden name?" });
+
                 context.SaveChanges();
             }
         }

@@ -1,4 +1,5 @@
 ﻿using MVC_OnlineShop.Models;
+using MVC_OnlineShop.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,18 +8,20 @@ using System.Web.Mvc;
 
 namespace MVC_OnlineShop.Controllers {
 
-    [RoutePrefix("User")] // Not sure if this should be named "User" or something else
+    [RoutePrefix("Account")] // Not sure if this should be named "User" or something else
     [Route("{action=Login}")]
     public class UserManagementController : Controller {
 
         // GET: UserManagement
         [HttpGet]
+        [Route("Login", Name = "Login")]
         public ActionResult Login()
         {
             return View();
         }
 
         [HttpPost]
+        [Route("Login/{model}")]
         public ActionResult Login(Customer model)
         {
             if (!ModelState.IsValid) return View(model);
@@ -48,20 +51,26 @@ namespace MVC_OnlineShop.Controllers {
                 }
             }
         }
+
         [HttpPost]
-        [ValidateAntiForgeryToken] 
+        [ValidateAntiForgeryToken]
+        [Route("Logout")]
         public ActionResult Logout()
         {
             Session.Clear();
             Session.Abandon();
             return RedirectToAction("Index", "Home");
         }
+
         [HttpGet]
+        [Route("Register", Name = "Register")]
         public ActionResult Register()
         {
             return View();
         }
+
         [HttpPost]
+        [Route("Register")]
         public ActionResult Register(Customer model)
         {
             if (!ModelState.IsValid) return View(model);
@@ -75,7 +84,9 @@ namespace MVC_OnlineShop.Controllers {
                 using (var context = new CustomerContext())
                 {
                     //model.RoleId = context.Roles.Where(r => r.Name.ToLower().Equals("user")).FirstOrDefault().Id;
-                    model.RoleId = 1;
+                    //model.RoleType = RoleType.Administrator;
+                    model.RoleId = 1; // Role ID 1 =  Normal
+
                     Customer match = context.Customers.Where(u => u.UserId == model.UserId || u.UserName == model.UserName).FirstOrDefault();
                     if (match != null)
                     {
@@ -93,12 +104,16 @@ namespace MVC_OnlineShop.Controllers {
                 }
             }
         }
+
         [HttpGet]
+        [Route("ForgetPassword")]
         public ActionResult ForgotPassword()
         {
             return View();
         }
+
         [HttpPost]
+        [Route("ForgotPassword/{model}")]
         public ActionResult ForgotPassword(ForgotPasswordViewModel model)
         {
             Customer match;
@@ -118,12 +133,16 @@ namespace MVC_OnlineShop.Controllers {
                 return View(model);
             }
         }
+
         [HttpGet]
+        [Route("ChangePassword")]
         public ActionResult ChangePassword()
         {
             return View();
         }
+
         [HttpPost]
+        [Route("ChangePassword/{model}")]
         public ActionResult ChangePassword(ChangePasswordViewModel model)
         {
             if (model.NewPass == model.NewPassValidation && Session["UserId"] != null)

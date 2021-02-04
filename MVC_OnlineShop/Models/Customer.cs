@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MVC_OnlineShop.Models.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -50,5 +51,6 @@ namespace MVC_OnlineShop.Models {
         [DisplayName("RoleId: ")]
         //[Required(ErrorMessage = "required.")]
         public int RoleId { get; set; }
+        /*public RoleType RoleType { get; set; } */
     }
 }

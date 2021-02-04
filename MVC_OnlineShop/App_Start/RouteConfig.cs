@@ -18,6 +18,7 @@ namespace MVC_OnlineShop {
             //    defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             //);
 
+            /*
             routes.MapRoute(
                 name: "Page1",
                 url: "Shop/Page1",
@@ -35,6 +36,7 @@ namespace MVC_OnlineShop {
                 url: "Index",
                 defaults: new { controller = "Home", action = "Index" }
             );
+            */
         }
     }
 }

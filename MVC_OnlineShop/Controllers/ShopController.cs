@@ -1,29 +1,35 @@
-﻿using MVC_OnlineShop.Models;
+﻿using MVC_OnlineShop.Infrastructure;
+using MVC_OnlineShop.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using MVC_OnlineShop.Models;
-using PagedList;
+// using MVC_OnlineShop.Models;
+// using PagedList;
 
 namespace MVC_OnlineShop.Controllers
 {
-
     [RoutePrefix("Shop")]
-    [Route("{action=Page1}")]
+    //[IsAuthenticationFilter]
+    //[Route("{action=Portal}")]
     public class ShopController : Controller
     {
 
         Cart ShoppingCart = new Cart();
 
-
         // GET: Shop
-        public ActionResult Index()
+        [HttpGet]
+        [Route("Portal", Name = "Portal")]
+        [IsAuthorized("Normal")]
+        public ActionResult Portal()
         {
             return View();
         }
 
+        [HttpGet]
+        [Route("Cart")]
+        [IsAuthorized("Normal")]
         public ActionResult Cart()
         {
             // TO DELETE
@@ -38,6 +44,9 @@ namespace MVC_OnlineShop.Controllers
             return View();
         }
 
+        [HttpGet]
+        [Route("ViewBill")]
+        [IsAuthorized("Normal")]
         public ActionResult ViewBill()
         {
             return View();
@@ -46,26 +55,46 @@ namespace MVC_OnlineShop.Controllers
         //locahost/shop/page1
 
         //Single Page of Laptop Results
-        public ViewResult Page1() {
+        [HttpGet]
+        [Route("Page1", Name = "Page1")]
+        [IsAuthorized("Normal")]
+        public ViewResult Page1(Customer model) {
+
+
 
             List<Product> productList = new List<Product>();
 
             using (var context = new CustomerContext())
             {
 
+                /*if (Session[ "UserId" ] != null) {
+                    Customer match = context.Customers.Find(Session[ "UserId" ]);
+                    if (match.Id == 1) {
+                        var products = context.Products
+                                                .Select(laptops => laptops)
+                                                .Where(p => p.Type == ProductType.Laptop).ToList();
+
+                        ViewData[ "productList" ] = products;
+
+                        return View("Page1");
+                    }
+                }*/
+
                 var products = context.Products
                                         .Select(laptops => laptops)
                                         .Where(p => p.Type == ProductType.Laptop).ToList();
 
-                ViewData["productList"] = products;
+                ViewData[ "productList" ] = products;
 
                 return View("Page1");
+
 
             }
         }
 
-
-
+        [HttpGet]
+        [Route("Page2")]
+        [IsAuthorized("Normal")]
         public ViewResult Page2()
         {
 
@@ -85,6 +114,9 @@ namespace MVC_OnlineShop.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("Page3")]
+        [IsAuthorized("Normal")]
         public ViewResult Page3()
         {
 
@@ -104,6 +136,9 @@ namespace MVC_OnlineShop.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("Page4")]
+        [IsAuthorized("Normal")]
         public ViewResult Page4()
         {
 
@@ -123,6 +158,14 @@ namespace MVC_OnlineShop.Controllers
             }
          
         }
+
+        [Route("UnAuthorized")]
+        [IsAuthorized("Normal")]
+        public ActionResult UnAuthorized() {
+            ViewBag.Message = "UnAuthorized Page!";
+            return View();
+        }
+
         /*
         //Paging of All Products - delete if not preferred
         public ViewResult Page2()
