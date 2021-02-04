@@ -7,7 +7,7 @@
         @foreach (var pList in ViewData["productList"] as List<Product>)
             {
                 <div class="col-sm-4">
-                    <img src="https://i.ibb.co/vLzkmgg/comp.jpg" class="card-img-top" alt="Product">
+                    <img src= @pList.Image_Url class="card-img-top" alt="Product">
                     <div class="card-body">
                         <h4 class="card-title">@pList.Name</h4>
                         <h5 class="card-title">$@pList.Price</h5>
