@@ -1,36 +1,22 @@
 ﻿@using MVC_OnlineShop
 
-<@{
+@{
     var item = ViewBag.Item;
-    Layout = null;
 }
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/bootstrap")
-    <meta name="viewport" content="width=device-width" />
-    <title>Product</title>
-</head>
-<body>
     
-    @Html.ActionLink("Back", "Page2","Shop", new { @class = "btn btn-dark" })
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-6 col-xs-12">
-                <img src="https://i.ibb.co/vLzkmgg/comp.jpg" class="card-img-top" alt="Product">
-            </div>
-            <div class="col-md-6 col-xs-12">
-                <h4 class=productName>@item.Name</h4>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+@Html.ActionLink("Back", "Page2","Shop", new { @class = "btn btn-dark" })
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-xs-12">
+            <img src="https://i.ibb.co/vLzkmgg/comp.jpg" class="card-img-top" alt="Product">
+        </div>
+        <div class="col-md-6 col-xs-12">
+            <h4 class=productName>@item.Name</h4>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 
-                <p><strong>Price:</strong> $@item.Price</p>
-                @Html.ActionLink("Add To Cart", "Cart", new { Id = item.Id }, new { @class = "btn btn-success" })
+            <p><strong>Price:</strong> $@item.Price</p>
+            @Html.ActionLink("Add To Cart", "Cart", new { Id = item.Id }, new { @class = "btn btn-success" })
 
-            </div>
         </div>
     </div>
-</body>
-</html>
+</div>
