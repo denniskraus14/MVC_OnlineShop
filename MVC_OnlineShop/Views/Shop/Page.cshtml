@@ -1,0 +1,42 @@
+﻿@using MVC_OnlineShop.Models
+@model MVC_OnlineShop.Models.Product
+
+@{
+    ViewBag.Name = "Page";
+}
+
+@Html.Partial("_bannerPartial")
+
+<div class="container-fluid bg-3 text-center">
+    <div class="row">
+
+        @foreach (var pList in ViewData[ "stringProductList" ] as List<Product>) {
+            <div class="col-sm-4">
+                <img src=@pList.Image_Url class="card-img-top" alt="Product">
+                <div class="card-body">
+                    <h4 class="card-title">@pList.Name</h4>
+                    <h5 class="card-title">$@pList.Price</h5>
+                    @Html.ActionLink("More Details", "Product", "Shop", new { Id = pList.Id }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Add To Cart", "Shop", "Cart", new { Id = pList.Id }, new { @class = "btn btn-success" })
+                </div>
+            </div>
+
+        }
+    </div>
+</div>
+
+<div class="navigation text-center">
+    <div class="pagination">
+        <!--<span>Page 1 of 4</span-->
+
+        <span class="current">1</span>
+        <a href='~/Shop/Page2' class="inactive">2</a>
+        <a href='~/Shop/Page3' class="inactive">3</a>
+        <a href='~/Shop/Page4' class="inactive">4</a>
+
+        <a href='~/Shop/Page2' class='btn btn-primary'>Next</a>
+        <!--<a href='~/Shop/Page2' class='btn btn-primary'>Next &rsaquo;</a>-->
+        <!--<a href='~/Shop/Page4'>Last &raquo;</a>-->
+    </div>
+</div>
+

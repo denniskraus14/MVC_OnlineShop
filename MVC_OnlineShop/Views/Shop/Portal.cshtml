@@ -1,5 +1,6 @@
 ﻿@{
     ViewBag.Title = "Index";
+    var item = ViewBag.Item;
 }
 
 <div class="container">
@@ -7,22 +8,41 @@
 
     <div class="row align-items-start">
         <div class="col-sm">
-            <div class="col-form-label">Test Label</div>
+            <img src=@item.Image_Url class="card-img-top" alt="Product">
+            <div class="card-body">
+                <h4 class="card-title">@item.Name</h4>
+                <h5 class="card-title">$@item.Price</h5>
+                @Html.RouteLink("Laptops", new { controller = "Shop", action = "page/laptop" }, new { @class = "btn btn-light" } )
+            </div>
+        </div>
+
+        <div class="col-sm">
+            <img src=@item.Image_Url class="card-img-top" alt="Product">
+            <div class="card-body">
+                <h4 class="card-title">@item.Name</h4>
+                <h5 class="card-title">$@item.Price</h5>
+                @Html.RouteLink("Mobiles", new { controller = "Shop", action = "page/Mobile" }, new { @class = "btn btn-light" } )
+            </div>
         </div>
 
 
         <div class="col-sm">
-            <div class="col-form-label">Test Label</div>
+            <img src=@item.Image_Url class="card-img-top" alt="Product">
+            <div class="card-body">
+                <h4 class="card-title">@item.Name</h4>
+                <h5 class="card-title">$@item.Price</h5>
+                @Html.RouteLink("TVs", new { controller = "Shop", action = "page/tv" }, new { @class = "btn btn-light" } )
+            </div>
         </div>
 
 
         <div class="col-sm">
-            <div class="col-form-label">Test Label</div>
-        </div>
-
-
-        <div class="col-sm">
-            <div class="col-form-label">Test Label</div>
+            <img src=@item.Image_Url class="card-img-top" alt="Product">
+            <div class="card-body">
+                <h4 class="card-title">@item.Name</h4>
+                <h5 class="card-title">$@item.Price</h5>
+                @Html.RouteLink("Aliens", new { controller = "Shop", action = "page/alien" }, new { @class = "btn btn-light" } )
+            </div>
         </div>
     </div>
 
