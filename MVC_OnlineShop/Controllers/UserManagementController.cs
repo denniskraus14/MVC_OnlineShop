@@ -106,7 +106,7 @@ namespace MVC_OnlineShop.Controllers {
         }
 
         [HttpGet]
-        [Route("ForgetPassword")]
+        [Route("ForgotPassword", Name = "ForgotPassword")]
         public ActionResult ForgotPassword()
         {
             return View();
