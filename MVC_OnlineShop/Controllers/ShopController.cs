@@ -1,45 +1,36 @@
 ﻿using MVC_OnlineShop.Infrastructure;
 using MVC_OnlineShop.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-// using MVC_OnlineShop.Models;
-// using PagedList;
 
 namespace MVC_OnlineShop.Controllers
 {
     [RoutePrefix("Shop")]
-    [IsAuthenticationFilter]
+    //[IsAuthenticationFilter]
     [Route("{action=Portal}")]
-    public class ShopController : Controller
-    {
-
+    public class ShopController : Controller {
         Cart ShoppingCart = new Cart();
 
         // GET: Shop
         [HttpGet]
         [Route("Portal", Name = "Portal")]
-        [IsAuthorized("Normal")]
-        public ActionResult Portal()
-        {
+        //[IsAuthorized("Normal")]
+        public ActionResult Portal() {
+            List<Product> product = new List<Product>();
+            using (var context = new CustomerContext()) {
+                var productType = context.Products
+                                        .Select(type => type)
+                                        .FirstOrDefault();
+                ViewBag.Item = productType;
+            }
             return View();
         }
 
         [HttpGet]
         [Route("Cart")]
         [IsAuthorized("Normal")]
-        public ActionResult Cart()
-        {
-            // TO DELETE
-            //List<Product> products = new List<Product>();
-            //Product p = new Product(1, "Big HP Laptop", 10,1, "carrotcake.jpeg", "Laptop");
-            //Product p2 = new Product(1, "Big HP Laptop", 10, 1, "alfredo.jpg", "Laptop");
-            //products.Add(p);
-            //products.Add(p2);
-            //ViewBag.Products = products;
-
+        public ActionResult Cart() {
             ViewBag["Products"] = ShoppingCart.Products;
             return View();
         }
@@ -47,8 +38,7 @@ namespace MVC_OnlineShop.Controllers
         [HttpGet]
         [Route("ViewBill")]
         [IsAuthorized("Normal")]
-        public ActionResult ViewBill()
-        {
+        public ActionResult ViewBill() {
             return View();
         }
 
@@ -61,22 +51,7 @@ namespace MVC_OnlineShop.Controllers
         public ViewResult Page1(Customer model) {
             List<Product> productList = new List<Product>();
 
-            using (var context = new CustomerContext())
-            {
-
-                /*if (Session[ "UserId" ] != null) {
-                    Customer match = context.Customers.Find(Session[ "UserId" ]);
-                    if (match.Id == 1) {
-                        var products = context.Products
-                                                .Select(laptops => laptops)
-                                                .Where(p => p.Type == ProductType.Laptop).ToList();
-
-                        ViewData[ "productList" ] = products;
-
-                        return View("Page1");
-                    }
-                }*/
-
+            using (var context = new CustomerContext()) {
                 var products = context.Products
                                         .Select(laptops => laptops)
                                         .Where(p => p.Type == ProductType.Laptop).ToList();
@@ -90,14 +65,10 @@ namespace MVC_OnlineShop.Controllers
         [HttpGet]
         [Route("Page2", Name = "Page2")]
         [IsAuthorized("Normal")]
-        public ViewResult Page2()
-        {
-
+        public ViewResult Page2() {
             List<Product> productList = new List<Product>();
 
-            using (var context = new CustomerContext())
-            {
-
+            using (var context = new CustomerContext()) {
                 var products = context.Products
                                         .Select(mobiles => mobiles)
                                         .Where(p => p.Type == ProductType.Mobile).ToList();
@@ -105,21 +76,16 @@ namespace MVC_OnlineShop.Controllers
                 ViewData["productList"] = products;
 
                 return View("Page2");
-
             }
         }
 
         [HttpGet]
         [Route("Page3", Name = "Page3")]
         [IsAuthorized("Normal")]
-        public ViewResult Page3()
-        {
-
+        public ViewResult Page3() {
             List<Product> productList = new List<Product>();
 
-            using (var context = new CustomerContext())
-            {
-
+            using (var context = new CustomerContext()) {
                 var products = context.Products
                                         .Select(tv => tv)
                                         .Where(p => p.Type == ProductType.TV).ToList();
@@ -127,21 +93,16 @@ namespace MVC_OnlineShop.Controllers
                 ViewData["productList"] = products;
 
                 return View("Page3");
-
             }
         }
 
         [HttpGet]
         [Route("Page4", Name = "Page4")]
         [IsAuthorized("Normal")]
-        public ViewResult Page4()
-        {
-
+        public ViewResult Page4() {
             List<Product> productList = new List<Product>();
 
-            using (var context = new CustomerContext())
-            {
-
+            using (var context = new CustomerContext()) {
                 var products = context.Products
                                         .Select(aliens => aliens)
                                         .Where(p => p.Type == ProductType.Alien).ToList();
@@ -149,9 +110,24 @@ namespace MVC_OnlineShop.Controllers
                 ViewData["productList"] = products;
 
                 return View("Page4");
-
             }
+        }
 
+        // Make pages more dynamic based on what they selected to be viewed
+        // Works, need to resolve the previous and next buttons
+        [HttpGet]
+        [Route("Page/{productType}", Name = "Page/{productType}")]
+        [IsAuthorized("Normal")]
+        public ViewResult Page(string productType) {
+            List<Product> productList = new List<Product>();
+
+            using ( var context = new CustomerContext()) {
+                var products = context.Products
+                                        .Select(type => type)
+                                        .Where(p => p.stringType == productType).ToList();
+                ViewData[ "stringProductList" ] = products;
+                return View("Page");
+            }
         }
 
         [Route("UnAuthorized")]
@@ -160,67 +136,13 @@ namespace MVC_OnlineShop.Controllers
             ViewBag.Message = "UnAuthorized Page!";
             return View();
         }
-
-        /*
-        //Paging of All Products - delete if not preferred
-        public ViewResult Page2()
-        {
-            List<Product> productList = new List<Product>();
-
-            using (var context = new CustomerContext())
-            {
-
-                var products = context.Products
-                                        .Select(x => x)
-                                        .Where(x => x.Type == "Mobile").ToList();
-
-                ViewData["productList"] = products;
-
-                return View();
-
-            }
-        }
-
-        public ViewResult Page3()
-        {
-
-            List<Product> productList = new List<Product>();
-
-            using (var context = new CustomerContext())
-            {
-
-                var products = context.Products
-                                        .Select(x => x)
-                                        .Where(x => x.Type == "TV").ToList();
-
-                ViewData["productList"] = products;
-
-                return View();
-
-            }
-
-        }
-
-        public ViewResult Page4()
-        {
-            List<Product> productList = new List<Product>();
-            using (var context = new CustomerContext())
-            {
-                var products = context.Products
-                                        .Select(x => x)
-                                        .Where(x => x.Type == "Alien").ToList();
-                ViewData["productList"] = products;
-                return View();
-            }
-
-        }
+        
         //Individual Product Page
         [Route("Product/{Id}")]
-        public ActionResult Product(int Id)
-        {
+        [IsAuthorized("Normal")]
+        public ActionResult Product(int Id) {
             List<Product> product = new List<Product>();
-            using (var context = new CustomerContext())
-            {
+            using (var context = new CustomerContext()) {
                 var products = context.Products
                                         .Select(x => x)
                                         .Where(x => x.Id == Id)
@@ -229,6 +151,6 @@ namespace MVC_OnlineShop.Controllers
             }
             return View();
         }
-        */
+
     }
 }
