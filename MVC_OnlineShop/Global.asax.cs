@@ -10,9 +10,9 @@ using MVC_OnlineShop.Migrations;
 namespace MVC_OnlineShop {
     public class MvcApplication : System.Web.HttpApplication {
         protected void Application_Start() {
+            RouteConfig.RegisterRoutes(RouteTable.Routes);
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             /*using (var context = new CustomerContext())
             {

@@ -22,3 +22,99 @@ select,
 textarea {
     max-width: 280px;
 }
+
+/* Style fix for logout buton with user have javascript disabled */
+#logoutForm input[type="submit"],
+#logoutForm input[type="button"],
+#logoutForm button {
+    background-color: #d3dce0;
+    color: #333;
+    border: none;
+    border: 0px;
+    font-size: 1em;
+    font-weight: 400;
+    margin: -4px 3px -4px 10px;
+    padding: 2px 3px;
+    text-decoration: none;
+    font-family: inherit;
+    outline: medium none;
+}
+
+/* Mobile CSS */
+@media (min-width: 576px) {
+    /* Style fix for logout buton with user have javascript disabled */
+    #login input[type="submit"],
+    #login input[type="button"],
+    #login button {
+        background: none;
+        color: #999;
+        border: none;
+        border: 0px;
+        font-size: 1em;
+        font-weight: 600;
+        margin: -4px 3px -4px 6px;
+        padding: 0;
+        text-decoration: none;
+        font-family: inherit;
+        outline: medium none;
+    }
+}
+
+@media (min-width: 768px) {
+    /* Style fix for logout buton with user have javascript disabled */
+    #login input[type="submit"],
+    #login input[type="button"],
+    #login button {
+        background: none;
+        color: #999;
+        border: none;
+        border: 0px;
+        font-size: 1em;
+        font-weight: 600;
+        margin: -4px 3px -4px 6px;
+        padding: 0;
+        text-decoration: none;
+        font-family: inherit;
+        outline: medium none;
+    }
+}
+
+@media (min-width: 992px) {
+    /* Style fix for logout buton with user have javascript disabled */
+    #login input[type="submit"],
+    #login input[type="button"],
+    #login button {
+        background: none;
+        color: #999;
+        border: none;
+        border: 0px;
+        font-size: 1em;
+        font-weight: 600;
+        margin: -4px 3px -4px 6px;
+        padding: 0;
+        text-decoration: none;
+        font-family: inherit;
+        outline: medium none;
+    }
+
+}
+
+@media (min-width: 1200px) {
+    /* Style fix for logout buton with user have javascript disabled */
+    #login input[type="submit"],
+    #login input[type="button"],
+    #login button {
+        background: none;
+        color: #999;
+        border: none;
+        border: 0px;
+        font-size: 1em;
+        font-weight: 600;
+        margin: -4px 3px -4px 6px;
+        padding: 0;
+        text-decoration: none;
+        font-family: inherit;
+        outline: medium none;
+    }
+
+}

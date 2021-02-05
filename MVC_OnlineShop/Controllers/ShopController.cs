@@ -88,7 +88,7 @@ namespace MVC_OnlineShop.Controllers
         }
 
         [HttpGet]
-        [Route("Page2")]
+        [Route("Page2", Name = "Page2")]
         [IsAuthorized("Normal")]
         public ViewResult Page2()
         {
@@ -110,7 +110,7 @@ namespace MVC_OnlineShop.Controllers
         }
 
         [HttpGet]
-        [Route("Page3")]
+        [Route("Page3", Name = "Page3")]
         [IsAuthorized("Normal")]
         public ViewResult Page3()
         {
@@ -132,7 +132,7 @@ namespace MVC_OnlineShop.Controllers
         }
 
         [HttpGet]
-        [Route("Page4")]
+        [Route("Page4", Name = "Page4")]
         [IsAuthorized("Normal")]
         public ViewResult Page4()
         {
