@@ -1,5 +1,6 @@
 ﻿using MVC_OnlineShop.Infrastructure;
 using MVC_OnlineShop.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -30,10 +31,32 @@ namespace MVC_OnlineShop.Controllers
         [HttpGet]
         [Route("Cart")]
         [IsAuthorized("Normal")]
-        public ActionResult Cart() {
-            ViewBag["Products"] = ShoppingCart.Products;
+        public ActionResult Cart(Product product) {
+            if (Session["cart"] == null) {
+                using (var context = new CustomerContext()) {
+                    List<Product> productList = new List<Product>();
+                    productList.Add(product);
+                    Session[ "cart" ] = productList;
+                    ViewBag.cart = productList.Count();
+                    Session[ "count" ] = 1;
+                }
+            } else {
+                List<Product> productList = (List<Product>)Session[ "cart" ];
+                productList.Add(product);
+                Session[ "cart" ] = productList;
+                ViewBag.cart = productList.Count();
+                Session[ "count" ] = Convert.ToInt32(Session[ "count" ]) + 1;
+            }
+
+            //ViewBag["Products"] = ShoppingCart.Products;
             return View();
+            //return RedirectToAction("Index", "Home");
         }
+
+        [HttpGet]
+        public ActionResult CartView() {
+            return View( (List<Product>) Session[ "cart" ] );
+        } 
 
         [HttpGet]
         [Route("ViewBill")]

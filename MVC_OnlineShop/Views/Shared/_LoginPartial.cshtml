@@ -27,11 +27,13 @@
                         l.className = "nav-link";
                     //-->
                 </script>
+
                 <noscript>
                     <input type="submit" value="Logout" class="nav-link" /> <!-- If javascript is disabled -->
                 </noscript>
-
             </li>
+
+            @Html.Partial("_ShoppingCartPartial")
         </ul>
 
         //@Html.Partial("_ShoppingCartPartial")
