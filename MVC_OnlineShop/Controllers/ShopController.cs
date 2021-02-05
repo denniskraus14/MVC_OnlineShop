@@ -43,7 +43,7 @@ namespace MVC_OnlineShop.Controllers
         }
 
         //locahost/shop/page1
-
+        /*
         //Single Page of Laptop Results
         [HttpGet]
         [Route("Page1", Name = "Page1")]
@@ -111,7 +111,7 @@ namespace MVC_OnlineShop.Controllers
 
                 return View("Page4");
             }
-        }
+        }*/
 
         // Make pages more dynamic based on what they selected to be viewed
         // Works, need to resolve the previous and next buttons
