@@ -322,6 +322,7 @@
     <Content Include="Views\UserManagement\ChangePassword.cshtml" />
     <Content Include="Views\Shop\ViewBill.cshtml" />
     <Content Include="Views\Shop\UnAuthorized.cshtml" />
+    <Content Include="Views\Shop\Page.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

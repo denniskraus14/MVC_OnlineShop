@@ -32,6 +32,7 @@ namespace MVC_OnlineShop.Models
         public int Quantity { get; set; }
         public string Image_Url { get; set; }
         public ProductType Type { get; set; }
+        public string stringType { get; set; }
 
 
 
