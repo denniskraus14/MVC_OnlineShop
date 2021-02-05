@@ -87,6 +87,12 @@ namespace MVC_OnlineShop.Migrations
                 */
                 context.Roles.Add(new Role { Name = "Normal" });
 
+                context.Customers.Add(new Customer {UserId = "1",UserName = "a",Password="password",
+                    ConfirmPassword="password", Email="a@yahoo.com", SecurityQuestion=1,QuestionAnswer="Smith",
+                    RoleId = 1,
+                    CreatedDate = DateTime.Today, LastLoginDate = DateTime.Today
+            });
+
                 context.SecurityQuestions.Add(new SecurityQuestion { Question = "What is your mother's maiden name?" });
 
                 context.SaveChanges();
