@@ -8,7 +8,7 @@ namespace MVC_OnlineShop.Controllers {
 
     //[RoutePrefix("")]
     [RoutePrefix("Home")]
-    //[Route("{action=Index}")]
+    [Route("{action=Index}")]
     public class HomeController : Controller {
 
         [HttpGet]
@@ -18,7 +18,7 @@ namespace MVC_OnlineShop.Controllers {
         }
 
         [HttpGet]
-        //[Route]
+        [Route("Contact", Name = "Contact")]
         public ActionResult Contact() {
             ViewBag.Message = "Your contact page.";
             return View();

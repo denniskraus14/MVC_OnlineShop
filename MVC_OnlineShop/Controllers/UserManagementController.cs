@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace MVC_OnlineShop.Controllers {
 
-    [RoutePrefix("Account")] // Not sure if this should be named "User" or something else
+    [RoutePrefix("Account")]
     [Route("{action=Login}")]
     public class UserManagementController : Controller {
 
@@ -54,7 +54,7 @@ namespace MVC_OnlineShop.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Route("Logout")]
+        //[Route("Logout", Name = "Logout")]
         public ActionResult Logout()
         {
             Session.Clear();
