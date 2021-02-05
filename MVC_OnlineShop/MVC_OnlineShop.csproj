@@ -306,7 +306,7 @@
     <Content Include="Views\Shared\_footerPartial.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_NavBarPartial.cshtml" />
-    <Content Include="Views\Shared\_ShoppingCarPartial.cshtml" />
+    <Content Include="Views\Shared\_ShoppingCartPartial.cshtml" />
     <Content Include="Views\Shared\_ProductsView.cshtml" />
     <Content Include="Views\Shop\Portal.cshtml" />
     <Content Include="Views\Shop\Page1.cshtml" />

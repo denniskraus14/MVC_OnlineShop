@@ -3,40 +3,28 @@
 @model Product
 
 @{
-    Layout = null;
+    var cartItem = ViewBag.cart;
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Cart</title>
-</head>
-
-<body>
-    <div>
-        <h3>Shopping Cart</h3>
-        <table cellpadding="2" cellspacing="2" border="1">
+<div>
+    <h3>Shopping Cart</h3>
+    <table cellpadding="2" cellspacing="2" border="1">
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Image</th>
+            <th>Price</th>
+        </tr>
+        @foreach (var product in Session[ "cart" ] as List<Product>) { 
             <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Image</th>
-                <th>Price</th>
+                <td>@product.Id</td>
+                <td>@product.Name</td>
+                <td><img src=@product.Image_Url width="60" /> </td>
+                <td>@product.Price</td>
             </tr>
-            @foreach (Product product in ViewBag.Products)
-            {
-                <tr>
-                    <td>@product._id</td>
-                    <td>@product._name</td>
-                    <td><img src=@product._image_url width="60" /> </td>
-                    <td>@product._price</td>
-                </tr>
-            }
-        </table>
+        }
+    </table>
 
-        <br /><br />
-        <h2><a href="/Shop/ViewBill">Purchase</a></h2>
-    </div>
-</body>
-</html>
+    <br /><br />
+    <h2><a href="/Shop/ViewBill">Purchase</a></h2>
+</div>
