@@ -15,15 +15,19 @@
     @Html.Partial("_bannerPartial")
     @Html.Partial("_ProductsView")
 
-    <div class="navigation">
+    <div class="navigation text-center">
         <div class="pagination">
-            <span>Page 2 of 4</span>
+            <!--<span>Page 1 of 4</span-->
+            <a href='~/Shop/Page1' class='btn btn-primary'>Previous</a>
+
             <a href='~/Shop/Page1' class="inactive">1</a>
             <span class="current">2</span>
             <a href='~/Shop/Page3' class="inactive">3</a>
             <a href='~/Shop/Page4' class="inactive">4</a>
-            <a href='~/Shop/Page3'>Next &rsaquo;</a>
-            <a href='~/Shop/Page4'>Last &raquo;</a>
+
+            <a href='~/Shop/Page3' class='btn btn-primary'>Next</a>
+            <!--<a href='~/Shop/Page3' class='btn btn-primary'>Next &rsaquo;</a>-->
+            <!--<a href='~/Shop/Page4'>Last &raquo;</a>-->
         </div>
     </div>
 </body>
