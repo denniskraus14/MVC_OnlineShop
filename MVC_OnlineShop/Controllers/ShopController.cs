@@ -42,7 +42,6 @@ namespace MVC_OnlineShop.Controllers
             return View();
         }
 
-        //locahost/shop/page1
         /*
         //Single Page of Laptop Results
         [HttpGet]
