@@ -34,18 +34,28 @@ namespace MVC_OnlineShop.Controllers
         public ActionResult Cart(Product product) {
             if (Session["cart"] == null) {
                 using (var context = new CustomerContext()) {
+                    Product prod = context.Products
+                                                .Select(p => p)
+                                                .Where(p => p.Id == product.Id)
+                                                .FirstOrDefault();
                     List<Product> productList = new List<Product>();
-                    productList.Add(product);
+                    productList.Add(prod);
                     Session[ "cart" ] = productList;
                     ViewBag.cart = productList.Count();
                     Session[ "count" ] = 1;
                 }
             } else {
-                List<Product> productList = (List<Product>)Session[ "cart" ];
-                productList.Add(product);
-                Session[ "cart" ] = productList;
-                ViewBag.cart = productList.Count();
-                Session[ "count" ] = Convert.ToInt32(Session[ "count" ]) + 1;
+                using (var context = new CustomerContext()) {
+                    Product prod = context.Products
+                                                .Select(p => p)
+                                                .Where(p => p.Id == product.Id)
+                                                .FirstOrDefault();
+                    List<Product> productList = (List<Product>)Session[ "cart" ];
+                    productList.Add(prod);
+                    Session[ "cart" ] = productList;
+                    ViewBag.cart = productList.Count();
+                    Session[ "count" ] = Convert.ToInt32(Session[ "count" ]) + 1;
+                }
             }
 
             //ViewBag["Products"] = ShoppingCart.Products;
