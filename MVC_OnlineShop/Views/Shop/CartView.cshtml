@@ -1,6 +1,9 @@
 ﻿@using MVC_OnlineShop.Models
 @using System.Web.Optimization
-@model Product
+
+@*@model Product*@
+
+@model IEnumerable <MVC_OnlineShop.Models.Product>
 
 @{
     var cartItem = ViewBag.cart;
@@ -24,7 +27,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var product in Session[ "cart" ] as List<Product>) {
+                        @*@foreach (var product in Session[ "cart" ] as List<Product>) {*@
+                        @foreach (var product in Model) {
                             <tr>
                                 <td data-th="Product">
                                     <div class="row">

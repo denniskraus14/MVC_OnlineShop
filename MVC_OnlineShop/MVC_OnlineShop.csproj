@@ -328,7 +328,7 @@
     <Content Include="Views\Shop\Page3.cshtml" />
     <Content Include="Views\Shop\Page4.cshtml" />
     <Content Include="Views\Shop\GenerateBill.cshtml" />
-    <Content Include="Views\Shop\Cart.cshtml" />
+    <Content Include="Views\Shop\CartView.cshtml" />
     <Content Include="Views\Shop\Product.cshtml" />
     <Content Include="Views\UserManagement\Login.cshtml" />
     <Content Include="Views\UserManagement\Register.cshtml" />

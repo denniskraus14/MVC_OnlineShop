@@ -30,8 +30,7 @@ namespace MVC_OnlineShop.Controllers
 
         [HttpGet]
         [Route("Cart")]
-        [IsAuthorized("Normal")]
-        // TODO: Use this for only adding intems to the cart
+        [IsAuthorized("Administrator", "Moderator", "Normal")]
         public ActionResult Cart(Product product) {
             if (Session["cart"] == null) {
                 using (var context = new CustomerContext()) {
@@ -39,10 +38,10 @@ namespace MVC_OnlineShop.Controllers
                                                 .Select(p => p)
                                                 .Where(p => p.Id == product.Id)
                                                 .FirstOrDefault();
-                    List<Product> productList = new List<Product>();
-                    productList.Add(prod);
-                    Session[ "cart" ] = productList;
-                    ViewBag.cart = productList.Count();
+                    List<Product> cartList = new List<Product>();
+                    cartList.Add(prod);
+                    Session[ "cart" ] = cartList;
+                    ViewBag.cart = cartList.Count();
                     Session[ "count" ] = 1;
                 }
             } else {
@@ -51,20 +50,19 @@ namespace MVC_OnlineShop.Controllers
                                                 .Select(p => p)
                                                 .Where(p => p.Id == product.Id)
                                                 .FirstOrDefault();
-                    List<Product> productList = (List<Product>)Session[ "cart" ];
-                    productList.Add(prod);
-                    Session[ "cart" ] = productList;
-                    ViewBag.cart = productList.Count();
+                    List<Product> cartList = (List<Product>)Session[ "cart" ];
+                    cartList.Add(prod);
+                    Session[ "cart" ] = cartList;
+                    ViewBag.cart = cartList.Count();
                     Session[ "count" ] = Convert.ToInt32(Session[ "count" ]) + 1;
                 }
             }
 
-            //ViewBag["Products"] = ShoppingCart.Products;
-            return View();
-            //return RedirectToAction("Index", "Home");
+            return RedirectToAction("Portal", "Shop");
         }
 
         [HttpGet]
+        [IsAuthorized("Administrator", "Moderator", "Normal")]
         // TODO: Make this the new cart html page. 
         // TODO: Put cart html into cartView html
         public ActionResult CartView() { 
@@ -72,98 +70,31 @@ namespace MVC_OnlineShop.Controllers
         } 
 
         [HttpGet]
+        [Route("RemoveProduct", Name = "RemoveProduct")]
+        [IsAuthorized("Administrator", "Moderator", "Normal")]
         public ActionResult RemoveProduct(Product productToRemove) {
             List<Product> cartList = (List<Product>)Session[ "cart" ];
             cartList.RemoveAll(p => p.Id == productToRemove.Id);
             Session[ "cart" ] = cartList;
             Session[ "count" ] = Convert.ToInt32(Session[ "count" ]) - 1;
-            return RedirectToAction("Shop", "Cart");
+
+            return RedirectToAction("CartView", "Shop");
         }
 
         [HttpGet]
         [Route("ViewBill")]
-        [IsAuthorized("Normal")]
+        [IsAuthorized("Administrator", "Moderator", "Normal")]
         // TODO: Make ViewBill html page 
         //          - Will only have the payment stuff in this html page along with how to pay for products.
         public ActionResult ViewBill() {
             return View();
         }
 
-        /*
-        //Single Page of Laptop Results
-        [HttpGet]
-        [Route("Page1", Name = "Page1")]
-        [IsAuthorized("Normal")]
-        public ViewResult Page1(Customer model) {
-            List<Product> productList = new List<Product>();
-
-            using (var context = new CustomerContext()) {
-                var products = context.Products
-                                        .Select(laptops => laptops)
-                                        .Where(p => p.Type == ProductType.Laptop).ToList();
-
-                ViewData["productList"] = products;
-
-                return View("Page1");
-            }
-        }
-
-        [HttpGet]
-        [Route("Page2", Name = "Page2")]
-        [IsAuthorized("Normal")]
-        public ViewResult Page2() {
-            List<Product> productList = new List<Product>();
-
-            using (var context = new CustomerContext()) {
-                var products = context.Products
-                                        .Select(mobiles => mobiles)
-                                        .Where(p => p.Type == ProductType.Mobile).ToList();
-
-                ViewData["productList"] = products;
-
-                return View("Page2");
-            }
-        }
-
-        [HttpGet]
-        [Route("Page3", Name = "Page3")]
-        [IsAuthorized("Normal")]
-        public ViewResult Page3() {
-            List<Product> productList = new List<Product>();
-
-            using (var context = new CustomerContext()) {
-                var products = context.Products
-                                        .Select(tv => tv)
-                                        .Where(p => p.Type == ProductType.TV).ToList();
-
-                ViewData["productList"] = products;
-
-                return View("Page3");
-            }
-        }
-
-        [HttpGet]
-        [Route("Page4", Name = "Page4")]
-        [IsAuthorized("Normal")]
-        public ViewResult Page4() {
-            List<Product> productList = new List<Product>();
-
-            using (var context = new CustomerContext()) {
-                var products = context.Products
-                                        .Select(aliens => aliens)
-                                        .Where(p => p.Type == ProductType.Alien).ToList();
-
-                ViewData["productList"] = products;
-
-                return View("Page4");
-            }
-        }*/
-
         // Make pages more dynamic based on what they selected to be viewed
         // Works, need to resolve the previous and next buttons
         [HttpGet]
         [Route("Page/{productType}", Name = "Page/{productType}")]
-        [IsAuthorized("Normal")]
+        [IsAuthorized("Administrator", "Moderator", "Normal")]
         public ViewResult Page(string productType) {
             List<Product> productList = new List<Product>();
 
@@ -177,7 +108,7 @@ namespace MVC_OnlineShop.Controllers
         }
 
         [Route("UnAuthorized")]
-        [IsAuthorized("Normal")]
+        [IsAuthorized("Administrator", "Moderator", "Normal")]
         public ActionResult UnAuthorized() {
             ViewBag.Message = "UnAuthorized Page!";
             return View();
@@ -185,7 +116,7 @@ namespace MVC_OnlineShop.Controllers
         
         //Individual Product Page
         [Route("Product/{Id}")]
-        [IsAuthorized("Normal")]
+        [IsAuthorized("Administrator", "Moderator", "Normal")]
         public ActionResult Product(int Id) {
             List<Product> product = new List<Product>();
             using (var context = new CustomerContext()) {
