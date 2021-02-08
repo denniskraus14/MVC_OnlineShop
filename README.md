@@ -2,9 +2,9 @@
 Fake online shopping cart application. 
 Register a customer and add products to a shopping cart.
 
-#TO DO
+## TO DO
 
-#SHOPPING CART
+# SHOPPING CART
 - Fix shopping cart partial view glyph icon 
 - Change images on Shopping Cart portal page
 - Fix broken page # links at the bottom of the page
@@ -16,7 +16,7 @@ Register a customer and add products to a shopping cart.
 - Update Error page
 - Update Unauthorize page
 
-#ADMIN
+# ADMIN
 - Add different rolls (i.e., admin)
 - Add admin dashboard
 
