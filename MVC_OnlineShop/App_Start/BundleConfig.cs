@@ -30,8 +30,7 @@ namespace MVC_OnlineShop {
                       "~/Content/PagedList.css",
                       "~/Content/bootstrap.css",
                       "~/Content/bootstrap-grid.css",
-                      "~/Content/bootstrap-reboot.css",
-                      "~/Content/fontawesome"
+                      "~/Content/bootstrap-reboot.css"
             ));
         }
     }
