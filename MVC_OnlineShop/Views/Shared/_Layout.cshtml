@@ -4,9 +4,69 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/bundles/bootstrap")
+    @Styles.Render("~/content/css")
+    @Styles.Render("~/scripts/js")
+    @Styles.Render("~/Content/fontawesome")
+    @*    <script>
+            $(document).ready(function () {
+
+                $('.btnAddToCart').on('click', function () {
+                    var getItemId = parseInt($(this).closest('td').prop('id'));
+                    var getUserName = $('.loggedUsername').html();
+                    $.ajax({
+                        type: 'POST',
+                        contentType: 'application/json; charset=utf-8',
+                        url: 'Shop/Cart',
+                        data: "{ 'itemId':' " + getItemId + "' }",
+                        success: function (data) {
+                            $('#cartCount').html(data)
+                        },
+                        error: function (data) {
+                            alert(data);
+                        }
+                    });
+                });
+
+                $('#cartCount').on('click', function () {
+                    var getName = $('.loggedUsername').html();
+                    $.ajax({
+                        type: 'POST',
+                        contentType: 'application/json; charset=utf-8',
+                        url: '/Home/GetCartItems',
+
+                        success: function (data) {
+                            $('#exampleModal').html(data);
+                            $('#exampleModal').modal({
+                                backdrop:false
+                            });
+                        },
+                        error: function (data) {
+                            alert(data);
+                        }
+                    });
+                });
+
+                $(document).delegate('.cartDel', 'click', function () {
+                    var DeleteItem=parseInt($(this).closest('tr').prop('id'));
+                    $.ajax({
+                        type: 'POST',
+                        contentType: 'application/json; charset=utf-8',
+                        url: '/Home/DeleteCart',
+                        data: "{ 'itemId':' " + DeleteItem + "' }",
+                        success: function (data) {
+                            $('#exampleModal').html(data);
+                            $('#spnCart').html($(data).find('#cartList tbody tr').length);
+                            $('#exampleModal').modal({
+                                backdrop: false
+                            });
+                        },
+                        error: function (data) {
+                            alert(data);
+                        }
+                    });
+                });
+            });
+        </script>*@
 </head>
 <body>
 
@@ -17,8 +77,7 @@
         @Html.Partial("_footerPartial")
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+    @*@Scripts.Render("~/bundles/jquery")*@
     @RenderSection("scripts", required: false)
 </body>
 </html>

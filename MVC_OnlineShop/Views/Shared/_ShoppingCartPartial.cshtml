@@ -1,6 +1,6 @@
 ﻿<li class="nav-link">
-    <a href="@Url.Action("Cart", "Shop")" class="btn btn-info btn-lg">
+    <a href="@Url.Action("Cart", "Shop")">
         <span class="glyphicon glyphicon-shopping-cart" style="color:blue"></span>
-        Cart <span class="cart-count">@Session[ "count" ]</span>
+        Cart <span class="cart-count" id="cartCount">@Session[ "count" ]</span>
     </a>
 </li>

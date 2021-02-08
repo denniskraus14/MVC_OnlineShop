@@ -5,7 +5,7 @@
     using (Html.BeginForm("Logout", "UserManagement", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" })) {
         @Html.AntiForgeryToken()
         <ul class="nav navbar-nav navbar-right">
-            <li class="nav-link">
+            <li class="nav-link loggedUsername">
                 @*Welcome: <a href="#">@Session[ "UserName" ]</a>*@ <!-- Make username link redirect to profile page -->
                 Welcome: @Session["UserName"] <!-- Use a RouteLink to determine the users profile page -->
             </li>
