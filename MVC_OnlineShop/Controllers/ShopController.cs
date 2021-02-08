@@ -31,6 +31,7 @@ namespace MVC_OnlineShop.Controllers
         [HttpGet]
         [Route("Cart")]
         [IsAuthorized("Normal")]
+        // TODO: Use this for only adding intems to the cart
         public ActionResult Cart(Product product) {
             if (Session["cart"] == null) {
                 using (var context = new CustomerContext()) {
@@ -64,13 +65,26 @@ namespace MVC_OnlineShop.Controllers
         }
 
         [HttpGet]
-        public ActionResult CartView() {
+        // TODO: Make this the new cart html page. 
+        // TODO: Put cart html into cartView html
+        public ActionResult CartView() { 
             return View( (List<Product>) Session[ "cart" ] );
         } 
 
         [HttpGet]
+        public ActionResult RemoveProduct(Product productToRemove) {
+            List<Product> cartList = (List<Product>)Session[ "cart" ];
+            cartList.RemoveAll(p => p.Id == productToRemove.Id);
+            Session[ "cart" ] = cartList;
+            Session[ "count" ] = Convert.ToInt32(Session[ "count" ]) - 1;
+            return RedirectToAction("Shop", "Cart");
+        }
+
+        [HttpGet]
         [Route("ViewBill")]
         [IsAuthorized("Normal")]
+        // TODO: Make ViewBill html page 
+        //          - Will only have the payment stuff in this html page along with how to pay for products.
         public ActionResult ViewBill() {
             return View();
         }
