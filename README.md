@@ -6,7 +6,7 @@ Register a customer and add products to a shopping cart.
 
 ### SHOPPING CART
 <strike> - Fix ViewBag Title on Page.cshtml so that it reflects correct item type</strike>
-- Fix shopping cart partial view glyph icon 
+<strike> - Fix shopping cart partial view glyph icon </strike>
 - Change images on Shopping Cart portal page
 - Fix broken page # links at the bottom of the page
 - Enable the ability to view cart with nothing in it (maybe add view that says the customer's cart is empty?)
