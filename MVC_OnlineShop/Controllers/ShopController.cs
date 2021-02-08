@@ -23,8 +23,11 @@ namespace MVC_OnlineShop.Controllers
                 var productType = context.Products
                                         .Select(type => type)
                                         .FirstOrDefault();
-                ViewBag.Item = productType;
+                //ViewBag.Item = productType;
+                ViewBag.ProductType = productType;
+                ViewBag.Item = "Welcome to the Alpha Shop";
             }
+
             return View();
         }
 
@@ -172,6 +175,7 @@ namespace MVC_OnlineShop.Controllers
                                         .Select(type => type)
                                         .Where(p => p.stringType == productType).ToList();
                 ViewData[ "stringProductList" ] = products;
+                ViewBag.Item = productType + "s";
                 return View("Page");
             }
         }

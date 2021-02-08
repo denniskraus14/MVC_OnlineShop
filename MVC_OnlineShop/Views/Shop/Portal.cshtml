@@ -1,10 +1,12 @@
 ﻿@{
     ViewBag.Title = "Index";
-    var item = ViewBag.Item;
+    var item = ViewBag.ProductType;
 }
 
+@Html.Partial("_bannerPartial")
+
 <div class="container">
-    <h2>Welcome to the Alpha Shop</h2>
+    @*<h2>Welcome to the Alpha Shop</h2>*@
 
     <div class="row align-items-start">
         <div class="col-sm">
@@ -12,7 +14,7 @@
             <div class="card-body">
                 <h4 class="card-title">@item.Name</h4>
                 <h5 class="card-title">$@item.Price</h5>
-                @Html.RouteLink("Laptops", new { controller = "Shop", action = "page/laptop" }, new { @class = "btn btn-light" } )
+                @Html.RouteLink("Laptops", new { controller = "Shop", action = "page/Laptop" }, new { @class = "btn btn-light" })
             </div>
         </div>
 
@@ -21,17 +23,7 @@
             <div class="card-body">
                 <h4 class="card-title">@item.Name</h4>
                 <h5 class="card-title">$@item.Price</h5>
-                @Html.RouteLink("Mobiles", new { controller = "Shop", action = "page/Mobile" }, new { @class = "btn btn-light" } )
-            </div>
-        </div>
-
-
-        <div class="col-sm">
-            <img src=@item.Image_Url class="card-img-top" alt="Product">
-            <div class="card-body">
-                <h4 class="card-title">@item.Name</h4>
-                <h5 class="card-title">$@item.Price</h5>
-                @Html.RouteLink("TVs", new { controller = "Shop", action = "page/tv" }, new { @class = "btn btn-light" } )
+                @Html.RouteLink("Mobiles", new { controller = "Shop", action = "page/Mobile" }, new { @class = "btn btn-light" })
             </div>
         </div>
 
@@ -41,7 +33,17 @@
             <div class="card-body">
                 <h4 class="card-title">@item.Name</h4>
                 <h5 class="card-title">$@item.Price</h5>
-                @Html.RouteLink("Aliens", new { controller = "Shop", action = "page/alien" }, new { @class = "btn btn-light" } )
+                @Html.RouteLink("TVs", new { controller = "Shop", action = "page/Tv" }, new { @class = "btn btn-light" })
+            </div>
+        </div>
+
+
+        <div class="col-sm">
+            <img src=@item.Image_Url class="card-img-top" alt="Product">
+            <div class="card-body">
+                <h4 class="card-title">@item.Name</h4>
+                <h5 class="card-title">$@item.Price</h5>
+                @Html.RouteLink("Aliens", new { controller = "Shop", action = "page/Alien" }, new { @class = "btn btn-light" })
             </div>
         </div>
     </div>
