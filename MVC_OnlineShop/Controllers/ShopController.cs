@@ -96,19 +96,18 @@ namespace MVC_OnlineShop.Controllers
         [Route("Page/{productType}", Name = "Page/{productType}")]
         [IsAuthorized("Administrator", "Moderator", "Normal")]
         public ViewResult Page(string productType) {
-            List<Product> productList = new List<Product>();
-
             using ( var context = new CustomerContext()) {
                 var products = context.Products
                                         .Select(type => type)
                                         .Where(p => p.stringType == productType).ToList();
-                ViewData[ "stringProductList" ] = products;
-                return View("Page");
+
+                return View(products);
             }
         }
 
         [Route("UnAuthorized")]
         [IsAuthorized("Administrator", "Moderator", "Normal")]
+        // TODO: Work on a more dynamic not authorized page
         public ActionResult UnAuthorized() {
             ViewBag.Message = "UnAuthorized Page!";
             return View();
@@ -117,8 +116,8 @@ namespace MVC_OnlineShop.Controllers
         //Individual Product Page
         [Route("Product/{Id}")]
         [IsAuthorized("Administrator", "Moderator", "Normal")]
+        // TODO: Change how this page is being rendered.
         public ActionResult Product(int Id) {
-            List<Product> product = new List<Product>();
             using (var context = new CustomerContext()) {
                 var products = context.Products
                                         .Select(x => x)
