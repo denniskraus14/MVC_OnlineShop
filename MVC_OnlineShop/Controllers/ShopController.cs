@@ -34,7 +34,7 @@ namespace MVC_OnlineShop.Controllers
         [HttpGet]
         [Route("Cart")]
         [IsAuthorized("Administrator", "Moderator", "Normal")]
-        public ActionResult Cart(Product product) {
+        public ActionResult AddToCart(Product product) {
             if (Session["cart"] == null) {
                 using (var context = new CustomerContext()) {
                     Product prod = context.Products
@@ -66,8 +66,6 @@ namespace MVC_OnlineShop.Controllers
 
         [HttpGet]
         [IsAuthorized("Administrator", "Moderator", "Normal")]
-        // TODO: Make this the new cart html page. 
-        // TODO: Put cart html into cartView html
         public ActionResult CartView() { 
             return View( (List<Product>) Session[ "cart" ] );
         } 
@@ -105,7 +103,7 @@ namespace MVC_OnlineShop.Controllers
                                         .Where(p => p.stringType == productType).ToList();
                 ViewData[ "stringProductList" ] = products;
                 ViewBag.Item = productType + "s";
-                return View("Page");
+                return View(products);
             }
         }
 

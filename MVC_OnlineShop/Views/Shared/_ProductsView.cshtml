@@ -15,7 +15,7 @@
                     <h4 class="card-title">@pList.Name</h4>
                     <h5 class="card-title">$@pList.Price</h5>
                     @Html.ActionLink("More Details", "Product", "Shop", new { Id = pList.Id }, new { @class = "btn btn-primary" })
-                    @Html.ActionLink("Add To Cart", "Shop", "Cart", new { Id = pList.Id }, new { @class = "btn btn-success" })
+                    @Html.ActionLink("Add To Cart", "Shop", "AddToCart", new { Id = pList.Id }, new { @class = "btn btn-success" })
                 </div>
             </div>
 
