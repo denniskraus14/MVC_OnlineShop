@@ -105,7 +105,7 @@ namespace MVC_OnlineShop.Controllers
                                         .Where(p => p.stringType == productType).ToList();
                 ViewData[ "stringProductList" ] = products;
                 ViewBag.Item = productType + "s";
-                return View("Page");
+                return View(products);
             }
         }
 
