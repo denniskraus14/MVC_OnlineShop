@@ -7,10 +7,12 @@ using System.Web.Mvc;
 namespace MVC_OnlineShop.Controllers {
 
     [RoutePrefix("Home")]
-    [Route("{action=Index}")]
+    [Route("{action}")]
     public class HomeController : Controller {
 
         [HttpGet]
+        [Route("~/")]
+        [Route("")]
         [Route("Index", Name = "Index")]
         public ActionResult Index() {
             return View();
