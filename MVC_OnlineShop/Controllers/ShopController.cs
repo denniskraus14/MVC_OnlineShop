@@ -8,7 +8,7 @@ using System.Web.Mvc;
 namespace MVC_OnlineShop.Controllers
 {
     [RoutePrefix("Shop")]
-    //[IsAuthenticationFilter]
+    [IsAuthenticationFilter]
     [Route("{action=Portal}")]
     public class ShopController : Controller {
         Cart ShoppingCart = new Cart();
@@ -19,13 +19,16 @@ namespace MVC_OnlineShop.Controllers
         //[IsAuthorized("Normal")]
         public ActionResult Portal() {
             List<Product> product = new List<Product>();
-            using (var context = new CustomerContext()) {
+            using (var context = new CustomerContext())
+            {
+                /*
                 var productType = context.Products
                                         .Select(type => type)
-                                        .FirstOrDefault();
+                                        .FirstOrDefault();*/
+                var productType = context.Products.GroupBy(x => x.stringType, (key, g) => g.OrderBy(e => e.Price).FirstOrDefault()).ToList();
                 ViewBag.Item = productType;
+                return View(productType);
             }
-            return View();
         }
 
         [HttpGet]
