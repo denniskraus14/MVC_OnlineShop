@@ -26,15 +26,18 @@ namespace MVC_OnlineShop.Controllers
                                         .Select(type => type)
                                         .FirstOrDefault();*/
                 var productType = context.Products.GroupBy(x => x.stringType, (key, g) => g.OrderBy(e => e.Price).FirstOrDefault()).ToList();
-                ViewBag.Item = productType;
-                return View(productType);
+                ViewBag.ProductType = productType;
+                ViewBag.Item = "Welcome to the Alpha Shop";
+                 return View(productType);
             }
+
+            //return View();
         }
 
         [HttpGet]
         [Route("Cart")]
         [IsAuthorized("Administrator", "Moderator", "Normal")]
-        public ActionResult Cart(Product product) {
+        public ActionResult AddToCart(Product product) {
             if (Session["cart"] == null) {
                 using (var context = new CustomerContext()) {
                     Product prod = context.Products
@@ -66,8 +69,6 @@ namespace MVC_OnlineShop.Controllers
 
         [HttpGet]
         [IsAuthorized("Administrator", "Moderator", "Normal")]
-        // TODO: Make this the new cart html page. 
-        // TODO: Put cart html into cartView html
         public ActionResult CartView() { 
             return View( (List<Product>) Session[ "cart" ] );
         } 
@@ -103,7 +104,8 @@ namespace MVC_OnlineShop.Controllers
                 var products = context.Products
                                         .Select(type => type)
                                         .Where(p => p.stringType == productType).ToList();
-
+                ViewData[ "stringProductList" ] = products;
+                ViewBag.Item = productType + "s";
                 return View(products);
             }
         }

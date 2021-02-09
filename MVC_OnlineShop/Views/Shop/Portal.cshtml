@@ -2,11 +2,13 @@
 
 @{
     ViewBag.Title = "Index";
-    var item = ViewBag.Item;
+    var item = ViewBag.ProductType;
 }
 
+@Html.Partial("_bannerPartial")
+
 <div class="container">
-    <h2>Welcome to the Alpha Shop</h2>
+    @*<h2>Welcome to the Alpha Shop</h2>*@
 
     <div class="row align-items-start">
         @*
@@ -28,7 +30,6 @@
                 </div>
             </div>
 
-
             <div class="col-sm">
                 <img src=@item.Image_Url class="card-img-top" alt="Product">
                 <div class="card-body">
@@ -37,7 +38,6 @@
                     @Html.RouteLink("TVs", new { controller = "Shop", action = "page/tv" }, new { @class = "btn btn-light" } )
                 </div>
             </div>
-
 
             <div class="col-sm">
                 <img src=@item.Image_Url class="card-img-top" alt="Product">
