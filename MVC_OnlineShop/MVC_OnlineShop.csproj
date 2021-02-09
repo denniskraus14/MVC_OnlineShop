@@ -323,10 +323,6 @@
     <Content Include="Views\Shared\_ShoppingCartPartial.cshtml" />
     <Content Include="Views\Shared\_ProductsView.cshtml" />
     <Content Include="Views\Shop\Portal.cshtml" />
-    <Content Include="Views\Shop\Page1.cshtml" />
-    <Content Include="Views\Shop\Page2.cshtml" />
-    <Content Include="Views\Shop\Page3.cshtml" />
-    <Content Include="Views\Shop\Page4.cshtml" />
     <Content Include="Views\Shop\GenerateBill.cshtml" />
     <Content Include="Views\Shop\CartView.cshtml" />
     <Content Include="Views\Shop\Product.cshtml" />
