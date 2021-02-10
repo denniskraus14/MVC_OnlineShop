@@ -1,0 +1,15 @@
+﻿@model List<MVC_OnlineShop.Models.Product>
+
+@foreach (var product in Model) {
+    <div class="col-sm-3 img-resizing">
+        <img src=@product.Image_Url class="card-img-top img-fluid border-top border-right border-left rounded-top" alt="Product">
+        <div class="card-body border-bottom border-right border-left rounded-bottom">
+            <h4 class="card-title">@product.Name</h4>
+            <h5 class="card-title">$@product.Price</h5>
+            <div class="d-flex justify-content-center" style="margin: 0px -20px;">
+                @Html.ActionLink("More Details", "Product", "Shop", new { Id = product.Id }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Add To Cart", "AddToCart", new { Id = product.Id }, new { @class = "btn btn-success btnAddToCart" })
+            </div>
+        </div>
+    </div>
+}

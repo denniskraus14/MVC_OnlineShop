@@ -2,6 +2,7 @@
 using MVC_OnlineShop.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -18,21 +19,75 @@ namespace MVC_OnlineShop.Controllers
         [Route("Portal", Name = "Portal")]
         //[IsAuthorized("Normal")]
         public ActionResult Portal() {
-            List<Product> product = new List<Product>();
+            /*List<Product> product = new List<Product>();
             using (var context = new CustomerContext())
             {
-                /*
+                *//*
                 var productType = context.Products
                                         .Select(type => type)
-                                        .FirstOrDefault();*/
+                                        .FirstOrDefault();*//*
                 var productType = context.Products.GroupBy(x => x.stringType, (key, g) => g.OrderBy(e => e.Price).FirstOrDefault()).ToList();
                 ViewBag.ProductType = productType;
                 ViewBag.Item = "Welcome to the Alpha Shop";
                  return View(productType);
-            }
+            }*/
 
             //return View();
+
+
+            int BlockSize = 4;
+            var products = DataManager.GetProducts(1, BlockSize);
+            return View(products);
         }
+
+        /*public ActionResult GetTopProductsFromNextSection(int lastRowId, bool isHistoryBack) {
+            var sectionProducts = BLL.SectionProduct.GetNextSectionTopProducts(lastRowId, isHistoryBack);
+            return Json(sectionProducts, JsonRequestBehavior.AllowGet);
+        }*/
+
+        [ChildActionOnly]
+        public ActionResult ProductList(List<Product> model) {
+            return PartialView(model);
+        }
+
+        /// <summary>
+        /// Runs every time we scroll the page down and need to populate the enxt block of data
+        /// </summary>
+        /// <param name="BlockNumber"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult InfinateScroll(int BlockNumber) {
+            int BlockSize = 4;
+            var products = DataManager.GetProducts(BlockNumber, BlockSize);
+            JsonModel jsonModel = new JsonModel();
+            jsonModel.NoMoreData = products.Count < BlockSize;
+            jsonModel.HTMLString = RenderPartialViewToString("ProductList", products);
+
+            return Json(jsonModel);
+        }
+
+        /// <summary>
+        /// Gets the HTML string
+        /// </summary>
+        /// <param name="viewName"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        protected string RenderPartialViewToString(string viewName, object model) {
+            if (string.IsNullOrEmpty(viewName))
+                viewName = ControllerContext.RouteData.GetRequiredString("action");
+
+            ViewData.Model = model;
+
+            using (StringWriter sw = new StringWriter()) {
+                ViewEngineResult viewResult = ViewEngines.Engines.FindPartialView(ControllerContext, viewName);
+                ViewContext viewContext = new ViewContext(ControllerContext, viewResult.View, ViewData, TempData, sw);
+                viewResult.View.Render(viewContext, sw);
+
+                return sw.GetStringBuilder().ToString();
+            }
+        }
+
+
 
         [HttpGet]
         [Route("Cart")]
