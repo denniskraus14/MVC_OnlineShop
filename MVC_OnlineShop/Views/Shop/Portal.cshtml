@@ -18,6 +18,7 @@
                     <div class="d-flex justify-content-center" style="margin: 0px -20px;">
                         @Html.ActionLink("More Details", "Product", "Shop", new { Id = pList.Id }, new { @class = "btn btn-primary" })
                         @Html.ActionLink("Add To Cart", "AddToCart", new { Id = pList.Id }, new { @class = "btn btn-success btnAddToCart" })
+                        @Html.ActionLink("View "+pList.stringType+"s", "Page/"+pList.stringType, new { Id = ""}, new { @class = "btn btn-success btnGoTo" })
                     </div>
                 </div>
             </div>
