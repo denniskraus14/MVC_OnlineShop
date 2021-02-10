@@ -154,6 +154,7 @@
     <Compile Include="Models\ChangePasswordViewModel.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\CustomerContext.cs" />
+    <Compile Include="Models\DataManager.cs" />
     <Compile Include="Models\Enums\ProductType.cs" />
     <Compile Include="Models\Enums\RoleType.cs" />
     <Compile Include="Models\Exceptions\ProductNotFoundException.cs" />
@@ -163,6 +164,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ForgotPasswordViewModel.cs" />
+    <Compile Include="Models\JsonModel.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\SecurityQuestion.cs" />
@@ -177,6 +179,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\Img\ajax-loader.gif" />
     <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
@@ -337,6 +340,7 @@
     <Content Include="Views\Shop\ViewBill.cshtml" />
     <Content Include="Views\Shop\UnAuthorized.cshtml" />
     <Content Include="Views\Shop\Page.cshtml" />
+    <Content Include="Views\Shared\ProductList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
