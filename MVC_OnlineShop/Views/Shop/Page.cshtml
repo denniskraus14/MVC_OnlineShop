@@ -8,21 +8,22 @@
 
 @Html.Partial("_bannerPartial")
 
-<div class="container-fluid bg-3 text-center">
-    <div class="row">
+<div class="container-fluid text-center">
+    <div class="row" align="center">
 
         @*@foreach (var pList in ViewData[ "stringProductList" ] as List<Product>) {*@
         @foreach (var pList in Model) {
-            <div class="col-sm-4">
-                <img src=@pList.Image_Url class="card-img-top" alt="Product">
-                <div class="card-body">
+            <div class="col-sm-3 img-resizing">
+                <img src=@pList.Image_Url class="card-img-top img-fliud border-top border-right border-left rounded-top" alt="Product">
+                <div class="card-body border-bottom border-right border-left rounded-bottom">
                     <h4 class="card-title">@pList.Name</h4>
                     <h5 class="card-title">$@pList.Price</h5>
-                    @Html.ActionLink("More Details", "Product", "Shop", new { Id = pList.Id }, new { @class = "btn btn-primary" })
-                    @Html.ActionLink("Add To Cart", "AddToCart", new { Id = pList.Id }, new { @class = "btn btn-success btnAddToCart" })
+                    <div class="d-flex justify-content-center" style="margin: 0px -20px;">
+                        @Html.ActionLink("More Details", "Product", "Shop", new { Id = pList.Id }, new { @class = "btn btn-primary" })
+                        @Html.ActionLink("Add To Cart", "Cart", new { Id = pList.Id }, new { @class = "btn btn-success btnAddToCart" })
+                    </div>
                 </div>
             </div>
-
         }
     </div>
 </div>
