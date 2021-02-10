@@ -150,6 +150,7 @@
     <Compile Include="Migrations\CustomerContextMigrations.cs" />
     <Compile Include="Models\Bill.cs" />
     <Compile Include="Models\Cart.cs" />
+    <Compile Include="Models\CartItem.cs" />
     <Compile Include="Models\ChangePasswordViewModel.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\CustomerContext.cs" />
