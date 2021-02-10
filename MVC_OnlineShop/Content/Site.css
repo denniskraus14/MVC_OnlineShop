@@ -40,7 +40,31 @@ textarea {
     outline: medium none;
 }
 
-/* Mobile CSS */
+/* Hack for fixing images in shop page */
+.col-sm-3.img-resizing img {
+    max-height: 150px !important;
+    min-height: 150px !important;
+}
+
+/* Fixing spacing for product blocks */
+.col-sm-3 {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+/* More Info & Add To Cart Button Style Fix*/
+.col-sm-3 .d-flex a {
+    padding: 5px 10px;
+    margin: 0px 5px;
+}
+
+/****************************************************************************************/
+
+/*
+ *
+ *   Mobile CSS 
+ *
+ */
 @media (min-width: 576px) {
     /* Style fix for logout buton with user have javascript disabled */
     #login input[type="submit"],
