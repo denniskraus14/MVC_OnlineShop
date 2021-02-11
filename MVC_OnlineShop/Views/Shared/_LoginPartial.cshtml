@@ -7,7 +7,8 @@
         <ul class="nav navbar-nav navbar-right">
             <li class="nav-link loggedUsername">
                 @*Welcome: <a href="#">@Session[ "UserName" ]</a>*@ <!-- Make username link redirect to profile page -->
-                Welcome: @Session["UserName"] <!-- Use a RouteLink to determine the users profile page -->
+                @*Welcome: @Session["UserName"] <!-- Use a RouteLink to determine the users profile page -->*@
+                @Html.RouteLink("Welcome: "+ @Session["UserName"], "Profile", "UserManagement", new { @class = "nav-link" })
             </li>
             <li>
                 <!-- JS needs to be updated to latest syntax -->

@@ -167,9 +167,14 @@ namespace MVC_OnlineShop.Controllers {
 
         [HttpGet]
         [Route("Profile", Name ="Profile")]
-        public ActionResult UserProfile()
+        public ActionResult UserProfile(Customer model)
         {
-            return View();
+            Customer match = null;
+            using(var context = new CustomerContext())
+            {
+                match = context.Customers.Find(Session["UserId"]);
+            }
+            return View(match);
         }
     }
 }
