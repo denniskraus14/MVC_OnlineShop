@@ -191,6 +191,8 @@
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\custom\page-scroll-1.0.0.js" />
+    <Content Include="Scripts\custom\portal-scroll-1.0.0.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />
@@ -340,7 +342,8 @@
     <Content Include="Views\Shop\ViewBill.cshtml" />
     <Content Include="Views\Shop\UnAuthorized.cshtml" />
     <Content Include="Views\Shop\Page.cshtml" />
-    <Content Include="Views\Shared\ProductList.cshtml" />
+    <Content Include="Views\Shared\_ProductList.cshtml" />
+    <Content Include="Views\Shared\_ProductTypeList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

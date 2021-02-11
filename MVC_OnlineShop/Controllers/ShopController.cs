@@ -19,34 +19,19 @@ namespace MVC_OnlineShop.Controllers
         [Route("Portal", Name = "Portal")]
         //[IsAuthorized("Normal")]
         public ActionResult Portal() {
-            /*List<Product> product = new List<Product>();
-            using (var context = new CustomerContext())
-            {
-                *//*
-                var productType = context.Products
-                                        .Select(type => type)
-                                        .FirstOrDefault();*//*
-                var productType = context.Products.GroupBy(x => x.stringType, (key, g) => g.OrderBy(e => e.Price).FirstOrDefault()).ToList();
-                ViewBag.ProductType = productType;
-                ViewBag.Item = "Welcome to the Alpha Shop";
-                 return View(productType);
-            }*/
-
-            //return View();
-
-
-            int BlockSize = 4;
+            ViewBag.Item = "Welcome to the Alpha Shop";
+            int BlockSize = 4; // products to display
             var products = DataManager.GetProducts(1, BlockSize);
             return View(products);
         }
 
-        /*public ActionResult GetTopProductsFromNextSection(int lastRowId, bool isHistoryBack) {
-            var sectionProducts = BLL.SectionProduct.GetNextSectionTopProducts(lastRowId, isHistoryBack);
-            return Json(sectionProducts, JsonRequestBehavior.AllowGet);
-        }*/
+        [ChildActionOnly]
+        public ActionResult _ProductList(List<Product> model) {
+            return PartialView(model);
+        }
 
         [ChildActionOnly]
-        public ActionResult ProductList(List<Product> model) {
+        public ActionResult _ProductTypeList(List<Product> model) {
             return PartialView(model);
         }
 
@@ -61,7 +46,18 @@ namespace MVC_OnlineShop.Controllers
             var products = DataManager.GetProducts(BlockNumber, BlockSize);
             JsonModel jsonModel = new JsonModel();
             jsonModel.NoMoreData = products.Count < BlockSize;
-            jsonModel.HTMLString = RenderPartialViewToString("ProductList", products);
+            jsonModel.HTMLString = RenderPartialViewToString("_ProductList", products);
+
+            return Json(jsonModel);
+        }
+
+        [HttpPost]
+        public ActionResult InfinateScrollForProductType(int BlockNumber, string productType) {
+            int BlockSize = 4;
+            var products = DataManager.GetProductTypes(BlockNumber, BlockSize, productType);
+            JsonModel jsonModel = new JsonModel();
+            jsonModel.NoMoreData = products.Count < BlockSize;
+            jsonModel.HTMLString = RenderPartialViewToString("_ProductTypeList", products);
 
             return Json(jsonModel);
         }
@@ -87,7 +83,18 @@ namespace MVC_OnlineShop.Controllers
             }
         }
 
+        // Make pages more dynamic based on what they selected to be viewed
+        // Works, need to resolve the previous and next buttons
+        [HttpGet]
+        [Route("Page/{productType}", Name = "Page/{productType}")]
+        [IsAuthorized("Administrator", "Moderator", "Normal")]
+        public ViewResult Page(string productType) {
+            ViewBag.pageType = productType;
 
+            int BlockSize = 4;
+            var products = DataManager.GetProductTypes(1, BlockSize, productType);
+            return View(products);
+        }
 
         [HttpGet]
         [Route("Cart")]
@@ -196,22 +203,6 @@ namespace MVC_OnlineShop.Controllers
         //          - Will only have the payment stuff in this html page along with how to pay for products.
         public ActionResult ViewBill() {
             return View();
-        }
-
-        // Make pages more dynamic based on what they selected to be viewed
-        // Works, need to resolve the previous and next buttons
-        [HttpGet]
-        [Route("Page/{productType}", Name = "Page/{productType}")]
-        [IsAuthorized("Administrator", "Moderator", "Normal")]
-        public ViewResult Page(string productType) {
-            using ( var context = new CustomerContext()) {
-                var products = context.Products
-                                        .Select(type => type)
-                                        .Where(p => p.stringType == productType).ToList();
-                ViewData[ "stringProductList" ] = products;
-                ViewBag.Item = productType + "s";
-                return View(products);
-            }
         }
 
         [Route("UnAuthorized")]
