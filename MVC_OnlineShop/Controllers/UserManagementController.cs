@@ -164,5 +164,12 @@ namespace MVC_OnlineShop.Controllers {
                 return View(model);
             }
         }
+
+        [HttpGet]
+        [Route("Profile", Name ="Profile")]
+        public ActionResult UserProfile()
+        {
+            return View();
+        }
     }
 }
