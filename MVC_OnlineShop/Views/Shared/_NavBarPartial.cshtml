@@ -19,6 +19,9 @@
                 <li class="nav-item">
                     @Html.RouteLink("Shop", "Portal", "Shop", new { @class = "nav-link" })
                 </li>
+                <li class="nav-item">
+                    @Html.RouteLink("Profile", "Profile", "UserManagement", new { @class = "nav-link" })
+                </li>
             </ul>
             @Html.Partial("_LoginPartial")
         </div>
