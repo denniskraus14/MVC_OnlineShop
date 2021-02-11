@@ -5,26 +5,20 @@
         </button>
 
         <!-- Company Name -->
-        @Html.ActionLink("Alpha Website", "Index", "Home",  new { @class = "navbar-brand" })
+        @Html.RouteLink("Alpha Website", "Index", "Home",  new { @class = "navbar-brand" })
 
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                <li class="nav-item active">
-                    <!-- <a class="nav-link" href="#">Home <span class="sr-onl9y">(current)</span></a> -->
+                <!--the active Nav item feature doesn't work and isn't dynamic, only Home stays highlighted-->
+                <!--<li class="nav-item active">-->
+                <li class="nav-item">
+                    <!-- <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a> -->
                     @*@Html.ActionLink("Home", "Index", "Home", new { @class = "nav-link" })*@
                     @Html.RouteLink("Home", "Index", "Home", new { @class = "nav-link" })
                 </li>
                 <li class="nav-item">
-                    <!-- <a class="nav-link disabled" href="#">Disabled</a> -->
-                    @*@Html.ActionLink("Shop", "Page1", "Shop", new { @class = "nav-link" })*@
                     @Html.RouteLink("Shop", "Portal", "Shop", new { @class = "nav-link" })
                 </li>
-                <!-- <li class="nav-item"> -->
-                <!-- <a class="nav-link disabled" href="#">Disabled</a> -->
-                <!-- Maybe change this, just putting her as an example -->
-                @*@Html.ActionLink("Login", "Login", "UserManagement", new { @class = "nav-link" })*@
-                @*@Html.RouteLink("Login", "Login", "User", new { @class = "nav-link" }) *@
-                <!-- </li> -->
             </ul>
             @Html.Partial("_LoginPartial")
         </div>
