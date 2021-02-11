@@ -18,7 +18,7 @@
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress />
+    <Use64BitIISExpress>false</Use64BitIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -342,8 +342,8 @@
     <Content Include="Views\Shop\ViewBill.cshtml" />
     <Content Include="Views\Shop\UnAuthorized.cshtml" />
     <Content Include="Views\Shop\Page.cshtml" />
-    <Content Include="Views\Shared\_ProductList.cshtml" />
-    <Content Include="Views\Shared\_ProductTypeList.cshtml" />
+    <Content Include="Views\Shared\ProductList.cshtml" />
+    <Content Include="Views\UserManagement\UserProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
