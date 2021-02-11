@@ -5,136 +5,20 @@
     var item = ViewBag.ProductType;
 }
 
-@*<div id="section-products"></div>*@
-
 @Html.Partial("_bannerPartial")
 
 <div class="container text-center">
     <div id="productListDiv" class="row align-items-start" align="center">
-        @*@foreach (var pList in Model) {
-                <div class="col-sm-3 img-resizing" >
-                    <img src=@pList.Image_Url class="card-img-top img-fluid border-top border-right border-left rounded-top" alt="Product">
-                    <div class="card-body border-bottom border-right border-left rounded-bottom">
-                        <h4 class="card-title">@pList.Name</h4>
-                        <h5 class="card-title">$@pList.Price</h5>
-                        <div class="d-flex justify-content-center" style="margin: 0px -20px;">
-                            @Html.ActionLink("More Details", "Product", "Shop", new { Id = pList.Id }, new { @class = "btn btn-primary" })
-                            @Html.ActionLink("Add To Cart", "AddToCart", new { Id = pList.Id }, new { @class = "btn btn-success btnAddToCart" })
-                            @Html.ActionLink("View "+pList.stringType+"s", "Page/"+pList.stringType, new { Id = ""}, new { @class = "btn btn-success btnGoTo" })
-                        </div>
-                    </div>
-                </div>
-            }*@
-
-        @*@Html.Partial("_ProductList")*@ @*Maybe needed*@
-
-        @{ Html.RenderAction("ProductList", "Shop", new { Model = Model }); }
+        @{
+            Html.RenderAction("_ProductList", "Shop", new { Model = Model });
+        }
     </div>
     <div id="loadingDiv" style="text-align: center; display: none; margin-bottom: 20px;">
         <img alt="Loading" src="@Url.Content("~/Content/Img/ajax-loader.gif")" />
     </div>
-
 </div>
 
-<script type="text/javascript">
-    var BlockNumber = 2;  //Infinate Scroll starts from second block
-    var NoMoreData = false;
-    var inProgress = false;
-
-    $(window).scroll(function () {
-        if ($(window).scrollTop() == $(document).height() -
-        $(window).height() && !NoMoreData && !inProgress) {
-
-            inProgress = true;
-            $("#loadingDiv").show();
-
-            $.post("@Url.Action("InfinateScroll",
-            "Shop")", { "BlockNumber": BlockNumber },
-                    function (data) {
-
-                        BlockNumber = BlockNumber + 1;
-                        NoMoreData = data.NoMoreData;
-                        $("#productListDiv").append(data.HTMLString);
-                        $("#loadingDiv").hide();
-                        inProgress = false;
-                    });
-        }
-    });
-</script>
-
-
-
-
-
-@*<input type="hidden" id="last-row-id" value="0" />*@
-
-@*<script>
-        //get default products
-        $(document).ready(function () {
-            GetProductsFromNextSection(false);
-        });
-
-        //get next products automatic
-        $(window).scroll(function () {
-            if ($(window).scrollTop() == $(document).height() - $(window).height()) {
-                GetProductsFromNextSection(true);
-            }
-        });
-
-        //common handler
-        function GetProductsFromNextSection(scrollPage) {
-            var lastRowId = ($("#last-row-id").val() * 1);
-            var isHistoryBack = (lastRowId > 0 && !scrollPage);
-
-            $.ajax({
-                type: 'GET',
-                url: '/Service/GetTopProductsFromNextSection?lastRowId=' + lastRowId + '&isHistoryBack=' + isHistoryBack,
-                dataType: 'json',
-                success: function (jsonData) {
-                    var rowid = lastRowId + 1;
-
-                    if (jsonData == null) {
-                        return;
-                    }
-
-                    $.each(jsonData, function (index, section) {
-                        var sectionIndex = (isHistoryBack ? index + 1 : rowid);
-                        var articleData = "";
-                        $.each(section.SectionProducts, function (iindex, item) {
-                            articleData += '<li>' +
-                                '<div class="imagebox"><img src="' + item.ImageUrl + '" alt="product image"/></div>' +
-                                '<div class="descriptionbox"><h4><a href="' + item.Url + '</a></h4>' +
-                                '<p>' + item.Summary + '</p>'
-                            '</li>';
-                        });
-                        $('#section-products').append(articleData);
-                    });
-
-                    if (!isHistoryBack) {
-                        $("#last-row-id").val(rowid);
-                    }
-                },
-                error: function () {
-                    //alert('Error');
-                }
-            });
-
-            return false;
-        }
-    </script>*@
-
-@*<script>
-        $("#myLink").click(function (e) {
-
-            e.preventDefault();
-            $.ajax({
-
-                url: $(this).attr("href"),
-                success: function () {
-                    alert("Value Added");
-                }
-
-            });
-
-        });
-    </script>*@
+@section InfinateScroll {
+    @Html.Hidden("portalUrl", Url.Action("InfinateScroll", "Shop"))
+    @Scripts.Render("~/Scripts/custom/portal-scroll-1.0.0.js")
+}

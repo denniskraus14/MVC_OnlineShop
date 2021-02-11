@@ -1,45 +1,26 @@
 ﻿@using MVC_OnlineShop.Models
-@*@model MVC_OnlineShop.Models.Product*@
 @model IEnumerable<MVC_OnlineShop.Models.Product>
 
 @{
     ViewBag.Name = "Page";
+    var getType = ViewBag.pageType;
 }
 
 @Html.Partial("_bannerPartial")
 
-<div class="container-fluid text-center">
-    <div class="row" align="center">
-
-        @*@foreach (var pList in ViewData[ "stringProductList" ] as List<Product>) {*@
-        @foreach (var pList in Model) {
-            <div class="col-sm-3 img-resizing">
-                <img src=@pList.Image_Url class="card-img-top img-fliud border-top border-right border-left rounded-top" alt="Product">
-                <div class="card-body border-bottom border-right border-left rounded-bottom">
-                    <h4 class="card-title">@pList.Name</h4>
-                    <h5 class="card-title">$@pList.Price</h5>
-                    <div class="d-flex justify-content-center" style="margin: 0px -20px;">
-                        @Html.ActionLink("More Details", "Product", "Shop", new { Id = pList.Id }, new { @class = "btn btn-primary" })
-                        @Html.ActionLink("Add To Cart", "Cart", new { Id = pList.Id }, new { @class = "btn btn-success btnAddToCart" })
-                    </div>
-                </div>
-            </div>
-        }
+<div class="container text-center">
+    <div id="productListDiv" class="row align-items-start" align="center">
+        @{  Html.RenderAction("_ProductTypeList", "Shop", new { Model = Model });  }
+    </div>
+    <div id="loadingDiv" style="text-align: center; display: none; margin-bottom: 20px;">
+        <img alt="Loading" src="@Url.Content("~/Content/Img/ajax-loader.gif")" />
     </div>
 </div>
 
-<div class="navigation text-center">
-    <div class="pagination">
-        <!--<span>Page 1 of 4</span-->
-
-        <span class="current">1</span>
-        <a href='~/Shop/Mobile' class="inactive">2</a>
-        <a href='~/Shop/TV' class="inactive">3</a>
-        <a href='~/Shop/Alien' class="inactive">4</a>
-
-        <a href='~/Shop/Mobile' class='btn btn-primary'>Next</a>
-        <!--<a href='~/Shop/Page2' class='btn btn-primary'>Next &rsaquo;</a>-->
-        <!--<a href='~/Shop/Page4'>Last &raquo;</a>-->
-    </div>
-</div>
+@section InfinateScroll {
+    @*Get the product type we are trying to display*@
+    <input type="hidden" id="pageType" name="pageType" value="@ViewBag.pageType"/>
+    @Html.Hidden("pageUrl", Url.Action("InfinateScrollForProductType", "Shop", new { Model = Model } ))
+    @Scripts.Render("~/Scripts/custom/page-scroll-1.0.0.js")
+}
 
