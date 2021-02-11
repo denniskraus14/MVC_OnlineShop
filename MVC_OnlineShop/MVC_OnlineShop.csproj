@@ -342,7 +342,8 @@
     <Content Include="Views\Shop\ViewBill.cshtml" />
     <Content Include="Views\Shop\UnAuthorized.cshtml" />
     <Content Include="Views\Shop\Page.cshtml" />
-    <Content Include="Views\Shared\ProductList.cshtml" />
+    <Content Include="Views\Shared\_ProductList.cshtml" />
+    <Content Include="Views\Shared\_ProductTypeList.cshtml" />
     <Content Include="Views\UserManagement\UserProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
