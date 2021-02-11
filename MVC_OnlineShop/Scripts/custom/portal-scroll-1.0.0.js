@@ -4,6 +4,7 @@ var inProgress = false;
 
 $(window).scroll(function () {
     if ($(window).scrollTop() == $(document).height() - $(window).height() && !NoMoreData && !inProgress) {
+    //if ($(window).scrollTop() + $(document).height() >= $(window).height() && !NoMoreData && !inProgress) { // loads all products
         inProgress = true;
         $("#loadingDiv").show();
 
