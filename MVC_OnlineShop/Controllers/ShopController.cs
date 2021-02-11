@@ -20,7 +20,7 @@ namespace MVC_OnlineShop.Controllers
         //[IsAuthorized("Normal")]
         public ActionResult Portal() {
             ViewBag.Item = "Welcome to the Alpha Shop";
-            int BlockSize = 4; // products to display
+            int BlockSize = 8; // products to display, adds to rows of products
             var products = DataManager.GetProducts(1, BlockSize);
             return View(products);
         }
@@ -91,7 +91,7 @@ namespace MVC_OnlineShop.Controllers
         public ViewResult Page(string productType) {
             ViewBag.pageType = productType;
 
-            int BlockSize = 4;
+            int BlockSize = 8; // Adds two rows of products
             var products = DataManager.GetProductTypes(1, BlockSize, productType);
             return View(products);
         }
