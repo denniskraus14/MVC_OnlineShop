@@ -24,5 +24,13 @@ namespace MVC_OnlineShop.Controllers {
             ViewBag.Message = "Your contact page.";
             return View();
         }
+
+        [HttpGet]
+        [Route("About", Name = "About")]
+        public ActionResult About()
+        {
+            ViewBag.Message = "Your about page.";
+            return View();
+        }
     }
 }
