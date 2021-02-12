@@ -1,0 +1,84 @@
+﻿<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+@using MVC_OnlineShop.Models
+@model MVC_OnlineShop.Models.Customer
+<!------ Include the above in your HEAD tag ---------->
+
+<div style="padding-top: 30px" class="container emp-profile">
+    <form method="post">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="profile-img">
+                    <!--Default image until they add one. We should add this image to the db by default to make this dynamic-->
+                    <img src="https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg" alt="" />
+                    <div class="file btn btn-sm btn-primary">
+                        Change Photo
+                        <input type="file" name="file" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="profile-head">
+                    <h4>
+                        Welcome @Model.UserId!
+                    </h4>
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="tab-content profile-tab" id="myTabContent">
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        @Html.ValidationSummary(true, "Registration Failed", new { @class = "text-warning" })
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.UserId, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(model => model.UserId, htmlAttributes: new { @class = "control" })
+                                @Html.ValidationMessageFor(model => model.UserId, "", htmlAttributes: new { @class = "text-warning" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(model => model.Email, htmlAttributes: new { @class = "control" })
+                                @Html.ValidationMessageFor(model => model.Email, "", htmlAttributes: new { @class = "text-warning" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(model => model.UserName, htmlAttributes: new { @class = "control" })
+                                @Html.ValidationMessageFor(model => model.UserName, "", htmlAttributes: new { @class = "text-warning" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.PasswordFor(model => model.Password, htmlAttributes: new { @class = "control" })
+                                @Html.ValidationMessageFor(model => model.Password, "", htmlAttributes: new { @class = "text-warning" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.PasswordFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control" })
+                                @Html.ValidationMessageFor(model => model.ConfirmPassword, "", htmlAttributes: new { @class = "text-warning" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Save Changes" class="btn btn-light" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

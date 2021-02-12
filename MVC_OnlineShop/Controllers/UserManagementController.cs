@@ -176,5 +176,54 @@ namespace MVC_OnlineShop.Controllers {
             }
             return View(match);
         }
+
+        [HttpGet]
+        [Route("Edit", Name = "Edit")]
+        public ActionResult Edit()
+        {
+            Customer match = null;
+            using (var context = new CustomerContext())
+            {
+                match = context.Customers.Find(Session["UserId"]);
+            }
+            return View(match);
+        }
+        
+        
+        [HttpPost]
+        [Route("Edit")]
+        public ActionResult Edit(Customer model)
+        {
+            if (!ModelState.IsValid) return View(model);
+            else if (model.Password != model.ConfirmPassword)
+            {
+                ModelState.AddModelError("PasswordsDoNotMatch", "Passwords do not Match");
+                return View(model);
+            }
+            else
+            {
+                using (var context = new CustomerContext())
+                {
+                    //model.RoleId = context.Roles.Where(r => r.Name.ToLower().Equals("user")).FirstOrDefault().Id;
+                    //model.RoleType = RoleType.Administrator;
+                    model.RoleId = 1; // Role ID 1 =  Normal
+
+                    Customer match = context.Customers.Where(u => u.UserId == model.UserId || u.UserName == model.UserName).FirstOrDefault();
+                    if (match != null)
+                    {
+                        ModelState.AddModelError("ExistingUser", "User Already Exists");
+                        return View(model);
+                    }
+                    else
+                    {
+                        model.CreatedDate = DateTime.Today;
+                        model.LastLoginDate = DateTime.Today;
+                        context.Customers.Add(model);
+                        context.SaveChanges();
+                        return Redirect("Portal");
+                    }
+                }
+            }
+        }
     }
 }
