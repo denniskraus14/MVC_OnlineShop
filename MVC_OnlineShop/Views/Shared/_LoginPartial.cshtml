@@ -1,52 +1,71 @@
 ﻿@using System.Web.Mvc;
 
-@if (!string.IsNullOrEmpty(Convert.ToString(Session["UserName"]))) {
+@if (!string.IsNullOrEmpty(Convert.ToString(Session["UserName"])))
+{
     @*using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))*@
-    using (Html.BeginForm("Logout", "UserManagement", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" })) {
+    using (Html.BeginForm("Logout", "UserManagement", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
         @Html.AntiForgeryToken()
-        <ul class="nav navbar-nav navbar-right">
-            <li class="nav-link loggedUsername">
-                @*Welcome: <a href="#">@Session[ "UserName" ]</a>*@ <!-- Make username link redirect to profile page -->
-                @*Welcome: @Session["UserName"] <!-- Use a RouteLink to determine the users profile page -->*@
-                @Html.RouteLink("Welcome: "+ @Session["UserName"], "Profile", "UserManagement", new { @class = "nav-link" })
-            </li>
-            <li>
-                <!-- JS needs to be updated to latest syntax -->
-                @*<a href="javascript:document.GetElementById('logoutForm').submit()" class="nav-link">Logout</a>*@
-                @*<a href="javascript:document.forms('logoutForm').submit()" class="nav-link">Logout</a>*@
-                @*@Html.ActionLink("Logout","Logout", "UserManagement");*@
-                @*@Html.RouteLink("Logout", "Logout", "Account", new { @class = "nav-link", id = "logoutLink" })*@
-                @*<input type="submit" value="Logout" class="nav-link" />*@
+<ul class="nav navbar-nav navbar-right">
+    <li class="nav-link loggedUsername">
+        @*Welcome: <a href="#">@Session[ "UserName" ]</a>*@ <!-- Make username link redirect to profile page -->
+        @*Welcome: @Session["UserName"] <!-- Use a RouteLink to determine the users profile page -->*@
+        @Html.RouteLink("Welcome: " + @Session["UserName"], "Profile", "UserManagement", new { @class = "nav-link" })
+    </li>
+    <li class="nav-link">
+        <img src="~/Content/Img/profile.svg" width="30" height="30" class="d-inline-block" alt="">
+    </li>
+    <li class=" nav-link">
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <!--<button class="btn btn-outline-success my-2 my-sm-0 d-inline-block" type="submit">Search</button>-->
+        </form>
+    </li>
+    <li class="nav-link">
+        <!-- JS needs to be updated to latest syntax -->
+        @*<a href="javascript:document.GetElementById('logoutForm').submit()" class="nav-link">Logout</a>*@
+        @*<a href="javascript:document.forms('logoutForm').submit()" class="nav-link">Logout</a>*@
+        @*@Html.ActionLink("Logout","Logout", "UserManagement");*@
+        @*@Html.RouteLink("Logout", "Logout", "Account", new { @class = "nav-link", id = "logoutLink" })*@
+        @*<input type="submit" value="Logout" class="nav-link" />*@
 
 
-                <a id="logout" href="javascript:document.getElementById('logoutForm').submit()" style="display:none">Logout</a>
-                <script>
-                    //<!--
-                    var l = document.getElementById('logout');
-                    if (typeof(l) != 'undefined' && l != null)
-                        l.style.display = "inline-flex";
-                        l.className = "nav-link";
-                    //-->
-                </script>
+        <a id="logout" href="javascript:document.getElementById('logoutForm').submit()" style="display:none">Logout</a>
+        <script>
+            //<!--
+            var l = document.getElementById('logout');
+            if (typeof (l) != 'undefined' && l != null)
+                l.style.display = "inline-flex";
+            l.className = "nav-link";
+                                                                                                    //-->
+        </script>
 
-                <noscript>
-                    <input type="submit" value="Logout" class="nav-link" /> <!-- If javascript is disabled -->
-                </noscript>
-            </li>
+        <noscript>
+            <input type="submit" value="Logout" class="nav-link" /> <!-- If javascript is disabled -->
+        </noscript>
+    </li>
+    @Html.Partial("_ShoppingCartPartial")
+</ul>
 
-            @Html.Partial("_ShoppingCartPartial")
-        </ul>
+
+
+
 
         //@Html.Partial("_ShoppingCartPartial")
         //@Html.RouteLink("Shop", "Page1", "Shop")
 
     }
-} else {
+}
+else
+{
     <ul class="nav navbar-nav navbar-right">
-        <li>
+        <li class="nav-link">
             @* @Html.ActionLink("Login", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" }) *@
             @Html.RouteLink("Login", "Login", "", new { @class = "nav-link", id = "loginLink" })
         </li>
 
     </ul>
+
+
+
 }
