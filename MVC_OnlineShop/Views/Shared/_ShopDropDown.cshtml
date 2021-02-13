@@ -1,9 +1,8 @@
 ﻿@using MVC_OnlineShop.Models
-@model List<MVC_OnlineShop.Models.Product>
 
 @{ 
-    List<Product> dropDown = NavBarSubMenu.ShopDropDown();
-    List<string> productTypeString = dropDown.Select(pt => pt.stringType).Distinct().ToList();
+    IEnumerable<Product> dropDown = NavBarSubMenu.ShopDropDown();
+    IEnumerable<string> productTypeString = dropDown.Select(pt => pt.stringType).Distinct().ToList();
 }
         
 <li class="nav-item dropdown">

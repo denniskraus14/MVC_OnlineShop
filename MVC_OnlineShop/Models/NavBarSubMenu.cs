@@ -6,7 +6,7 @@ using System.Web;
 namespace MVC_OnlineShop.Models {
     public class NavBarSubMenu {
 
-        public static List<Product> ShopDropDown() {
+        public static IEnumerable<Product> ShopDropDown() {
             using (var context = new CustomerContext()) {
                 return context.Products.ToList();
             }
