@@ -1,0 +1,18 @@
+﻿@using MVC_OnlineShop.Models
+@model List<MVC_OnlineShop.Models.Product>
+
+@{ 
+    List<Product> dropDown = NavBarSubMenu.ShopDropDown();
+    List<string> productTypeString = dropDown.Select(pt => pt.stringType).Distinct().ToList();
+}
+        
+<li class="nav-item dropdown">
+    <a href="@Url.Action("Portal", "Shop")" data-toggle="dropdown" class="nav-link dropdown-toggle" aria_haspopup="true" id="navbarDropdown">Shop</a>
+
+    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        @foreach (var item in productTypeString) {
+            <a href="@Url.Action("Page", "Shop", new { productType = item })" class="nav-link dropdown-item">@item</a>
+        }
+    </div>
+</li>
+

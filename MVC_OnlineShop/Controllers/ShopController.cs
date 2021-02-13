@@ -181,7 +181,7 @@ namespace MVC_OnlineShop.Controllers
         public ActionResult RemoveProductById(string productIdToRemove) {
             List<CartItem> cartList = (List<CartItem>)Session[ "cart" ];
             int index = isExist(productIdToRemove);
-            cartList.RemoveAt(index);
+            cartList.RemoveAt(index); // TODO: Create issue for removing products
             Session[ "cart" ] = cartList;
             Session[ "count" ] = Convert.ToInt32(Session[ "count" ]) - 1;
 
@@ -227,6 +227,5 @@ namespace MVC_OnlineShop.Controllers
             }
             return View();
         }
-
     }
 }
