@@ -12,9 +12,7 @@
                 <div class="profile-img">
                     <!--Default image until they add one. We should add this image to the db by default to make this dynamic-->
                     @*<img src=@Model.File alt="" />*@
-                    @foreach(var cx in (List<Customer>)Session["UserId"]) {
-                    <img src="@Url.Action("File", "File", new { id = cx.UserId})" alt="avatar" />
-                    }
+                    <img src="~/Account/RetrieveImage/@Model.UserId alt="avatar" />
                 </div> 
             </div>
             <div class="col-md-6">

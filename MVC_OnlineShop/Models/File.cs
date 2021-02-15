@@ -4,20 +4,18 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace MVC_OnlineShop.Models
 {
     public class File
     {
-        
-        public int FileId { get; set; }
-        [StringLength(255)]
-        public string FileName { get; set; }
-        [StringLength(100)]
-        public string ContentType { get; set; }
-        public byte[] Content { get; set; }
-        public FileType FileType { get; set; }
-        public string PersonId { get; set; }
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        [AllowHtml]
+        public string Contents { get; set; }
+        public byte[] Image { get; set; }
         public virtual Customer Customer { get; set; }
     }
 }

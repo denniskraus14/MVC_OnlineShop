@@ -1,4 +1,4 @@
-﻿using MVC_OnlineShop.Models;
+﻿/*using MVC_OnlineShop.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,11 +17,9 @@ namespace MVC_OnlineShop.Controllers
         {
             using (var context = new CustomerContext())
             {
-                Customer pid = (Customer)context.Customers.Select(p => p.UserId==id);
-      
-                var fileToRetrieve = context.Files.Select(p => p).Where(i => i.PersonId==pid.UserId).FirstOrDefault();
+                var fileToRetrieve = context.Files.Select(p => p).Where(i => i.PersonId==id).FirstOrDefault();
                 return File(fileToRetrieve.Content, fileToRetrieve.ContentType);
             }
         }
     }
-}
+}*/

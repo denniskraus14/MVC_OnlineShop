@@ -26,7 +26,7 @@ namespace MVC_OnlineShop.Infrastructure {
                 using (var context = new CustomerContext()) {
                     var userRole = (from c in context.Customers
                                     join r in context.Roles on c.RoleId equals r.Id
-                                    where c.UserId == userId
+                                    where c.UserId.ToString() == userId
                                     select new {
                                         r.Name
                                     }).FirstOrDefault();

@@ -3,19 +3,21 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
 namespace MVC_OnlineShop.Models {
     public class Customer {
-        [DisplayName("Id: ")]
+        //[DisplayName("Id: ")]
         //[Required(ErrorMessage = "required.")] // Maybe make tihs auto-increment?
-        public int Id { get; set; }
+        //public int Id { get; set; }
 
         [DisplayName("User Id: ")]
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Required(ErrorMessage = "required.")]
-        public string UserId { get; set; }
+        public int UserId { get; set; }
 
         [DisplayName("Username: ")]
         [Required(ErrorMessage = "required.")]
@@ -53,7 +55,6 @@ namespace MVC_OnlineShop.Models {
         public int RoleId { get; set; }
         /*public RoleType RoleType { get; set; } */
 
-        //this gets assigned at the registration step to a default image
-        //public virtual File File { get; set; }
+        public virtual byte[] File { get; set; }
     }
 }

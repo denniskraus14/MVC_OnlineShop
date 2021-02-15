@@ -71,7 +71,7 @@ namespace MVC_OnlineShop.Controllers {
 
         [HttpPost]
         [Route("Register")]
-        public ActionResult Register(Customer model, HttpPostedFileBase upload)
+        public ActionResult Register(Customer model)
         {
             if (!ModelState.IsValid) return View(model);
             else if (model.Password != model.ConfirmPassword)
@@ -97,23 +97,45 @@ namespace MVC_OnlineShop.Controllers {
                     {
                         model.CreatedDate = DateTime.Today;
                         model.LastLoginDate = DateTime.Today;
-                        File avatar = new File
+                        /*
+                         * Take #1
+                         * File avatar = new File
                         {
                             FileName = System.IO.Path.GetFileName(upload.FileName),
                             FileType = FileType.Avatar,
                             ContentType = upload.ContentType,
-                            //PersonId = model.UserId,
+                            PersonId = model.UserId,
                             Customer = model
                         };
                         using (var reader = new System.IO.BinaryReader(upload.InputStream))
                         {
                             avatar.Content = reader.ReadBytes(upload.ContentLength);
-                        }
-                        context.Customers.Add(model);
                         context.Files.Add(avatar);
+                        }*/
+                        //take #2
+                        HttpPostedFileBase file = Request.Files["ImageData"];
+                        ContentRepository service = new ContentRepository();
+                        int i = service.UploadImageInDataBase(file, model);
+                        context.Customers.Add(model);
                         context.SaveChanges();
                         return Redirect("Login");
                     }
+                }
+            }
+        }
+        [Route("RetrieveImage", Name = "RetrieveImage")]
+        public ActionResult RetrieveImage(int id)
+        {
+            using (var context = new CustomerContext())
+            {
+                byte[] cover = context.Customers.Select(p=>p).Where(p => id==p.UserId).FirstOrDefault().File;
+                if (cover != null)
+                {
+                    return File(cover, "image/jpeg");
+                }
+                else
+                {
+                    return null;
                 }
             }
         }
@@ -183,7 +205,7 @@ namespace MVC_OnlineShop.Controllers {
         public ActionResult UserProfile(Customer customer)
         {
             Customer match = null;
-            File file = null;
+            //File file = null;
             using(var context = new CustomerContext())
             {
                 match = context.Customers.Find(Session["UserId"]);
@@ -252,7 +274,7 @@ namespace MVC_OnlineShop.Controllers {
                 {
                     if (upload != null && upload.ContentLength > 0)
                     {
-                        var avatar = new File
+                        /*var avatar = new File
                         {
                             FileName = System.IO.Path.GetFileName(upload.FileName),
                             FileType = FileType.Avatar,
@@ -261,13 +283,13 @@ namespace MVC_OnlineShop.Controllers {
                         using (var reader = new System.IO.BinaryReader(upload.InputStream))
                         {
                             avatar.Content = reader.ReadBytes(upload.ContentLength);
-                            //this is where the database updating would happen
-                            Customer c = context.Customers.First(i => i.UserId == Session["UserId"]);
+                            //this is where the database updating would happen*/
+                            Customer c = context.Customers.First(i => i.UserId.ToString() == Session["UserId"].ToString());
                             c.UserId = temp.UserId;
                             c.Email = temp.Email;
                             c.UserName = temp.UserName;
-                            File f = context.Files.First(i => i.PersonId == Session["UserId"]);
-                            f = avatar;
+                            //File f = context.Files.First(i => i.PersonId == Session["UserId"]);
+                            //f = avatar;
                             context.SaveChanges();
                             return RedirectToAction("UserProfile");
                         }
@@ -276,5 +298,6 @@ namespace MVC_OnlineShop.Controllers {
                 return RedirectToAction("UserProfile");
             }
         }
-    }
+
+
 }

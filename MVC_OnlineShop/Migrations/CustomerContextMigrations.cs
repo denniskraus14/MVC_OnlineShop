@@ -47,7 +47,7 @@ namespace MVC_OnlineShop.Migrations
 
                 context.Customers.Add(new Customer
                 {
-                    UserId = "admin",
+                    UserId = 1,
                     UserName = "admin",
                     Password = "admin",
                     ConfirmPassword = "admin",
@@ -61,7 +61,7 @@ namespace MVC_OnlineShop.Migrations
 
                 context.Customers.Add(new Customer
                 {
-                    UserId = "1",
+                    UserId = 2,
                     UserName = "a",
                     Password = "password",
                     ConfirmPassword = "password",
