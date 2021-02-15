@@ -27,5 +27,7 @@ namespace MVC_OnlineShop.Models {
             //Database.SetInitializer<CustomerContext>(new DropCreateDatabaseIfModelChanges<CustomerContext>());
             base.OnModelCreating(modelBuilder);
         }
+        //Dennis - adding this to store user profile images
+        public DbSet<File> Files { get; set; }
     }
 }

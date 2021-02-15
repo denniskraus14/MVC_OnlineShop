@@ -83,12 +83,49 @@ namespace MVC_OnlineShop.Controllers {
                     } else {
                         model.CreatedDate = DateTime.Today;
                         model.LastLoginDate = DateTime.Today;
+                        /*
+                         * Take #1
+                         * File avatar = new File
+                        {
+                            FileName = System.IO.Path.GetFileName(upload.FileName),
+                            FileType = FileType.Avatar,
+                            ContentType = upload.ContentType,
+                            PersonId = model.UserId,
+                            Customer = model
+                        };
+                        using (var reader = new System.IO.BinaryReader(upload.InputStream))
+                        {
+                            avatar.Content = reader.ReadBytes(upload.ContentLength);
+                        context.Files.Add(avatar);
+                        }*/
+                        //take #2
+                        HttpPostedFileBase file = Request.Files["ImageData"];
+                        ContentRepository service = new ContentRepository();
+                        int i = service.UploadImageInDataBase(file, model);
                         model.Password = Encryption(model.Password);
                         model.ConfirmPassword = Encryption(model.ConfirmPassword);
                         context.Customers.Add(model);
                         context.SaveChanges();
                         return Redirect("Login");
                     }
+                }
+            }
+        }
+
+        //[HttpPost]
+        [Route("RetrieveImage/{id}", Name = "RetrieveImage")]
+        public ActionResult RetrieveImage(int id)
+        {
+            using (var context = new CustomerContext())
+            {
+                byte[] cover = context.Customers.Select(p=>p).Where(p => id==p.UserId).FirstOrDefault().File;
+                if (cover != null)
+                {
+                    return File(cover, "image/jpeg");
+                }
+                else
+                {
+                    return null;
                 }
             }
         }
@@ -118,8 +155,9 @@ namespace MVC_OnlineShop.Controllers {
         }
 
         [HttpGet]
-        //[Route("ChangePassword")]
-        public ActionResult ChangePassword() {
+        [Route("ChangePassword", Name ="ChangePassword")]
+        public ActionResult ChangePassword()
+        {
             return View();
         }
 
@@ -144,14 +182,18 @@ namespace MVC_OnlineShop.Controllers {
 
         [HttpGet]
         [Route("Profile", Name ="Profile")]
-        public ActionResult UserProfile(Customer model) {
-            Customer cx = null;
-
-            using(var context = new CustomerContext()) {
-                cx = context.Customers.Find(Session["UserId"]);
-            }
-
-            return View(cx);
+        public ActionResult UserProfile(Customer customer)
+        {
+            Customer match = null;
+            //File file = null;
+            using(var context = new CustomerContext())
+            {
+                match = context.Customers.Find(Session["UserId"]);
+                //string id = Session["UserId"].ToString();
+                //file = context.Files.Select(p=>p).Where(p => p.PersonId==id).FirstOrDefault();
+                //CustomerWithFile result = new CustomerWithFile { Customer = match, File = file };
+                return View(match);
+            } 
         }
 
         [HttpGet]
@@ -193,6 +235,40 @@ namespace MVC_OnlineShop.Controllers {
                         return Redirect("Portal");
                     }
                 }
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Save([Bind(Include = "UserId, Email, Username")] Customer temp, HttpPostedFileBase upload)
+        {
+            using (var context = new CustomerContext()) {
+                if (ModelState.IsValid)
+                {
+                    if (upload != null && upload.ContentLength > 0)
+                    {
+                        /*var avatar = new File
+                        {
+                            FileName = System.IO.Path.GetFileName(upload.FileName),
+                            FileType = FileType.Avatar,
+                            ContentType = upload.ContentType
+                        };
+                        using (var reader = new System.IO.BinaryReader(upload.InputStream))
+                        {
+                            avatar.Content = reader.ReadBytes(upload.ContentLength);
+                            //this is where the database updating would happen*/
+                            Customer c = context.Customers.First(i => i.UserId.ToString() == Session["UserId"].ToString());
+                            c.UserId = temp.UserId;
+                            c.Email = temp.Email;
+                            c.UserName = temp.UserName;
+                            //File f = context.Files.First(i => i.PersonId == Session["UserId"]);
+                            //f = avatar;
+                            context.SaveChanges();
+                            return RedirectToAction("UserProfile");
+                        }
+                    }
+                }
+                return RedirectToAction("UserProfile");
             }
         }
 

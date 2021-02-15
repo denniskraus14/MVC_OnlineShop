@@ -45,8 +45,9 @@ namespace MVC_OnlineShop.Migrations
                 context.Roles.Add(new Role { Name = "Moderator" }); // Role ID = 2
                 context.Roles.Add(new Role { Name = "Normal" }); // Role ID = 3
 
-                context.Customers.Add(new Customer {
-                    UserId = "admin",
+                context.Customers.Add(new Customer
+                {
+                    UserId = 1,
                     UserName = "admin",
                     Password = "admin",
                     ConfirmPassword = "admin",
@@ -56,10 +57,11 @@ namespace MVC_OnlineShop.Migrations
                     RoleId = 1,
                     CreatedDate = DateTime.Today,
                     LastLoginDate = DateTime.Today
-                });
+                }) ;
 
-                context.Customers.Add(new Customer {
-                    UserId = "1",
+                context.Customers.Add(new Customer
+                {
+                    UserId = 2,
                     UserName = "a",
                     Password = "password",
                     ConfirmPassword = "password",
@@ -69,7 +71,7 @@ namespace MVC_OnlineShop.Migrations
                     RoleId = 3,
                     CreatedDate = DateTime.Today,
                     LastLoginDate = DateTime.Today
-                });
+                }) ; 
 
                 context.SecurityQuestions.Add(new SecurityQuestion { Question = "What is your mother's maiden name?" });
 
