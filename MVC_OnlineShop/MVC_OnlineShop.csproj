@@ -146,6 +146,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\AESCrypt\AES.cs" />
+    <Compile Include="Infrastructure\AESCrypt\AESCrypt.cs" />
+    <Compile Include="Infrastructure\AESCrypt\AESCryptOptions.cs" />
+    <Compile Include="Infrastructure\AESCrypt\AESPasswordHash.cs" />
     <Compile Include="Infrastructure\IsAuthenticationFilter.cs" />
     <Compile Include="Infrastructure\IsAuthorizedAttribute.cs" />
     <Compile Include="Migrations\CustomerContextMigrations.cs" />
