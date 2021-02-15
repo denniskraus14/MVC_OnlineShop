@@ -11,11 +11,10 @@
             <div class="col-md-4">
                 <div class="profile-img">
                     <!--Default image until they add one. We should add this image to the db by default to make this dynamic-->
-                    <img src="https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg" alt="" />
-                    <div class="file btn btn-sm btn-primary">
-                        Change Photo
-                        <input type="file" name="file" />
-                    </div>
+                    @*<img src=@Model.File alt="" />*@
+                    @foreach(var cx in (List<Customer>)Session["UserId"]) {
+                    <img src="@Url.Action("File", "File", new { id = cx.UserId})" alt="avatar" />
+                    }
                 </div> 
             </div>
             <div class="col-md-6">
@@ -66,6 +65,7 @@
         <div class="col-md-2">
             @*<input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile" />*@
             @Html.RouteLink("Edit", "Edit", "UserManagement", new { @class = "nav-link" })
+            @Html.RouteLink("Change Password", "ChangePassword", "UserManagement", new { @class = "nav-link" })
         </div>
     </form>
 </div>

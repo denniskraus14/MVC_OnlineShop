@@ -52,5 +52,8 @@ namespace MVC_OnlineShop.Models {
         //[Required(ErrorMessage = "required.")]
         public int RoleId { get; set; }
         /*public RoleType RoleType { get; set; } */
+
+        //this gets assigned at the registration step to a default image
+        //public virtual File File { get; set; }
     }
 }

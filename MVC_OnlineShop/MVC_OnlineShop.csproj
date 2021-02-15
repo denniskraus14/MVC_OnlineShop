@@ -139,6 +139,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\FontAwesomeBundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ShopController.cs" />
     <Compile Include="Controllers\UserManagementController.cs" />
@@ -154,7 +155,9 @@
     <Compile Include="Models\ChangePasswordViewModel.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\CustomerContext.cs" />
+    <Compile Include="Models\CustomerWithFile.cs" />
     <Compile Include="Models\DataManager.cs" />
+    <Compile Include="Models\Enums\FileType.cs" />
     <Compile Include="Models\Enums\ProductType.cs" />
     <Compile Include="Models\Enums\RoleType.cs" />
     <Compile Include="Models\Exceptions\ProductNotFoundException.cs" />
@@ -163,6 +166,7 @@
       <DependentUpon>202101281850045_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\File.cs" />
     <Compile Include="Models\ForgotPasswordViewModel.cs" />
     <Compile Include="Models\JsonModel.cs" />
     <Compile Include="Models\Product.cs" />
@@ -351,6 +355,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Alien\" />
+    <Folder Include="Views\File\" />
     <Folder Include="Views\Laptop\" />
     <Folder Include="Views\Mobile\" />
     <Folder Include="Views\TV\" />

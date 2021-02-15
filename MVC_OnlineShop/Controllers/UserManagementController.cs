@@ -71,7 +71,7 @@ namespace MVC_OnlineShop.Controllers {
 
         [HttpPost]
         [Route("Register")]
-        public ActionResult Register(Customer model)
+        public ActionResult Register(Customer model, HttpPostedFileBase upload)
         {
             if (!ModelState.IsValid) return View(model);
             else if (model.Password != model.ConfirmPassword)
@@ -97,7 +97,20 @@ namespace MVC_OnlineShop.Controllers {
                     {
                         model.CreatedDate = DateTime.Today;
                         model.LastLoginDate = DateTime.Today;
+                        File avatar = new File
+                        {
+                            FileName = System.IO.Path.GetFileName(upload.FileName),
+                            FileType = FileType.Avatar,
+                            ContentType = upload.ContentType,
+                            //PersonId = model.UserId,
+                            Customer = model
+                        };
+                        using (var reader = new System.IO.BinaryReader(upload.InputStream))
+                        {
+                            avatar.Content = reader.ReadBytes(upload.ContentLength);
+                        }
                         context.Customers.Add(model);
+                        context.Files.Add(avatar);
                         context.SaveChanges();
                         return Redirect("Login");
                     }
@@ -135,7 +148,7 @@ namespace MVC_OnlineShop.Controllers {
         }
 
         [HttpGet]
-        [Route("ChangePassword")]
+        [Route("ChangePassword", Name ="ChangePassword")]
         public ActionResult ChangePassword()
         {
             return View();
@@ -167,14 +180,18 @@ namespace MVC_OnlineShop.Controllers {
 
         [HttpGet]
         [Route("Profile", Name ="Profile")]
-        public ActionResult UserProfile(Customer model)
+        public ActionResult UserProfile(Customer customer)
         {
             Customer match = null;
+            File file = null;
             using(var context = new CustomerContext())
             {
                 match = context.Customers.Find(Session["UserId"]);
-            }
-            return View(match);
+                //string id = Session["UserId"].ToString();
+                //file = context.Files.Select(p=>p).Where(p => p.PersonId==id).FirstOrDefault();
+                //CustomerWithFile result = new CustomerWithFile { Customer = match, File = file };
+                return View(match);
+            } 
         }
 
         [HttpGet]
@@ -223,6 +240,40 @@ namespace MVC_OnlineShop.Controllers {
                         return Redirect("Portal");
                     }
                 }
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Save([Bind(Include = "UserId, Email, Username")] Customer temp, HttpPostedFileBase upload)
+        {
+            using (var context = new CustomerContext()) {
+                if (ModelState.IsValid)
+                {
+                    if (upload != null && upload.ContentLength > 0)
+                    {
+                        var avatar = new File
+                        {
+                            FileName = System.IO.Path.GetFileName(upload.FileName),
+                            FileType = FileType.Avatar,
+                            ContentType = upload.ContentType
+                        };
+                        using (var reader = new System.IO.BinaryReader(upload.InputStream))
+                        {
+                            avatar.Content = reader.ReadBytes(upload.ContentLength);
+                            //this is where the database updating would happen
+                            Customer c = context.Customers.First(i => i.UserId == Session["UserId"]);
+                            c.UserId = temp.UserId;
+                            c.Email = temp.Email;
+                            c.UserName = temp.UserName;
+                            File f = context.Files.First(i => i.PersonId == Session["UserId"]);
+                            f = avatar;
+                            context.SaveChanges();
+                            return RedirectToAction("UserProfile");
+                        }
+                    }
+                }
+                return RedirectToAction("UserProfile");
             }
         }
     }
