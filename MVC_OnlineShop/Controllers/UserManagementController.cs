@@ -123,7 +123,9 @@ namespace MVC_OnlineShop.Controllers {
                 }
             }
         }
-        [Route("RetrieveImage", Name = "RetrieveImage")]
+
+        //[HttpPost]
+        [Route("RetrieveImage/{id}", Name = "RetrieveImage")]
         public ActionResult RetrieveImage(int id)
         {
             using (var context = new CustomerContext())

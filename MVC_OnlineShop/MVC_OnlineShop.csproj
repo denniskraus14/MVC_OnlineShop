@@ -156,7 +156,6 @@
     <Compile Include="Models\ContentRepository.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\CustomerContext.cs" />
-    <Compile Include="Models\CustomerWithFile.cs" />
     <Compile Include="Models\DataManager.cs" />
     <Compile Include="Models\Enums\FileType.cs" />
     <Compile Include="Models\Enums\ProductType.cs" />
