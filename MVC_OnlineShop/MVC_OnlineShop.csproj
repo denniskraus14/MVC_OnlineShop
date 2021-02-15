@@ -18,7 +18,8 @@
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress>false</Use64BitIISExpress>
+    <Use64BitIISExpress>
+    </Use64BitIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -146,6 +147,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\AESCrypt\AES.cs" />
+    <Compile Include="Infrastructure\AESCrypt\AESCrypt.cs" />
+    <Compile Include="Infrastructure\AESCrypt\AESCryptOptions.cs" />
+    <Compile Include="Infrastructure\AESCrypt\AESPasswordHash.cs" />
     <Compile Include="Infrastructure\IsAuthenticationFilter.cs" />
     <Compile Include="Infrastructure\IsAuthorizedAttribute.cs" />
     <Compile Include="Migrations\CustomerContextMigrations.cs" />
@@ -169,6 +174,7 @@
     <Compile Include="Models\File.cs" />
     <Compile Include="Models\ForgotPasswordViewModel.cs" />
     <Compile Include="Models\JsonModel.cs" />
+    <Compile Include="Models\NavBarSubMenu.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\SecurityQuestion.cs" />
@@ -351,6 +357,7 @@
     <Content Include="Views\Shared\_ProductTypeList.cshtml" />
     <Content Include="Views\UserManagement\UserProfile.cshtml" />
     <Content Include="Views\UserManagement\Edit.cshtml" />
+    <Content Include="Views\Shared\_ShopDropDown.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -16,10 +16,15 @@ namespace MVC_OnlineShop.Models {
         public DbSet<Product> Products { get; set;}
 
         public DbSet<SecurityQuestion> SecurityQuestions { get; set; }
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            Database.SetInitializer<CustomerContext>(new DropCreateDatabaseAlways<CustomerContext>());
+        protected override void OnModelCreating(DbModelBuilder modelBuilder) {
+            // Drops the database and creates a new one with pre-defined options/settings
+            Database.SetInitializer<CustomerContext>(new DropCreateDatabaseAlways<CustomerContext>()); 
+
+            // Utilizes exisiting database with its content
             //Database.SetInitializer<CustomerContext>(new CreateDatabaseIfNotExists<CustomerContext>());
+
+            //
+            //Database.SetInitializer<CustomerContext>(new DropCreateDatabaseIfModelChanges<CustomerContext>());
             base.OnModelCreating(modelBuilder);
         }
         //Dennis - adding this to store user profile images

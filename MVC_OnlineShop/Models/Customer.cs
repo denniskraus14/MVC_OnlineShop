@@ -25,12 +25,14 @@ namespace MVC_OnlineShop.Models {
 
         [DisplayName("Password: ")]
         /*[DataType(DataType.Password, ErrorMessage = "Password is not valid")]*/
+        [DataType(DataType.Password)]
         /*[RegularExpression("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$", ErrorMessage = "Password is not valid. Regular Expression")]*/
         [Required(ErrorMessage = "Password is required.")]
         public string Password { get; set; }
 
         [DisplayName("Confirm Password: ")]
         [Required(ErrorMessage = "Required.")]
+        [DataType(DataType.Password)]
         [Compare("Password", ErrorMessage = "Passwords do nbot match.")]
         public string ConfirmPassword { get; set; }
 
