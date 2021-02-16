@@ -1,0 +1,22 @@
+﻿@using MVC_OnlineShop.Models
+
+@{
+    IEnumerable<Customer> profileImage = NavBarSubMenu.ProfileImage();
+    IEnumerable<byte[]> profileImageByte = profileImage.Select(pi => pi.File).ToList();
+
+    List<Customer> cxSession = (List<Customer>)Session[ "UserId" ];
+}
+
+@foreach(var cx in (List<Customer>)Session[ "UserId" ]) {
+    
+}
+
+@if ( ) {
+
+}
+
+@if (Model.File.Length == 0) {
+    <picture class="fa fa-user-circle fa-5x" alt="@Model.UserName"></picture>
+} else {
+    <img src="~/Account/RetrieveImage/@Model.UserId" alt="@Model.UserName" />
+}
