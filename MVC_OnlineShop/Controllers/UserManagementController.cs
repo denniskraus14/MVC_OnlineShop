@@ -39,8 +39,8 @@ namespace MVC_OnlineShop.Controllers {
                         return View(model);
                     } else {
                         Session.Timeout = 10;
-                        Session["UserName"] = user.UserName;
-                        Session["UserId"] = user.UserId;
+                        Session[ "UserName" ] = user.UserName;
+                        Session[ "UserId" ] = user.UserId;
                         model.LastLoginDate = DateTime.Today;
                         return RedirectToAction("Index", "Home");
                     }
@@ -99,7 +99,7 @@ namespace MVC_OnlineShop.Controllers {
                         context.Files.Add(avatar);
                         }*/
                         //take #2
-                        HttpPostedFileBase file = Request.Files["ImageData"];
+                        HttpPostedFileBase file = Request.Files[ "ImageData" ];
                         ContentRepository service = new ContentRepository();
                         int i = service.UploadImageInDataBase(file, model);
                         model.Password = Encryption(model.Password);
@@ -114,17 +114,12 @@ namespace MVC_OnlineShop.Controllers {
 
         //[HttpPost]
         [Route("RetrieveImage/{id}", Name = "RetrieveImage")]
-        public ActionResult RetrieveImage(int id)
-        {
-            using (var context = new CustomerContext())
-            {
-                byte[] cover = context.Customers.Select(p=>p).Where(p => id==p.UserId).FirstOrDefault().File;
-                if (cover != null)
-                {
+        public ActionResult RetrieveImage(int id) {
+            using (var context = new CustomerContext()) {
+                byte[] cover = context.Customers.Select(p => p).Where(p => id == p.UserId).FirstOrDefault().File;
+                if (cover != null) {
                     return File(cover, "image/jpeg");
-                }
-                else
-                {
+                } else {
                     return null;
                 }
             }
@@ -145,8 +140,8 @@ namespace MVC_OnlineShop.Controllers {
             }
 
             if (match != null && match.SecurityQuestion == model.QuestionId && match.QuestionAnswer.ToLower() == model.Answer.ToLower()) {
-                Session["UserId"] = model.UserId;
-                Session["UserName"] = match.UserName;
+                Session[ "UserId" ] = model.UserId;
+                Session[ "UserName" ] = match.UserName;
                 return RedirectToAction("ChangePassword", "User");
             } else {
                 ModelState.AddModelError("QuestionAnswerUserMismatch", "User Id, Question, and answer did not all match");
@@ -155,18 +150,17 @@ namespace MVC_OnlineShop.Controllers {
         }
 
         [HttpGet]
-        [Route("ChangePassword", Name ="ChangePassword")]
-        public ActionResult ChangePassword()
-        {
+        [Route("ChangePassword", Name = "ChangePassword")]
+        public ActionResult ChangePassword() {
             return View();
         }
 
         [HttpPost]
         //[Route("ChangePassword/{model}")]
         public ActionResult ChangePassword(ChangePasswordViewModel model) {
-            if (model.NewPass == model.NewPassValidation && Session["UserId"] != null) {
+            if (model.NewPass == model.NewPassValidation && Session[ "UserId" ] != null) {
                 using (var context = new CustomerContext()) {
-                    Customer cxLoggedIn = context.Customers.Find(Session["UserId"]);
+                    Customer cxLoggedIn = context.Customers.Find(Session[ "UserId" ]);
                     context.Customers.Remove(cxLoggedIn);
                     context.SaveChanges();
                     cxLoggedIn.Password = model.NewPass = Encryption(model.NewPass);
@@ -181,19 +175,17 @@ namespace MVC_OnlineShop.Controllers {
         }
 
         [HttpGet]
-        [Route("Profile", Name ="Profile")]
-        public ActionResult UserProfile(Customer customer)
-        {
+        [Route("Profile", Name = "Profile")]
+        public ActionResult UserProfile(Customer customer) {
             Customer match = null;
             //File file = null;
-            using(var context = new CustomerContext())
-            {
-                match = context.Customers.Find(Session["UserId"]);
+            using (var context = new CustomerContext()) {
+                match = context.Customers.Find(Session[ "UserId" ]);
                 //string id = Session["UserId"].ToString();
                 //file = context.Files.Select(p=>p).Where(p => p.PersonId==id).FirstOrDefault();
                 //CustomerWithFile result = new CustomerWithFile { Customer = match, File = file };
                 return View(match);
-            } 
+            }
         }
 
         [HttpGet]
@@ -202,13 +194,13 @@ namespace MVC_OnlineShop.Controllers {
             Customer cx = null;
 
             using (var context = new CustomerContext()) {
-                cx = context.Customers.Find(Session["UserId"]);
+                cx = context.Customers.Find(Session[ "UserId" ]);
             }
 
             return View(cx);
         }
-        
-        
+
+
         [HttpPost]
         [Route("Edit")]
         public ActionResult Edit(Customer model) {
@@ -240,13 +232,10 @@ namespace MVC_OnlineShop.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Save([Bind(Include = "UserId, Email, Username")] Customer temp, HttpPostedFileBase upload)
-        {
+        public ActionResult Save([Bind(Include = "UserId, Email, Username")] Customer temp, HttpPostedFileBase upload) {
             using (var context = new CustomerContext()) {
-                if (ModelState.IsValid)
-                {
-                    if (upload != null && upload.ContentLength > 0)
-                    {
+                if (ModelState.IsValid) {
+                    if (upload != null && upload.ContentLength > 0) {
                         /*var avatar = new File
                         {
                             FileName = System.IO.Path.GetFileName(upload.FileName),
@@ -257,21 +246,26 @@ namespace MVC_OnlineShop.Controllers {
                         {
                             avatar.Content = reader.ReadBytes(upload.ContentLength);
                             //this is where the database updating would happen*/
-                            Customer c = context.Customers.First(i => i.UserId.ToString() == Session["UserId"].ToString());
-                            c.UserId = temp.UserId;
-                            c.Email = temp.Email;
-                            c.UserName = temp.UserName;
-                            //File f = context.Files.First(i => i.PersonId == Session["UserId"]);
-                            //f = avatar;
-                            context.SaveChanges();
-                            return RedirectToAction("UserProfile");
-                        }
+                        Customer c = context.Customers.First(i => i.UserId.ToString() == Session[ "UserId" ].ToString());
+                        c.UserId = temp.UserId;
+                        c.Email = temp.Email;
+                        c.UserName = temp.UserName;
+                        //File f = context.Files.First(i => i.PersonId == Session["UserId"]);
+                        //f = avatar;
+                        context.SaveChanges();
+                        return RedirectToAction("UserProfile");
                     }
                 }
-                return RedirectToAction("UserProfile");
             }
+            return RedirectToAction("UserProfile");
         }
 
+        /// <summary>
+        /// This will grab the string input and encrypt it using AES. Then once it has been encrypted it will output the
+        /// encryption into a string. 
+        /// </summary>
+        /// <param name="clearText">string to encrypt into AES</param>
+        /// <returns>Return the AES encryption string</returns>
         private string Encryption(string clearText) {
             string EncryptionKey = "A4JE6UR8I3B89MDHAJ4KIWQP7L1MD9JE";
             byte[] clearBytes = Encoding.Unicode.GetBytes(clearText);
@@ -290,5 +284,10 @@ namespace MVC_OnlineShop.Controllers {
             return clearText;
         }
 
+
+
+
+
     }
+
 }
