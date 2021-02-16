@@ -1,4 +1,5 @@
 ﻿using System;
+using MVC_OnlineShop.Infrastructure;
 using MVC_OnlineShop.Models;
 
 namespace MVC_OnlineShop.Migrations {
@@ -38,30 +39,37 @@ namespace MVC_OnlineShop.Migrations {
                 context.Roles.Add(new Role { Name = "Moderator" }); // Role ID = 2
                 context.Roles.Add(new Role { Name = "Normal" }); // Role ID = 3
 
+                AES obj = new AES();
+
+                string def = obj.Encryption("password");
+
                 context.Customers.Add(new Customer {
                     UserId = 1,
                     UserName = "admin",
-                    Password = "admin",
-                    ConfirmPassword = "admin",
+                    Password = def,
+                    ConfirmPassword = def,
                     Email = "admin@yahoo.com",
                     SecurityQuestion = 1,
                     QuestionAnswer = "admin",
                     RoleId = 1,
                     CreatedDate = DateTime.Today,
-                    LastLoginDate = DateTime.Today
+                    LastLoginDate = DateTime.Today,
+                    File = new byte[] { }
                 }) ;
 
-                context.Customers.Add(new Customer {
+                context.Customers.Add(new Customer
+                {
                     UserId = 2,
                     UserName = "a",
-                    Password = "password",
-                    ConfirmPassword = "password",
+                    Password = def,
+                    ConfirmPassword = def,
                     Email = "a@yahoo.com",
                     SecurityQuestion = 1,
                     QuestionAnswer = "Smith",
                     RoleId = 3,
                     CreatedDate = DateTime.Today,
-                    LastLoginDate = DateTime.Today
+                    LastLoginDate = DateTime.Today,
+                    File = new byte[] { }
                 }) ;
 
                 context.SecurityQuestions.Add(new SecurityQuestion { Question = "What is your mother's maiden name?" });
