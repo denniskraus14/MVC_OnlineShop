@@ -27,7 +27,8 @@ namespace MVC_OnlineShop.Controllers {
             if (ModelState.IsValid) return View(model);
             else {
                 using (var context = new CustomerContext()) {
-                    Customer user = context.Customers.Where(u => u.UserId == model.UserId).FirstOrDefault();
+                    //Customer user = context.Customers.Where(u => u.UserId == model.UserId).FirstOrDefault();
+                    Customer user = context.Customers.Where(u => u.Email == model.Email).FirstOrDefault();
 
                     model.Password = Encryption(model.Password);
 
@@ -62,8 +63,8 @@ namespace MVC_OnlineShop.Controllers {
             return View();
         }
 
-        [HttpPost]
-        [Route("Register")]
+        //[HttpPost]
+        //[Route("Register")]
         public ActionResult Register(Customer model) {
             if (!ModelState.IsValid) return View(model);
             else if (model.Password != model.ConfirmPassword) {
@@ -75,7 +76,9 @@ namespace MVC_OnlineShop.Controllers {
                     //model.RoleType = RoleType.Administrator;
                     model.RoleId = 3; // Role ID 3 =  Normal
 
-                    Customer match = context.Customers.Where(u => u.UserId == model.UserId || u.UserName == model.UserName).FirstOrDefault();
+
+                    //Customer match = context.Customers.Where(u => u.UserId == model.UserId || u.UserName == model.UserName).FirstOrDefault();
+                    Customer match = context.Customers.Where(u => u.UserName == model.UserName || u.Email == model.Email).FirstOrDefault();
 
                     if (match != null) {
                         ModelState.AddModelError("ExistingUser", "User Already Exists");
