@@ -1,0 +1,18 @@
+﻿@using MVC_OnlineShop.Models;
+
+@{
+    IEnumerable<Customer> profileImage = NavBarSubMenu.ProfileImage();
+    IEnumerable<byte[]> profileImageByte = profileImage.Select(pi => pi.File).ToList();
+
+    using (var context = new SiteContext()){
+        string temp = Session["UserId"].ToString();
+        Customer cx = context.Customers.Where(u => u.UserId.ToString().Equals(temp)).FirstOrDefault();
+
+        if (cx.File.Length == 0){
+            <i class="fa fa-user-circle fa-3x" alt="@cx.UserName"></i>
+        }
+        else{
+        <img src="~/Account/RetrieveImage/@cx.UserId" alt="@cx.UserName" />
+        }
+    }
+}

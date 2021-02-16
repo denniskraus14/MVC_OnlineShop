@@ -44,6 +44,9 @@ namespace MVC_OnlineShop.Controllers {
                         Session[ "UserName" ] = user.UserName;
                         Session[ "UserId" ] = user.UserId;
                         model.LastLoginDate = DateTime.Today;
+                        if(model.File == null){
+                            model.File = new byte[] { };
+                        }
                         return RedirectToAction("Index", "Home");
                     }
                 }
@@ -184,11 +187,9 @@ namespace MVC_OnlineShop.Controllers {
         [Route("Edit", Name = "Edit")]
         public ActionResult Edit() {
             Customer cx = null;
-
             using (var context = new SiteContext()) {
                 cx = context.Customers.Find(Session[ "UserId" ]);
             }
-
             return View(cx);
         }
 
@@ -204,7 +205,7 @@ namespace MVC_OnlineShop.Controllers {
                 using (var context = new SiteContext()) {
                     //model.RoleId = context.Roles.Where(r => r.Name.ToLower().Equals("user")).FirstOrDefault().Id;
                     //model.RoleType = RoleType.Administrator;
-                    model.RoleId = 1; // Role ID 1 =  Normal
+                    //model.RoleId = 1; // Role ID 1 =  Normal
 
                     Customer cx = context.Customers.Where(u => u.UserId == model.UserId || u.UserName == model.UserName).FirstOrDefault();
 
@@ -214,6 +215,7 @@ namespace MVC_OnlineShop.Controllers {
                     } else {
                         model.CreatedDate = DateTime.Today;
                         model.LastLoginDate = DateTime.Today;
+                        //change this. don't add! update!
                         context.Customers.Add(model);
                         context.SaveChanges();
                         return Redirect("Portal");

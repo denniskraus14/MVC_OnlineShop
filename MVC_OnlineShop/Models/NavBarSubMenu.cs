@@ -11,5 +11,12 @@ namespace MVC_OnlineShop.Models {
                 return context.Products.ToList();
             }
         }
+
+        public static IEnumerable<Customer> ProfileImage() {
+            using (var context = new SiteContext()) {
+                return context.Customers.ToList();
+            }
+        }
+
     }
 }
