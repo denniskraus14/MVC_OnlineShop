@@ -11,10 +11,8 @@
             <div class="row">
                 <div class="col-md-4">
                     <div class="profile-img">
-                        <!--Default image until they add one. We should add this image to the db by default to make this dynamic-->
-                        @*<img src=@Model.File alt="" />*@
-                        @if (Model.File.Equals("0x")) {
-                            <img src="" class="fa fa-user-circle" alt="@Model.UserName" />
+                        @if (Model.File.Length==0) {
+                            <img src="http://s3.amazonaws.com/37assets/svn/765-default-avatar.png" class="fa fa-user-circle" alt="@Model.UserName" />
                         } else {
                             <img src="~/Account/RetrieveImage/@Model.UserId" alt="@Model.UserName" />
                         }
