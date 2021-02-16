@@ -20,7 +20,7 @@ namespace MVC_OnlineShop.Controllers
         //[IsAuthorized("Normal")]
         public ActionResult Portal() {
             ViewBag.Item = "Welcome to the Alpha Shop";
-            int BlockSize = 8; // products to display, adds to rows of products
+            int BlockSize = 4; // products to display, adds to rows of products
             var products = DataManager.GetProducts(1, BlockSize);
             return View(products);
         }
@@ -91,7 +91,7 @@ namespace MVC_OnlineShop.Controllers
         public ViewResult Page(string productType) {
             ViewBag.pageType = productType;
 
-            int BlockSize = 8; // Adds two rows of products
+            int BlockSize = 4; // Adds a row of products
             var products = DataManager.GetProductTypes(1, BlockSize, productType);
             return View(products);
         }
@@ -101,7 +101,7 @@ namespace MVC_OnlineShop.Controllers
         [IsAuthorized("Administrator", "Moderator", "Normal")]
         public ActionResult AddToCart(Product product) {
             if (Session["cart"] == null) {
-                using (var context = new CustomerContext()) {
+                using (var context = new SiteContext()) {
                     Product prod = context.Products
                                                 .Select(p => p)
                                                 .Where(p => p.Id == product.Id)
@@ -118,7 +118,7 @@ namespace MVC_OnlineShop.Controllers
                     prod.Quantity = prod.Quantity - 1;
                 }
             } else {
-                using (var context = new CustomerContext()) {
+                using (var context = new SiteContext()) {
                     Product prod = context.Products
                                                 .Select(p => p)
                                                 .Where(p => p.Id == product.Id)
@@ -152,7 +152,6 @@ namespace MVC_OnlineShop.Controllers
         [Route("UpdateQuantity", Name = "UpdateQuantity")]
         public ActionResult UpdateQuantity(FormCollection formCollection) {
             string[ ] quantities = formCollection.GetValues("cartProductQuantity");
-            /*List<Product> cartList = (List<Product>)Session[ "cart" ];*/
             List<CartItem> cartList = (List<CartItem>)Session[ "cart" ];
             for (int i = 0; i < cartList.Count; i++)
                 cartList[ i ].Quantity = Convert.ToInt32(quantities[ i ]);
@@ -199,26 +198,27 @@ namespace MVC_OnlineShop.Controllers
         [HttpGet]
         [Route("ViewBill")]
         [IsAuthorized("Administrator", "Moderator", "Normal")]
-        // TODO: Make ViewBill html page 
-        //          - Will only have the payment stuff in this html page along with how to pay for products.
         public ActionResult ViewBill() {
             return View();
         }
 
+
         [Route("UnAuthorized")]
         [IsAuthorized("Administrator", "Moderator", "Normal")]
-        // TODO: Work on a more dynamic not authorized page
         public ActionResult UnAuthorized() {
             ViewBag.Message = "UnAuthorized Page!";
             return View();
         }
-        
-        //Individual Product Page
+
+        /// <summary>
+        /// Individual Product Page
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
         [Route("Product/{Id}")]
         [IsAuthorized("Administrator", "Moderator", "Normal")]
-        // TODO: Change how this page is being rendered.
         public ActionResult Product(int Id) {
-            using (var context = new CustomerContext()) {
+            using (var context = new SiteContext()) {
                 var products = context.Products
                                         .Select(x => x)
                                         .Where(x => x.Id == Id)

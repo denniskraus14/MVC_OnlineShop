@@ -1,19 +1,19 @@
 ﻿using MVC_OnlineShop.Models;
-using MVC_OnlineShop.Models.Enums;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using MVC_OnlineShop.Infrastructure;
+using MVC_OnlineShop.Model;
 
 namespace MVC_OnlineShop.Controllers {
 
     [RoutePrefix("Account")]
     [Route("{action=Login}")]
     public class UserManagementController : Controller {
+
+        private AES _encrypt = new AES();
+        private ContentRepository _image = new ContentRepository();
 
         // GET: UserManagement
         [HttpGet]
@@ -26,11 +26,12 @@ namespace MVC_OnlineShop.Controllers {
         public ActionResult Login(Customer model) {
             if (ModelState.IsValid) return View(model);
             else {
-                using (var context = new CustomerContext()) {
+                using (var context = new SiteContext()) {
                     //Customer user = context.Customers.Where(u => u.UserId == model.UserId).FirstOrDefault();
                     Customer user = context.Customers.Where(u => u.Email == model.Email).FirstOrDefault();
 
-                    model.Password = Encryption(model.Password);
+                    //model.Password = Encryption(model.Password);
+                    model.Password = _encrypt.Encryption(model.Password);
 
                     if (user == null) {
                         ModelState.AddModelError("BadUser", $"User {model.UserId} not found");
@@ -71,13 +72,11 @@ namespace MVC_OnlineShop.Controllers {
                 ModelState.AddModelError("PasswordsDoNotMatch", "Passwords do not Match");
                 return View(model);
             } else {
-                using (var context = new CustomerContext()) {
+                using (var context = new SiteContext()) {
                     //model.RoleId = context.Roles.Where(r => r.Name.ToLower().Equals("user")).FirstOrDefault().Id;
                     //model.RoleType = RoleType.Administrator;
                     model.RoleId = 3; // Role ID 3 =  Normal
 
-
-                    //Customer match = context.Customers.Where(u => u.UserId == model.UserId || u.UserName == model.UserName).FirstOrDefault();
                     Customer match = context.Customers.Where(u => u.UserName == model.UserName || u.Email == model.Email).FirstOrDefault();
 
                     if (match != null) {
@@ -86,29 +85,18 @@ namespace MVC_OnlineShop.Controllers {
                     } else {
                         model.CreatedDate = DateTime.Today;
                         model.LastLoginDate = DateTime.Today;
-                        /*
-                         * Take #1
-                         * File avatar = new File
-                        {
-                            FileName = System.IO.Path.GetFileName(upload.FileName),
-                            FileType = FileType.Avatar,
-                            ContentType = upload.ContentType,
-                            PersonId = model.UserId,
-                            Customer = model
-                        };
-                        using (var reader = new System.IO.BinaryReader(upload.InputStream))
-                        {
-                            avatar.Content = reader.ReadBytes(upload.ContentLength);
-                        context.Files.Add(avatar);
-                        }*/
-                        //take #2
+
                         HttpPostedFileBase file = Request.Files[ "ImageData" ];
-                        ContentRepository service = new ContentRepository();
-                        int i = service.UploadImageInDataBase(file, model);
-                        model.Password = Encryption(model.Password);
-                        model.ConfirmPassword = Encryption(model.ConfirmPassword);
+                        model.File = _image.ConvertToBytes(file);
+
+                        //model.Password = Encryption(model.Password);
+                        //model.ConfirmPassword = Encryption(model.ConfirmPassword);
+                        model.Password = _encrypt.Encryption(model.Password);
+                        model.ConfirmPassword = _encrypt.Encryption(model.ConfirmPassword);
+
                         context.Customers.Add(model);
                         context.SaveChanges();
+
                         return Redirect("Login");
                     }
                 }
@@ -118,7 +106,7 @@ namespace MVC_OnlineShop.Controllers {
         //[HttpPost]
         [Route("RetrieveImage/{id}", Name = "RetrieveImage")]
         public ActionResult RetrieveImage(int id) {
-            using (var context = new CustomerContext()) {
+            using (var context = new SiteContext()) {
                 byte[] cover = context.Customers.Select(p => p).Where(p => id == p.UserId).FirstOrDefault().File;
                 if (cover != null) {
                     return File(cover, "image/jpeg");
@@ -138,7 +126,7 @@ namespace MVC_OnlineShop.Controllers {
         [Route("ForgotPassword/{model}")]
         public ActionResult ForgotPassword(ForgotPasswordViewModel model) {
             Customer match;
-            using (var context = new CustomerContext()) {
+            using (var context = new SiteContext()) {
                 match = context.Customers.Find(model.UserId);
             }
 
@@ -162,11 +150,12 @@ namespace MVC_OnlineShop.Controllers {
         //[Route("ChangePassword/{model}")]
         public ActionResult ChangePassword(ChangePasswordViewModel model) {
             if (model.NewPass == model.NewPassValidation && Session[ "UserId" ] != null) {
-                using (var context = new CustomerContext()) {
+                using (var context = new SiteContext()) {
                     Customer cxLoggedIn = context.Customers.Find(Session[ "UserId" ]);
                     context.Customers.Remove(cxLoggedIn);
                     context.SaveChanges();
-                    cxLoggedIn.Password = model.NewPass = Encryption(model.NewPass);
+                    //cxLoggedIn.Password = model.NewPass = Encryption(model.NewPass);
+                    cxLoggedIn.Password = model.NewPass = _encrypt.Encryption(model.NewPass);
                     context.Customers.Add(cxLoggedIn);
                     context.SaveChanges();
                 }
@@ -182,7 +171,7 @@ namespace MVC_OnlineShop.Controllers {
         public ActionResult UserProfile(Customer customer) {
             Customer match = null;
             //File file = null;
-            using (var context = new CustomerContext()) {
+            using (var context = new SiteContext()) {
                 match = context.Customers.Find(Session[ "UserId" ]);
                 //string id = Session["UserId"].ToString();
                 //file = context.Files.Select(p=>p).Where(p => p.PersonId==id).FirstOrDefault();
@@ -196,7 +185,7 @@ namespace MVC_OnlineShop.Controllers {
         public ActionResult Edit() {
             Customer cx = null;
 
-            using (var context = new CustomerContext()) {
+            using (var context = new SiteContext()) {
                 cx = context.Customers.Find(Session[ "UserId" ]);
             }
 
@@ -212,7 +201,7 @@ namespace MVC_OnlineShop.Controllers {
                 ModelState.AddModelError("PasswordsDoNotMatch", "Passwords do not Match");
                 return View(model);
             } else {
-                using (var context = new CustomerContext()) {
+                using (var context = new SiteContext()) {
                     //model.RoleId = context.Roles.Where(r => r.Name.ToLower().Equals("user")).FirstOrDefault().Id;
                     //model.RoleType = RoleType.Administrator;
                     model.RoleId = 1; // Role ID 1 =  Normal
@@ -236,19 +225,10 @@ namespace MVC_OnlineShop.Controllers {
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Save([Bind(Include = "UserId, Email, Username")] Customer temp, HttpPostedFileBase upload) {
-            using (var context = new CustomerContext()) {
+            using (var context = new SiteContext()) {
                 if (ModelState.IsValid) {
                     if (upload != null && upload.ContentLength > 0) {
-                        /*var avatar = new File
-                        {
-                            FileName = System.IO.Path.GetFileName(upload.FileName),
-                            FileType = FileType.Avatar,
-                            ContentType = upload.ContentType
-                        };
-                        using (var reader = new System.IO.BinaryReader(upload.InputStream))
-                        {
-                            avatar.Content = reader.ReadBytes(upload.ContentLength);
-                            //this is where the database updating would happen*/
+                        //this is where the database updating would happen
                         Customer c = context.Customers.First(i => i.UserId.ToString() == Session[ "UserId" ].ToString());
                         c.UserId = temp.UserId;
                         c.Email = temp.Email;
@@ -262,34 +242,6 @@ namespace MVC_OnlineShop.Controllers {
             }
             return RedirectToAction("UserProfile");
         }
-
-        /// <summary>
-        /// This will grab the string input and encrypt it using AES. Then once it has been encrypted it will output the
-        /// encryption into a string. 
-        /// </summary>
-        /// <param name="clearText">string to encrypt into AES</param>
-        /// <returns>Return the AES encryption string</returns>
-        private string Encryption(string clearText) {
-            string EncryptionKey = "A4JE6UR8I3B89MDHAJ4KIWQP7L1MD9JE";
-            byte[] clearBytes = Encoding.Unicode.GetBytes(clearText);
-            using (Aes encryptor = Aes.Create()) {
-                Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(EncryptionKey, new byte[] { 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76 });
-                encryptor.Key = pdb.GetBytes(32);
-                encryptor.IV = pdb.GetBytes(16);
-                using (MemoryStream ms = new MemoryStream()) {
-                    using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateEncryptor(), CryptoStreamMode.Write)) {
-                        cs.Write(clearBytes, 0, clearBytes.Length);
-                        cs.Close();
-                    }
-                    clearText = Convert.ToBase64String(ms.ToArray());
-                }
-            }
-            return clearText;
-        }
-
-
-
-
 
     }
 

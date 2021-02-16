@@ -1,15 +1,14 @@
-﻿using MVC_OnlineShop.Models.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace MVC_OnlineShop.Models {
+﻿namespace MVC_OnlineShop.Models {
     public class Role {
 
+        /// <summary>
+        /// Can be used for checking if Cx has access to page
+        /// </summary>
         public int Id { get; set; }
 
+        /// <summary>
+        /// Display name for the role
+        /// </summary>
         public string Name { get; set; } 
-        /*public RoleType roleType { get; set; }*/
     }
 }

@@ -1,21 +1,24 @@
 ﻿<!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title</title>
-    @Styles.Render("~/content/css")
-    @Scripts.Render("~/scripts/js")
-    @Styles.Render("~/Content/fontawesome")
-    @RenderSection("InfinateScroll", false) <!-- Only loads when called on within the view -->
-</head>
-<body>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>@ViewBag.Title</title>
+        @Styles.Render("~/content/css")
+        @Scripts.Render("~/scripts/js")
+        @Styles.Render("~/Content/fontawesome")
+        @RenderSection("InfinateScroll", false) <!-- Only loads when called on within the view -->
+    </head>
+    <body class="d-flex flex-column min-vh-100">
 
-    @Html.Partial("_NavBarPartial")
+        @Html.Partial("_NavBarPartial")
 
-    <div class="container body-content">
-        @RenderBody()
+        <div class="container body-content">
+            @RenderBody()
+        </div>
+
+        <div class="wrapper flex-grow-1"></div>
         @Html.Partial("_footerPartial")
-    </div>
-</body>
+
+    </body>
 </html>
