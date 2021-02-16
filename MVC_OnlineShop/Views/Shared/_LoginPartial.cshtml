@@ -10,11 +10,14 @@
             <li class="nav-link loggedUsername">
                 @*Welcome: <a href="#">@Session[ "UserName" ]</a>*@ <!-- Make username link redirect to profile page -->
                 @*Welcome: @Session["UserName"] <!-- Use a RouteLink to determine the users profile page -->*@
-                @Html.RouteLink("Welcome: " + @Session["UserName"], "Profile", "UserManagement", new { @class = "nav-link" })
+                @*@Html.RouteLink(@Session[ "UserName" ] + " ", "Profile", "UserManagement", new { @class = "nav-link" })*@
+                <a href="@Url.Action("Profile","UserManagement")" class="nav-link" alt="@Session["UserName"]">
+                    @Session[ "UserName" ] @Html.Partial("_ProfileImagePartial")
+                </a>
             </li>
-            <li class="nav-link">
+            @*<li class="nav-link">
                @Html.Partial("_ProfileImagePartial")
-            </li>
+            </li>*@
             <li class=" nav-link">
                 <form class="form-inline my-2 my-lg-0">
                     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">

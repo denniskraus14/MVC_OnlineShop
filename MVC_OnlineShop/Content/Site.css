@@ -58,6 +58,19 @@ textarea {
     margin: 0px 5px;
 }
 
+/*Fix profile image size on navigation bar*/
+.nav-link i.fa.fa-user-circle {
+    font-size: 20px;
+}
+
+/*Fix location of profile image on navigation bar*/
+.nav-link img.img-thumbnail {
+    max-height: 45px !important;
+    display: -webkit-inline-box;
+    position: absolute;
+    display: inline-block;
+}
+
 /****************************************************************************************/
 
 /*

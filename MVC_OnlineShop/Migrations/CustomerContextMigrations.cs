@@ -79,6 +79,8 @@ namespace MVC_OnlineShop.Migrations {
 
                 context.SaveChanges();
             }
+
+
         }
     }
 }
