@@ -9,10 +9,9 @@
         Customer cx = context.Customers.Where(u => u.UserId.ToString().Equals(temp)).FirstOrDefault();
 
         if (cx.File.Length == 0){
-            <i class="fa fa-user-circle fa-3x" alt="@cx.UserName"></i>
-        }
-        else{
-        <img src="~/Account/RetrieveImage/@cx.UserId" alt="@cx.UserName" />
+            <i class="fa fa-user-circle fa-5x img-thumbnail" alt="@cx.UserName"></i>
+        } else{
+            <img src="~/Account/RetrieveImage/@cx.UserId" alt="@cx.UserName" class="img-thumbnail" />
         }
     }
 }

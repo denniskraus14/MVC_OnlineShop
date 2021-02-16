@@ -1,4 +1,5 @@
 ﻿using System;
+using MVC_OnlineShop.Infrastructure;
 using MVC_OnlineShop.Models;
 
 namespace MVC_OnlineShop.Migrations {
@@ -71,6 +72,8 @@ namespace MVC_OnlineShop.Migrations {
 
                 context.SaveChanges();
             }
+
+
         }
     }
 }
