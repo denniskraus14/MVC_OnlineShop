@@ -1,22 +1,18 @@
-﻿@using MVC_OnlineShop.Models
+﻿@using MVC_OnlineShop.Models;
 
 @{
     IEnumerable<Customer> profileImage = NavBarSubMenu.ProfileImage();
     IEnumerable<byte[]> profileImageByte = profileImage.Select(pi => pi.File).ToList();
 
-    List<Customer> cxSession = (List<Customer>)Session[ "UserId" ];
-}
+    using (var context = new SiteContext()){
+        string temp = Session["UserId"].ToString();
+        Customer cx = context.Customers.Where(u => u.UserId.ToString().Equals(temp)).FirstOrDefault();
 
-@foreach(var cx in (List<Customer>)Session[ "UserId" ]) {
-    
-}
-
-@if ( ) {
-
-}
-
-@if (Model.File.Length == 0) {
-    <picture class="fa fa-user-circle fa-5x" alt="@Model.UserName"></picture>
-} else {
-    <img src="~/Account/RetrieveImage/@Model.UserId" alt="@Model.UserName" />
+        if (cx.File.Length == 0){
+            <i class="fa fa-user-circle fa-3x" alt="@cx.UserName"></i>
+        }
+        else{
+        <img src="~/Account/RetrieveImage/@cx.UserId" alt="@cx.UserName" />
+        }
+    }
 }
