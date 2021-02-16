@@ -1,18 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using MVC_OnlineShop.Models;
-using MVC_OnlineShop.Models.Enums;
 
-namespace MVC_OnlineShop.Migrations
-{
-    public class CustomerContextMigrations
-    {
-        public static void Migrations()
-        {
-            using (var context = new CustomerContext())
-            {
+namespace MVC_OnlineShop.Migrations {
+    public class CustomerContextMigrations {
+        public static void Migrations() {
+            using (var context = new SiteContext()) {
                 //Laptops
                 context.Products.Add(new Product { Name = "Acer", Description = "This is a sample description", Price = 150, Quantity = 1000, stringType = "Laptop", Image_Url= "https://images-na.ssl-images-amazon.com/images/I/71sesDsw95L._AC_SL1500_.jpg" });
                 context.Products.Add(new Product { Name = "Dell", Description = "This is a sample description", Price = 200, Quantity = 1000, stringType = "Laptop", Image_Url= "https://specials-images.forbesimg.com/imageserve/5d609f0668cb0a0008c045d2/960x0.jpg?cropX1=0&cropX2=1500&cropY1=327&cropY2=1171" });
@@ -40,13 +32,13 @@ namespace MVC_OnlineShop.Migrations
                 context.Products.Add(new Product { Name = "Tralfamadorians", Description = "This is a sample description", Price = 100000, Quantity = 100, stringType = "Alien", Image_Url= "https://i.pinimg.com/originals/7c/e6/32/7ce632615f7cdbee31dda411b18df9c1.jpg" });
                 context.Products.Add(new Product { Name = "Martians", Description = "This is a sample description", Price = 300, Quantity = 1000, stringType = "Alien", Image_Url = "https://bcdbimages.s3.amazonaws.com/warner/marvin.jpg" });
                 context.Products.Add(new Product { Name = "Spiders from Mars", Description = "This is a sample description", Price = 350000, Quantity = 99, stringType = "Alien", Image_Url = "https://render.fineartamerica.com/images/images-profile-flow/400/images-medium-large-5/spiders-from-mars-carl-salonen.jpg" });
+                context.Products.Add(new Product { Name = "Spiders from Mars (copy)", Description = "This is a sample description (copy)", Price = 950000, Quantity = 99, stringType = "Alien", Image_Url = "https://render.fineartamerica.com/images/images-profile-flow/400/images-medium-large-5/spiders-from-mars-carl-salonen.jpg" });
 
                 context.Roles.Add(new Role { Name = "Administrator" }); // Role ID = 1
                 context.Roles.Add(new Role { Name = "Moderator" }); // Role ID = 2
                 context.Roles.Add(new Role { Name = "Normal" }); // Role ID = 3
 
-                context.Customers.Add(new Customer
-                {
+                context.Customers.Add(new Customer {
                     UserId = 1,
                     UserName = "admin",
                     Password = "admin",
@@ -59,8 +51,7 @@ namespace MVC_OnlineShop.Migrations
                     LastLoginDate = DateTime.Today
                 }) ;
 
-                context.Customers.Add(new Customer
-                {
+                context.Customers.Add(new Customer {
                     UserId = 2,
                     UserName = "a",
                     Password = "password",
@@ -71,9 +62,12 @@ namespace MVC_OnlineShop.Migrations
                     RoleId = 3,
                     CreatedDate = DateTime.Today,
                     LastLoginDate = DateTime.Today
-                }) ; 
+                }) ;
 
                 context.SecurityQuestions.Add(new SecurityQuestion { Question = "What is your mother's maiden name?" });
+                context.SecurityQuestions.Add(new SecurityQuestion { Question = "What city was you born in?" });
+                context.SecurityQuestions.Add(new SecurityQuestion { Question = "What is your favorite hobby?" });
+                context.SecurityQuestions.Add(new SecurityQuestion { Question = "What is your first pet name?" });
 
                 context.SaveChanges();
             }

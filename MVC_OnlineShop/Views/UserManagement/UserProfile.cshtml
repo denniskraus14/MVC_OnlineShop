@@ -1,6 +1,7 @@
-﻿<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+﻿@*<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>*@
+
 @using MVC_OnlineShop.Models
 @model MVC_OnlineShop.Models.Customer
 <!------ Include the above in your HEAD tag ---------->
@@ -12,8 +13,12 @@
                     <div class="profile-img">
                         <!--Default image until they add one. We should add this image to the db by default to make this dynamic-->
                         @*<img src=@Model.File alt="" />*@
-                        <img src="~/Account/RetrieveImage/@Model.UserId" alt="avatar" />
-                        </div>
+                        @if (Model.File.Equals("0x")) {
+                            <img src="" class="fa fa-user-circle" alt="@Model.UserName" />
+                        } else {
+                            <img src="~/Account/RetrieveImage/@Model.UserId" alt="@Model.UserName" />
+                        }
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <div class="profile-head">

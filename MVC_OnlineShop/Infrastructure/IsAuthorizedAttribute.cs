@@ -23,7 +23,7 @@ namespace MVC_OnlineShop.Infrastructure {
             bool authorize = false;
             var userId = Convert.ToString(httpContext.Session[ "UserId" ]);
             if (!string.IsNullOrEmpty(userId)) {
-                using (var context = new CustomerContext()) {
+                using (var context = new SiteContext()) {
                     var userRole = (from c in context.Customers
                                     join r in context.Roles on c.RoleId equals r.Id
                                     where c.UserId.ToString() == userId

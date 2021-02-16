@@ -64,7 +64,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.SecurityQuestion, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @using (var context = new CustomerContext()) {
+            @using (var context = new SiteContext()) {
                 @Html.DropDownListFor(model => model.SecurityQuestion, context.SecurityQuestions.ToList().Select(sq => new SelectListItem() { Text = sq.Question, Value = sq.Id.ToString() }), htmlAttributes: new { @class = "control" })
             }
             @Html.ValidationMessageFor(model => model.SecurityQuestion, "", htmlAttributes: new { @class = "text-warning" })

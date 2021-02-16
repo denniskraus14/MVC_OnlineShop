@@ -7,9 +7,8 @@ namespace MVC_OnlineShop.Models {
     public static class DataManager {
 
         public static List<Product> GetProducts(int BlockNumber, int BlockSize) {
-            /*int startIndex = (BlockNumber - 1) * BlockSize;*/
             int startIndex = (BlockNumber - 1) * BlockSize;
-            using (var context = new CustomerContext()) {
+            using (var context = new SiteContext()) {
                 var productList = context.Products.Select(p => p);
                 return productList.OrderBy(p => p.Id).Skip(startIndex).Take(BlockSize).ToList();
             }
@@ -17,7 +16,7 @@ namespace MVC_OnlineShop.Models {
 
         public static List<Product> GetProductTypes(int BlockNumber, int BlockSize, string productType) {
             int startIndex = (BlockNumber - 1) * BlockSize;
-            using (var context = new CustomerContext()) {
+            using (var context = new SiteContext()) {
                 var products = context.Products
                                         .Select(type => type)
                                         .Where(p => p.stringType == productType);
