@@ -6,11 +6,13 @@
     var getType = ViewBag.pageType;
 }
 
+@section SearchBar{ @Html.Partial("_SearchBarPartial") }
+
 @Html.Partial("_bannerPartial")
 
 <div class="container text-center">
     <div id="productListDiv" class="row align-items-start" align="center">
-        @{  Html.RenderAction("_ProductTypeList", "Shop", new { Model = Model });  }
+        @{ Html.RenderAction("_ProductTypeList", "Shop", new { Model = Model }); }
     </div>
     <div id="loadingDiv" style="text-align: center; display: none; margin-bottom: 20px;">
         <img alt="Loading" src="@Url.Content("~/Content/Img/ajax-loader.gif")" />
@@ -19,8 +21,7 @@
 
 @section InfinateScroll {
     @*Get the product type we are trying to display*@
-    <input type="hidden" id="pageType" name="pageType" value="@ViewBag.pageType"/>
-    @Html.Hidden("pageUrl", Url.Action("InfinateScrollForProductType", "Shop", new { Model = Model } ))
+    <input type="hidden" id="pageType" name="pageType" value="@ViewBag.pageType" />
+    @Html.Hidden("pageUrl", Url.Action("InfinateScrollForProductType", "Shop", new { Model = Model }))
     @Scripts.Render("~/Scripts/custom/page-scroll-1.0.0.js")
 }
-

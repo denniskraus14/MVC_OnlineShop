@@ -63,12 +63,35 @@ textarea {
     font-size: 20px;
 }
 
-/*Fix location of profile image on navigation bar*/
+/*Fix location & alignment of profile image on navigation bar*/
 .nav-link img.img-thumbnail {
     max-height: 45px !important;
-    display: -webkit-inline-box;
-    position: absolute;
-    display: inline-block;
+    display: -webkit-inline-box !important;
+    position: absolute !important;
+    display: inline-block !important;
+    top: 15px !important;
+    margin-left: 4px !important;
+}
+li.nav-link.loggedUsername {
+    margin: 0 40px 0 0 !important;
+}
+
+/*
+ * By default, Bootstrap 4 uses 'flex' for navbars, but doesn't actually add
+ * the required 'flex-flow' by default. This will ensure we get the expected
+ * results for a main NavBAr and Sub NavBar
+*/
+.navbar-collapse {
+    flex-flow: row wrap;
+}
+
+/*
+ * We will also ned to add a customize css to generate the 'flex-direction for
+ * our rows, and specifiy that they should occupy 100% of the width of the flex.
+*/
+.flex-row {
+    flex-direction: row;
+    width: 100%;
 }
 
 /****************************************************************************************/
