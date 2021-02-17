@@ -1,74 +1,51 @@
 ﻿@using System.Web.Mvc;
 
-@if (!string.IsNullOrEmpty(Convert.ToString(Session["UserName"])))
-{
-    @*using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))*@
-    using (Html.BeginForm("Logout", "UserManagement", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
-    {
+@if (!string.IsNullOrEmpty(Convert.ToString(Session["UserName"]))) {
+    using (Html.BeginForm("Logout", "UserManagement", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" })) {
         @Html.AntiForgeryToken()
-        <ul class="nav navbar-nav navbar-right">
+
+        <!--Begin Login Partial View-->
+        <ul class="nav navbar-nav mt-lg-0 navbar-right float-sm-right">
+
+            <!--Username & Avatar-->
             <li class="nav-link loggedUsername">
-                @*Welcome: <a href="#">@Session[ "UserName" ]</a>*@ <!-- Make username link redirect to profile page -->
-                @*Welcome: @Session["UserName"] <!-- Use a RouteLink to determine the users profile page -->*@
-                @*@Html.RouteLink(@Session[ "UserName" ] + " ", "Profile", "UserManagement", new { @class = "nav-link" })*@
                 <a href="@Url.Action("Profile","UserManagement")" class="nav-link" alt="@Session["UserName"]">
                     @Session[ "UserName" ] @Html.Partial("_ProfileImagePartial")
                 </a>
             </li>
-            @*<li class="nav-link">
-               @Html.Partial("_ProfileImagePartial")
-            </li>*@
-            <li class=" nav-link">
-                <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                    <!--<button class="btn btn-outline-success my-2 my-sm-0 d-inline-block" type="submit">Search</button>-->
-                </form>
-            </li>
+
+            <!--Logout Button (JS & Disalbed JS Version)-->
             <li class="nav-link">
-                <!-- JS needs to be updated to latest syntax -->
-                @*<a href="javascript:document.GetElementById('logoutForm').submit()" class="nav-link">Logout</a>*@
-                @*<a href="javascript:document.forms('logoutForm').submit()" class="nav-link">Logout</a>*@
-                @*@Html.ActionLink("Logout","Logout", "UserManagement");*@
-                @*@Html.RouteLink("Logout", "Logout", "Account", new { @class = "nav-link", id = "logoutLink" })*@
-                @*<input type="submit" value="Logout" class="nav-link" />*@
-
-
                 <a id="logout" href="javascript:document.getElementById('logoutForm').submit()" style="display:none">Logout</a>
                 <script>
-                    //<!--
                     var l = document.getElementById('logout');
-                    if (typeof (l) != 'undefined' && l != null)
-                        l.style.display = "inline-flex";
+                    if (typeof (l) != 'undefined' && l != null) l.style.display = "inline-flex";
                     l.className = "nav-link";
-                                                                                                                    //-->
                 </script>
 
                 <noscript>
                     <input type="submit" value="Logout" class="nav-link" /> <!-- If javascript is disabled -->
                 </noscript>
             </li>
+
+            <!--Shopping Cart-->
             @Html.Partial("_ShoppingCartPartial")
         </ul>
 
-
-
-
-
-        //@Html.Partial("_ShoppingCartPartial")
-        //@Html.RouteLink("Shop", "Page1", "Shop")
-
     }
-}
-else
-{
-    <ul class="nav navbar-nav navbar-right">
+} else {
+    <!--Displayed if there is no UserId Session-->
+    <ul class="nav navbar-nav mt-lg-0 navbar-right float-sm-right">
+
+        <!--Login-->
         <li class="nav-link">
-            @* @Html.ActionLink("Login", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" }) *@
-            @Html.RouteLink("Login", "Login", "", new { @class = "nav-link", id = "loginLink" })
+            @Html.RouteLink("Login", "Login", null, new { @class = "nav-link", id = "loginLink" })
+        </li>
+
+        <!--Register-->
+        <li class="nav-link">
+            @Html.RouteLink("Register", "Register", null, new { @class = "nav-link", id = "loginLink" })
         </li>
 
     </ul>
-
-
-
 }

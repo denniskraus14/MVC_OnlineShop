@@ -12,6 +12,7 @@
     <body class="d-flex flex-column min-vh-100">
 
         @Html.Partial("_NavBarPartial")
+        @RenderSection("SearchBar", false)
 
         <div class="container body-content">
             @RenderBody()

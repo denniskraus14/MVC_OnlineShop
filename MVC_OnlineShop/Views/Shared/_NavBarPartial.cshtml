@@ -5,36 +5,32 @@
         </button>
 
         <!-- Company Name -->
-        @Html.RouteLink("Alpha Website", "Index", "Home", new { @class = "navbar-brand" })
-
+        <!--@Html.RouteLink("Alpha Website", "Index", "Home", new { @class = "navbar-brand" })-->
+        <!--Navigation links that will collapse on small window & mobile version-->
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                <!--the active Nav item feature doesn't work and isn't dynamic, only Home stays highlighted-->
-                <!--<li class="nav-item active">-->
-                <li class="nav-item">
-                    <!-- <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a> -->
-                    @Html.RouteLink("Home", "Index", "Home", new { @class = "nav-link" })
-                </li>
-                @Html.Partial("_ShopDropDown")
-            </ul>
 
-<!--original HTML drop down menu item for reference-->
-<!--
-    <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Dropdown
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Something else here</a>
-        </div>
-    </li>
--->
+            <!--Main NavBar-->
+            <div class="flex-row">
+                <!--Left of navigation bar-->
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0 float-sm-left">
 
-            @Html.Partial("_LoginPartial")
+                    <!-- Company Name -->
+                    @Html.RouteLink("Alpha Website", "Index", "Home", new { @class = "navbar-brand" })
+
+                    <!--Home-->
+                    <li class="nav-item">
+                        @Html.RouteLink("Home", "Index", "Home", new { @class = "nav-link" })
+                    </li>
+
+                    <!--Shop link with its category drop down links-->
+                    @Html.Partial("_ShopDropDown")
+                </ul>
+
+                <!--Right side of the navigation bar-->
+                @Html.Partial("_LoginPartial")
+            </div>
 
         </div>
     </div>
 </nav>
+
