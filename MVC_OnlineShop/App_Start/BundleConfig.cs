@@ -14,9 +14,9 @@ namespace MVC_OnlineShop {
                         "~/Scripts/jquery.unobtrusive-ajax.js",
                         "~/Scripts/jquery-3.5.1.js",
                         "~/Scripts/bootstrap.bundle.js",
-                        "~/Scripts/bootstrap.js",
-                        "~/Scripts/popper.js",
-                        "~/Scripts/popper-utils.js"
+                        "~/Scripts/bootstrap.js"
+                        /*"~/Scripts/popper.js",*/
+                        /*"~/Scripts/popper-utils.js"*/
             ));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
@@ -27,7 +27,6 @@ namespace MVC_OnlineShop {
 
             bundles.Add(new StyleBundle("~/content/css").Include(
                       "~/Content/Site.css",
-                      "~/Content/PagedList.css",
                       "~/Content/bootstrap.css",
                       "~/Content/bootstrap-grid.css",
                       "~/Content/bootstrap-reboot.css"
