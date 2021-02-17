@@ -1,4 +1,10 @@
-﻿var BlockNumber = 2;  //Infinate Scroll starts from second block
+﻿/*!
+  * Page Scroll v1.0.0
+  * Copyright 2021 The Author (https://github.com/ezenity)
+  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+  */
+
+var BlockNumber = 2;  //Infinate Scroll starts from second block
 var NoMoreData = false;
 var inProgress = false;
 
