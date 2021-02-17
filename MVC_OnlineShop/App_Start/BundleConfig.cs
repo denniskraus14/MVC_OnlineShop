@@ -14,7 +14,8 @@ namespace MVC_OnlineShop {
                         "~/Scripts/jquery.unobtrusive-ajax.js",
                         "~/Scripts/jquery-3.5.1.js",
                         "~/Scripts/bootstrap.bundle.js",
-                        "~/Scripts/bootstrap.js"
+                        "~/Scripts/bootstrap.js",
+                        "~/Scripts/custom/search-bar-removal-1.0.0.js" // Removes on mobile dropdown for navbar
             ));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're

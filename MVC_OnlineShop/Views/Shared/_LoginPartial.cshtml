@@ -1,21 +1,28 @@
 ﻿@using System.Web.Mvc;
 
-@if (!string.IsNullOrEmpty(Convert.ToString(Session["UserName"]))) {
+@if (!string.IsNullOrEmpty(Convert.ToString(Session[ "UserName" ]))) {
     using (Html.BeginForm("Logout", "UserManagement", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" })) {
         @Html.AntiForgeryToken()
 
         <!--Begin Login Partial View-->
-        <ul class="nav navbar-nav mt-lg-0 navbar-right float-sm-right">
+        <ul class="nav navbar-nav mt-lg-0 navbar-right float-lg-right">
 
             <!--Username & Avatar-->
-            <li class="nav-link loggedUsername">
+            
+            @{
+                // This will make the first letter of a username 1return a uppercase
+                string userName = @Session[ "UserName" ].ToString();
+                userName = userName.First().ToString().ToUpper() + String.Join("", userName.Skip(1));
+            
+            <li class="nav-item loggedUsername">
                 <a href="@Url.Action("Profile","UserManagement")" class="nav-link" alt="@Session["UserName"]">
-                    @Session[ "UserName" ] @Html.Partial("_ProfileImagePartial")
+                    @userName @Html.Partial("_ProfileImagePartial")
                 </a>
             </li>
+            }
 
             <!--Logout Button (JS & Disalbed JS Version)-->
-            <li class="nav-link">
+            <li class="nav-item">
                 <a id="logout" href="javascript:document.getElementById('logoutForm').submit()" style="display:none">Logout</a>
                 <script>
                     var l = document.getElementById('logout');
@@ -38,12 +45,12 @@
     <ul class="nav navbar-nav mt-lg-0 navbar-right float-sm-right">
 
         <!--Login-->
-        <li class="nav-link">
+        <li class="nav-item">
             @Html.RouteLink("Login", "Login", null, new { @class = "nav-link", id = "loginLink" })
         </li>
 
         <!--Register-->
-        <li class="nav-link">
+        <li class="nav-item">
             @Html.RouteLink("Register", "Register", null, new { @class = "nav-link", id = "loginLink" })
         </li>
 
