@@ -3216,9 +3216,9 @@ input[type="button"].btn-block {
   z-index: 1000;
   display: none;
   float: left;
-  min-width: 10rem;
-  padding: 0.5rem 0;
-  margin: 0.125rem 0 0;
+  min-width: 6rem; /*Default: 10rem*/
+  padding: 0.5rem 0; /*Default: 0.5rem 0*/
+  margin: -0.3rem 0 0; /*Default: 0.125rem 0 0*/
   font-size: 1rem;
   color: #212529;
   text-align: left;
@@ -3418,7 +3418,7 @@ input[type="button"].btn-block {
 
 .dropdown-header {
   display: block;
-  padding: 0.5rem 1.5rem;
+  padding: 0.5rem .5rem;
   margin-bottom: 0;
   font-size: 0.875rem;
   color: #6c757d;
