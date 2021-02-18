@@ -71,16 +71,36 @@ jobs:
 #      - name: Run the Docker image
 #        run: docker run --rm auycro/msbuild --version
 #################################################################################################################################
-  build: 
+#### Builds against DotNet Core ####
+#  build: 
+#    runs-on: windows-latest
+#    steps:
+#      - uses: actions/checkout@v1
+#      - name: Setup .NEt Core
+#        uses: actions/setup-dotnet@v1
+#        with:
+#          dotnet-version: 2.2.108
+#      - name: Build with dotnet
+#        run: dotnet build --configuration Release
+#      - name: Test it
+#        run: dotnet test --verbosity normal
+#################################################################################################################################
+#### Legacy ####
+  build:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v1
-      - name: Setup .NEt Core
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: 2.2.108
-      - name: Build with dotnet
-        run: dotnet build --configuration Release
-      - name: Test it
-        run: dotnet test --verbosity normal
-          
+    - uses: actions/checkout@v1
+    
+    - name: Setup Nuget.exe
+      #uses: warrenbuckley/Setup-Nuget@v1
+      uses: NuGet/setup-nuget@v1.0.5
+      
+    - name: Restore packages
+      run: nuget restore MVC_OnlineShop.sln
+      
+    - name: Setup MSBuild.exe
+      #uses: warrenbuckley/Setup-MSBuild@v1
+      uses: microsoft/setup-msbuild@v1.0.2
+      
+    - name: Build with MSBuild
+      run: msbuild  MVC_OnlineShop.sln -p:Configuration=Release
