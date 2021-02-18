@@ -6,14 +6,14 @@
 }
         
 <li class="nav-item dropdown">
-    <!--
-        data-toggle="dropdown" makes it unclickable
-    -->
-    <a href="@Url.Action("Portal", "Shop")" class="nav-link dropdown-toggle" aria_haspopup="true" id="navbarDropdown">Shop</a>
+    <a href="#" type="button" data-toggle="dropdown" class="nav-link dropdown-toggle" aria_haspopup="true" id="navbarDropdown" aria-expanded="false">Shop</a>
 
     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a href="@Url.Action("Portal", "Shop")" type="button" class="nav-link dropdown-item">Portal</a>
+        <div class="dropdown-divider"></div>
+        <h6 class="dropdown-header">Product Types</h6>
         @foreach (var item in productTypeString) {
-            <a href="@Url.Action("Page", "Shop", new { productType = item })" class="nav-link dropdown-item">@item</a>
+            <a href="@Url.Action("Page", "Shop", new { productType = item })" type="button" class="nav-link dropdown-item">@item's</a>
         }
     </div>
 </li>
