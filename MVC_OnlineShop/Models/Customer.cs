@@ -25,7 +25,7 @@ namespace MVC_OnlineShop.Models {
         [DisplayName("Confirm Password: ")]
         [Required(ErrorMessage = "Required.")]
         [DataType(DataType.Password)]
-        [Compare("Password", ErrorMessage = "Passwords do nbot match.")]
+        [Compare("Password", ErrorMessage = "Passwords do not match.")]
         public string ConfirmPassword { get; set; }
 
         [DisplayName("Email: ")]
