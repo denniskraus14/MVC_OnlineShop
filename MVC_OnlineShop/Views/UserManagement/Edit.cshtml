@@ -6,7 +6,7 @@
 
 
 @{
-    ViewBag.Title = "Profile";
+    ViewBag.Title = "Edit Profile";
 }
 <br />
 <br />
@@ -14,69 +14,78 @@
 
 
 
-<div style="padding-top: 30px" class="container emp-profile">
+<div style="padding-top: 30px", class="container emp-profile">
     <form method="post">
+        <h4>Edit your profile here! </h4>
+        <br />
+
+        <!--Photo-->
         <div class="row">
             <div class="col-md-4">
                 <div class="profile-img">
-                    <img src=@Model.File alt="" />
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="profile-head">
-                    <h4>
-                        Welcome @Model.UserId!
-                    </h4>
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
-                        </li>
-                    </ul>
+                    @Html.Partial("_ProfileImagePartial")
                 </div>
             </div>
         </div>
-        
-       @*@using(Html.BeginForm("Edit", "Customer", null, FormMethod.Post, new {enctype = "multipart/form-data"}){*@ 
-            @Html.AntiForgeryToken()
-            <div class="form-horizontal">
-                <h4>Profile Page</h4>
-                <br />
-                @Html.ValidationSummary(true, "Profile edits failed. Please enter valid information!", new { @class = "text-warning" })
-                <div class="form-group">
-                    @Html.LabelFor(model => model.UserId, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.TextBoxFor(model => model.UserId, htmlAttributes: new { @class = "control" })
-                        @Html.ValidationMessageFor(model => model.UserId, "", htmlAttributes: new { @class = "text-warning" })
-                    </div>
+        <br />
+        <!-- a little awkard-->
+        @*<div class="col-md-6">
+            <div class="profile-head">
+                <h4>
+                    Welcome @Model.FirstName!
+                </h4>
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
+                    </li>
+                </ul>
+            </div>
+        </div>*@
+
+
+        @*@using(Html.BeginForm("Edit", "Customer", null, FormMethod.Post, new {enctype = "multipart/form-data"}){*@
+        @Html.AntiForgeryToken()
+        <div class="form-horizontal">
+
+            @Html.ValidationSummary(true, "Profile edits failed. Please enter valid information!", new { @class = "text-warning" })
+
+            <!--This shouldn't be modified by a standard user, leaving here just in case -->
+            @*<div class="form-group">
+                @Html.LabelFor(model => model.UserId, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.UserId, htmlAttributes: new { @class = "control" })
+                    @Html.ValidationMessageFor(model => model.UserId, "", htmlAttributes: new { @class = "text-warning" })
                 </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.TextBoxFor(model => model.Email, htmlAttributes: new { @class = "control" })
-                        @Html.ValidationMessageFor(model => model.Email, "", htmlAttributes: new { @class = "text-warning" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.TextBoxFor(model => model.UserName, htmlAttributes: new { @class = "control" })
-                        @Html.ValidationMessageFor(model => model.UserName, "", htmlAttributes: new { @class = "text-warning" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.Label("Avatar", new { @class = "control-label col-md-2" })
-                    <div class="file btn btn-sm btn-primary">
-                        Change Photo
-                        <input type="file" id="Avatar" name="upload" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Save Changes" class="btn btn-light" />
-                    </div>
+            </div>*@
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Email, htmlAttributes: new { @class = "control" })
+                    @Html.ValidationMessageFor(model => model.Email, "", htmlAttributes: new { @class = "text-warning" })
                 </div>
             </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.UserName, htmlAttributes: new { @class = "control" })
+                    @Html.ValidationMessageFor(model => model.UserName, "", htmlAttributes: new { @class = "text-warning" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("Profile Photo: ", new { @class = "control-label col-md-2" })
+                <br />
+                <div class="file btn btn-sm btn-primary">
+                    <input type="file" id="Avatar" name="upload" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-10">
+                    <input type="submit" value="Save Changes" class="btn btn-light" />
+                </div>
+            </div>
+        </div>
         @*}*@
-        </form>
+    </form>
 </div>
         

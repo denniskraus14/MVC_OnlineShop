@@ -16,6 +16,15 @@ namespace MVC_OnlineShop.Models {
         [Required(ErrorMessage = "required.")]
         public string UserName { get; set; }
 
+        [DisplayName("First Name: ")]
+        [Required(ErrorMessage = "required.")]
+        public string FirstName { get; set; }
+
+        [DisplayName("Last Name: ")]
+        [Required(ErrorMessage = "required.")]
+        public string LastName { get; set; }
+
+
         [DisplayName("Password: ")]
         [DataType(DataType.Password)]
         /*[RegularExpression("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$", ErrorMessage = "Password is not valid. Regular Expression")]*/

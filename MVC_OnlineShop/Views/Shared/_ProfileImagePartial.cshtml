@@ -6,12 +6,12 @@
 
     using (var context = new SiteContext()){
         string temp = Session["UserId"].ToString();
-        Customer cx = context.Customers.Where(u => u.UserId.ToString().Equals(temp)).FirstOrDefault();
+        Customer customer = context.Customers.Where(u => u.UserId.ToString().Equals(temp)).FirstOrDefault();
 
-        if (cx.File.Length == 0){
-            <i class="fa fa-user-circle fa-5x img-thumbnail" alt="@cx.UserName"></i>
+        if (customer.File.Length == 0){
+            <i class="fa fa-user-circle fa-5x img-thumbnail" alt="@customer.UserName"></i>
         } else{
-            <img src="~/Account/RetrieveImage/@cx.UserId" alt="@cx.UserName" class="img-thumbnail" />
+            <img src="~/Account/RetrieveImage/@customer.UserId" alt="@customer.FirstName" class="img-thumbnail" />
         }
     }
 }
