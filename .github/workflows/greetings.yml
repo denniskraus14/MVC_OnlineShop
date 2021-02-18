@@ -1,13 +1,11 @@
 name: Greetings
-
 on: 
-  push:
-    branches:
-      - master
+#  push:
+#    branches:
+#      - master
   pull_request:
     branches:
       - master
-
 jobs:
   greeting:
     runs-on: ubuntu-latest
