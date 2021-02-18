@@ -16,6 +16,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
+  #################################################################################################################################
 #  build:
 #    # The type of runner that the job will run on
 #    runs-on: windows-latest
@@ -45,14 +46,41 @@ jobs:
 #        with:
 #          name: published_webapp
 #          path: bin\Release\Publish
-  build-msbuild:
-    name: Build msbuild
+#################################################################################################################################
+  #build-dotnet:
+  #  name: Build dotnet
+  #  runs-on: windows-latest
+  #  steps:
+  #    - name: Checkout
+  #      uses: actions/checkout@v2
+  #    - name: Build the Docker image
+  #      run: docker build . --file Dockerfile --tag auycro/dotnet
+  #      #run: docker build . --file Dockerfile --tag auycro/dotnet:$(date +%s)
+  #    - name: Run the Docker image
+  #      run: docker run --rm auycro/dotnet --version
+#################################################################################################################################
+#  build-msbuild:
+#    name: Build msbuild
+#    runs-on: windows-latest
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v2
+#      - name: Build the Docker image
+#        run: docker build --file Dockerfile.msbuild --tag auycro/msbuild .
+#        #run: docker build . --file Dockerfile --tag auycro/dotnet:$(date +%s)
+#      - name: Run the Docker image
+#        run: docker run --rm auycro/msbuild --version
+#################################################################################################################################
+  build: 
     runs-on: windows-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Build the Docker image
-        run: docker build --file Dockerfile.msbuild --tag auycro/msbuild .
-        #run: docker build . --file Dockerfile --tag auycro/dotnet:$(date +%s)
-      - name: Run the Docker image
-        run: docker run --rm auycro/msbuild --version
+      - uses: actions/checkout@v1
+      - name: Setup .NEt Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 2.2.108
+      - name: Build with dotnet
+        run: dotnet build --configuration Release
+      - name: Test it
+        run: dotnet test --verbosity normal
+          
