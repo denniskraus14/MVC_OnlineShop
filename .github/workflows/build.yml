@@ -29,12 +29,12 @@ jobs:
         
       - name: Use Node.js
         uses: actions/setup-node@v1
-       
-      - name: Setup NuGet
-        uses: NuGet/setup-nuget@v1.0.2
+        
+      - name: Setup NuGet.exe for use with actions
+        uses: NuGet/setup-nuget@v1.0.5
      
       - name: Restore NuGet Packages
-        run: nuget restore SimpleFrameworkApp.sln
+        run: nuget restore MVC_OnlineShop.sln
 
       - name: Build and Publish Web App
         run: msbuild MVC_OnlineShop.sln /p:Configuration=Release /p:DeployOnBuild=true /p:PublishProfile=Release
