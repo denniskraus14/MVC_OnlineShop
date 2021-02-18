@@ -26,6 +26,9 @@ jobs:
       
       - name: Setup MSBuild Path
         uses: microsoft/setup-msbuild@v1.0.2
+        
+      - name: Use Node.js
+        uses: actions/setup-node@v1
        
       - name: Setup NuGet
         uses: NuGet/setup-nuget@v1.0.2
