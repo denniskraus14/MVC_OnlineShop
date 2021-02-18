@@ -12,7 +12,6 @@ namespace MVC_OnlineShop.Controllers
     [IsAuthenticationFilter]
     [Route("{action=Portal}")]
     public class ShopController : Controller {
-        Cart ShoppingCart = new Cart();
 
         // GET: Shop
         [HttpGet]
@@ -100,44 +99,30 @@ namespace MVC_OnlineShop.Controllers
         [Route("Cart")]
         [IsAuthorized("Administrator", "Moderator", "Normal")]
         public ActionResult AddToCart(Product product) {
-            if (Session["cart"] == null) {
-                using (var context = new SiteContext()) {
-                    Product prod = context.Products
-                                                .Select(p => p)
-                                                .Where(p => p.Id == product.Id)
-                                                .FirstOrDefault();
-                    //List<Product> cartList = new List<Product>();
-                    //cartList.Add(prod);
-                    List<CartItem> cartList = new List<CartItem>();
-                    cartList.Add(new CartItem { Product = prod, Quantity = 1 } );
-                    Session[ "cart" ] = cartList;
-                    // ViewBag.cart = cartList.Count(); // Replaced by Session["count"]
+            using (var context = new SiteContext()) {
+                Product prod = context.Products
+                                            .Select(p => p)
+                                            .Where(p => p.Id == product.Id)
+                                            .FirstOrDefault();
+                List<CartItem> cartList;
+
+                if (Session[ "cart" ] == null) {
+                    cartList = new List<CartItem>();
                     Session[ "count" ] = 1;
-                    // Decreases quantity amount in database
-                    //  - Not sure if this should be here or when Cx checksout and pays. 
-                    prod.Quantity = prod.Quantity - 1;
-                }
-            } else {
-                using (var context = new SiteContext()) {
-                    Product prod = context.Products
-                                                .Select(p => p)
-                                                .Where(p => p.Id == product.Id)
-                                                .FirstOrDefault();
-                    //List<Product> cartList = (List<Product>)Session[ "cart" ];
-                    //cartList.Add(prod);
-                    List<CartItem> cartList = (List<CartItem>)Session[ "cart" ];
-                    cartList.Add( new CartItem { Product = prod, Quantity = 1 });
-                    Session[ "cart" ] = cartList;
-                    // ViewBag.cart = cartList.Count(); // Replaced by Session["count"]
+                } else {
+                    cartList = (List<CartItem>)Session[ "cart" ];
                     Session[ "count" ] = Convert.ToInt32(Session[ "count" ]) + 1;
-                    // Decreases quantity amount in database
-                    //  - Not sure if this should be here or when Cx checksout and pays. 
-                    prod.Quantity = prod.Quantity - 1;
                 }
+
+                cartList.Add(new CartItem { Product = prod, Quantity = 1 });
+
+                Session[ "cart" ] = cartList;
+
+                // Decreases quantity amount in database
+                //  - Not sure if this should be here or when Cx checksout and pays. 
+                prod.Quantity = prod.Quantity - 1;
             }
 
-            //return RedirectToAction("Portal", "Shop");
-            //return new EmptyResult(); // Returns an error
             return new RedirectResult(Request.UrlReferrer.AbsoluteUri);
         }
 
