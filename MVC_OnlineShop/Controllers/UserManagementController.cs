@@ -72,7 +72,7 @@ namespace MVC_OnlineShop.Controllers {
         public ActionResult Register(Customer model) {
             if (!ModelState.IsValid) return View(model);
             else if (model.Password != model.ConfirmPassword) {
-                ModelState.AddModelError("PasswordsDoNotMatch", "Passwords do not Match");
+                ModelState.AddModelError("PasswordsDoNotMatch", "Passwords do not match!");
                 return View(model);
             } else {
                 using (var context = new SiteContext()) {
@@ -164,7 +164,7 @@ namespace MVC_OnlineShop.Controllers {
                 }
                 return RedirectToAction("Index", "Home");
             } else {
-                ModelState.AddModelError("PasswordsDoNotMatch", "Passwords do not Match");
+                ModelState.AddModelError("PasswordsDoNotMatch", "Passwords do not match");
                 return View(model);
             }
         }
@@ -199,7 +199,7 @@ namespace MVC_OnlineShop.Controllers {
         public ActionResult Edit(Customer model) {
             if (!ModelState.IsValid) return View(model);
             else if (model.Password != model.ConfirmPassword) {
-                ModelState.AddModelError("PasswordsDoNotMatch", "Passwords do not Match");
+                ModelState.AddModelError("PasswordsDoNotMatch", "Passwords do not match");
                 return View(model);
             } else {
                 using (var context = new SiteContext()) {

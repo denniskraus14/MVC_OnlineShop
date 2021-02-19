@@ -3,44 +3,61 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 @using MVC_OnlineShop.Models
 @model MVC_OnlineShop.Models.Customer
+
+
+@{
+    ViewBag.Title = "Edit Profile";
+}
+<br />
+<br />
 <!------ Include the above in your HEAD tag ---------->
 
-<div style="padding-top: 30px" class="container emp-profile">
+
+
+<div style="padding-top: 30px", class="container emp-profile">
     <form method="post">
+        <h4>Edit your profile here! </h4>
+        <br />
+
+        <!--Photo-->
         <div class="row">
             <div class="col-md-4">
                 <div class="profile-img">
-                    <img src=@Model.File alt="" />
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="profile-head">
-                    <h4>
-                        Welcome @Model.UserId!
-                    </h4>
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
-                        </li>
-                    </ul>
+                    @Html.Partial("_ProfileImagePartial")
                 </div>
             </div>
         </div>
-        using (Html.BeginForm("Edit", "Customer", null, FormMethod.Post, new {enctype = "multipart/form-data"}))
-        {
-        @Html.AntiForgeryToken()
+        <br />
+        <!-- a little awkard-->
+        @*<div class="col-md-6">
+            <div class="profile-head">
+                <h4>
+                    Welcome @Model.FirstName!
+                </h4>
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
+                    </li>
+                </ul>
+            </div>
+        </div>*@
 
+
+        @*@using(Html.BeginForm("Edit", "Customer", null, FormMethod.Post, new {enctype = "multipart/form-data"}){*@
+        @Html.AntiForgeryToken()
         <div class="form-horizontal">
-            <h4>Student</h4>
-            <hr />
-            @Html.ValidationSummary(true, "Registration Failed", new { @class = "text-warning" })
-            <div class="form-group">
+
+            @Html.ValidationSummary(true, "Profile edits failed. Please enter valid information!", new { @class = "text-warning" })
+
+            <!--This shouldn't be modified by a standard user, leaving here just in case -->
+            @*<div class="form-group">
                 @Html.LabelFor(model => model.UserId, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.TextBoxFor(model => model.UserId, htmlAttributes: new { @class = "control" })
                     @Html.ValidationMessageFor(model => model.UserId, "", htmlAttributes: new { @class = "text-warning" })
                 </div>
-            </div>
+            </div>*@
+
             <div class="form-group">
                 @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
@@ -56,16 +73,19 @@
                 </div>
             </div>
             <div class="form-group">
-                @Html.Label("Avatar", new { @class = "control-label col-md-2" })
+                @Html.Label("Profile Photo: ", new { @class = "control-label col-md-2" })
+                <br />
                 <div class="file btn btn-sm btn-primary">
-                    Change Photo
                     <input type="file" id="Avatar" name="upload" />
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
+                <div class="col-md-10">
                     <input type="submit" value="Save Changes" class="btn btn-light" />
                 </div>
             </div>
         </div>
+        @*}*@
+    </form>
 </div>
+        

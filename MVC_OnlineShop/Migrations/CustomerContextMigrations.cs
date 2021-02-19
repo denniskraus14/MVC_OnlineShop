@@ -43,8 +43,11 @@ namespace MVC_OnlineShop.Migrations {
 
                 string def = obj.Encryption("password");
 
-                context.Customers.Add(new Customer {
+                context.Customers.Add(new Customer
+                {
                     UserId = 1,
+                    FirstName = "Bob",
+                    LastName = "Smith",
                     UserName = "admin",
                     Password = def,
                     ConfirmPassword = def,
@@ -55,11 +58,13 @@ namespace MVC_OnlineShop.Migrations {
                     CreatedDate = DateTime.Today,
                     LastLoginDate = DateTime.Today,
                     File = new byte[] { }
-                }) ;
+                });
 
                 context.Customers.Add(new Customer
                 {
                     UserId = 2,
+                    FirstName = "Rob",
+                    LastName = "Smith",
                     UserName = "a",
                     Password = def,
                     ConfirmPassword = def,
@@ -70,7 +75,7 @@ namespace MVC_OnlineShop.Migrations {
                     CreatedDate = DateTime.Today,
                     LastLoginDate = DateTime.Today,
                     File = new byte[] { }
-                }) ;
+                });
 
                 context.SecurityQuestions.Add(new SecurityQuestion { Question = "What is your mother's maiden name?" });
                 context.SecurityQuestions.Add(new SecurityQuestion { Question = "What city was you born in?" });
