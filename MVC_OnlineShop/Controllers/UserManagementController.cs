@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using MVC_OnlineShop.Infrastructure;
 using MVC_OnlineShop.Model;
+using System.Collections.Generic;
 
 namespace MVC_OnlineShop.Controllers {
 
@@ -197,7 +198,9 @@ namespace MVC_OnlineShop.Controllers {
 
         [HttpPost]
         [Route("Edit")]
-        public ActionResult Edit(Customer model) {
+        public ActionResult Edit(Customer model)
+        {
+            /*
             if (!ModelState.IsValid) return View(model);
             else if (model.Password != model.ConfirmPassword) {
                 ModelState.AddModelError("PasswordsDoNotMatch", "Passwords do not match");
@@ -222,7 +225,45 @@ namespace MVC_OnlineShop.Controllers {
                         return Redirect("Portal");
                     }
                 }
+            }*/
+            using (var context = new SiteContext())
+            {
+                Customer current = context.Customers.Find(Session["UserId"]);
+                //email
+                if (model.Email != current.Email)
+                {
+                    //check to see that the email is available
+                    Customer temp = context.Customers.Select(p => p).Where(p => p.Email == model.Email).FirstOrDefault();
+                    if (temp == null)
+                    {
+                        //the email is available
+                        current.Email = model.Email;
+                    }
+                    //raise an exception/warning
+                }
+                //username
+                if (model.UserName != current.UserName)
+                {
+                    //check to see that the email is available
+                    Customer temp = context.Customers.Select(p => p).Where(p => p.UserName == model.UserName).FirstOrDefault();
+                    if (temp == null)
+                    {
+                        //the username is available
+                        current.UserName = model.UserName;
+                    }
+                    //raise an exception/warning
+                }
+                //profile photo
+                HttpPostedFileBase file = Request.Files["Avatar"];
+                byte[] temppic = _image.ConvertToBytes(file);
+                if (temppic != current.File && temppic != null)
+                {
+                    current.File = temppic;
+                }
+                context.SaveChanges();
+                return RedirectToAction("UserProfile");
             }
+        
         }
 
         [HttpPost]
