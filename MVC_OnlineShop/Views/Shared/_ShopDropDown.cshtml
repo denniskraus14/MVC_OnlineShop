@@ -13,7 +13,7 @@
         <div class="dropdown-divider"></div>
         <h6 class="dropdown-header">Product Types</h6>
         @foreach (var item in productTypeString) {
-            <a href="@Url.Action("Page", "Shop", new { productType = item })" type="button" class="nav-link dropdown-item">@item's</a>
+            <a href="@Url.Action("Page", "Shop", new { productType = item })" type="button" class="nav-link dropdown-item">@String.Concat(@item,"s")</a>
         }
     </div>
 </li>

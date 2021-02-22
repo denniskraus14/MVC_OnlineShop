@@ -265,28 +265,6 @@ namespace MVC_OnlineShop.Controllers {
             }
         
         }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Save([Bind(Include = "UserId, Email, Username")] Customer temp, HttpPostedFileBase upload) {
-            using (var context = new SiteContext()) {
-                if (ModelState.IsValid) {
-                    if (upload != null && upload.ContentLength > 0) {
-                        //this is where the database updating would happen
-                        Customer c = context.Customers.First(i => i.UserId.ToString() == Session[ "UserId" ].ToString());
-                        c.UserId = temp.UserId;
-                        c.Email = temp.Email;
-                        c.UserName = temp.UserName;
-                        //File f = context.Files.First(i => i.PersonId == Session["UserId"]);
-                        //f = avatar;
-                        context.SaveChanges();
-                        return RedirectToAction("UserProfile");
-                    }
-                }
-            }
-            return RedirectToAction("UserProfile");
-        }
-
     }
 
 }
