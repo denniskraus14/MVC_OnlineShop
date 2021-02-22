@@ -155,11 +155,12 @@ namespace MVC_OnlineShop.Controllers {
             if (model.NewPass == model.NewPassValidation && Session[ "UserId" ] != null) {
                 using (var context = new SiteContext()) {
                     Customer cxLoggedIn = context.Customers.Find(Session[ "UserId" ]);
-                    context.Customers.Remove(cxLoggedIn);
-                    context.SaveChanges();
+                    //context.Customers.Remove(cxLoggedIn);
+                    //context.SaveChanges();
                     //cxLoggedIn.Password = model.NewPass = Encryption(model.NewPass);
                     cxLoggedIn.Password = model.NewPass = _encrypt.Encryption(model.NewPass);
-                    context.Customers.Add(cxLoggedIn);
+                    cxLoggedIn.ConfirmPassword = model.NewPassValidation = _encrypt.Encryption(model.NewPassValidation);
+                    //context.Customers.Add(cxLoggedIn);
                     context.SaveChanges();
                 }
                 return RedirectToAction("Index", "Home");
