@@ -13,6 +13,8 @@ namespace MVC_OnlineShop.Controllers
     [Route("{action=Portal}")]
     public class ShopController : Controller {
 
+        private List<CartItem> __cartList;
+
         // GET: Shop
         [HttpGet]
         [Route("Portal", Name = "Portal")]
@@ -89,6 +91,7 @@ namespace MVC_OnlineShop.Controllers
         [IsAuthorized("Administrator", "Moderator", "Normal")]
         public ViewResult Page(string productType) {
             ViewBag.pageType = productType;
+            ViewBag.Item = productType;
 
             int BlockSize = 4; // Adds a row of products
             var products = DataManager.GetProductTypes(1, BlockSize, productType);
@@ -104,19 +107,18 @@ namespace MVC_OnlineShop.Controllers
                                             .Select(p => p)
                                             .Where(p => p.Id == product.Id)
                                             .FirstOrDefault();
-                List<CartItem> cartList;
 
                 if (Session[ "cart" ] == null) {
-                    cartList = new List<CartItem>();
+                    __cartList = new List<CartItem>();
                     Session[ "count" ] = 1;
                 } else {
-                    cartList = (List<CartItem>)Session[ "cart" ];
+                    __cartList = (List<CartItem>)Session[ "cart" ];
                     Session[ "count" ] = Convert.ToInt32(Session[ "count" ]) + 1;
                 }
 
-                cartList.Add(new CartItem { Product = prod, Quantity = 1 });
+                __cartList.Add(new CartItem { Product = prod, Quantity = 1 });
 
-                Session[ "cart" ] = cartList;
+                Session[ "cart" ] = __cartList;
 
                 // Decreases quantity amount in database
                 //  - Not sure if this should be here or when Cx checksout and pays. 
@@ -126,56 +128,72 @@ namespace MVC_OnlineShop.Controllers
             return new RedirectResult(Request.UrlReferrer.AbsoluteUri);
         }
 
+        /// <summary>
+        /// The is will display the cart view weather there is products inside
+        /// it or not.
+        /// </summary>
         [HttpGet]
         [IsAuthorized("Administrator", "Moderator", "Normal")]
         public ActionResult CartView() {
-            /*return View( (List<Product>) Session[ "cart" ] );*/
-            return View((List<CartItem>)Session[ "cart" ]);
+            return View(__cartList);
         } 
 
+        /// <summary>
+        /// This will get the quantity that is inside the CartView Partial and update the
+        /// cart Session. 
+        /// </summary>
+        /// <param name="formCollection">Post request for product quantity values</param>
+        /// <returns>Returns the cartView</returns>
         [HttpPost]
         [Route("UpdateQuantity", Name = "UpdateQuantity")]
-        public ActionResult UpdateQuantity(FormCollection formCollection) {
-            string[ ] quantities = formCollection.GetValues("cartProductQuantity");
-            List<CartItem> cartList = (List<CartItem>)Session[ "cart" ];
-            for (int i = 0; i < cartList.Count; i++)
-                cartList[ i ].Quantity = Convert.ToInt32(quantities[ i ]);
+        /*public ActionResult UpdateQuantity(FormCollection formCollection) {
+            string[ ] quantities = formCollection.GetValues("cartProductQuantity");*/
+        public ActionResult UpdateQuantity(CartItem quantities) { 
+
+            __cartList = (List<CartItem>)Session[ "cart" ];
+            for (int i = 0; i < __cartList.Count; i++)
+                //__cartList[ i ].Quantity = Convert.ToInt32(quantities[ i ]);
+                __cartList[ i ].Quantity = quantities.Quantity;
+
             // Might need to add the additional product to the cartList, Still need testing.
-            Session[ "cart" ] = cartList;
+            Session[ "cart" ] = __cartList;
+            // TODO: Add Database quantity deductor for when the amount for the product has changed
+
+            if (Session[ "count" ].Equals(0))
+                Session[ "cart" ] = null;
+
             return View("CartView");
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("RemoveProduct", Name = "RemoveProduct")]
         [IsAuthorized("Administrator", "Moderator", "Normal")]
         public ActionResult RemoveProduct(Product productToRemove) {
-            /*List<Product> cartList = (List<Product>)Session[ "cart" ];*/
-            /*cartList.RemoveAll(p => p.Id == productToRemove.Id);*/
-            List<CartItem> cartList = (List<CartItem>)Session[ "cart" ];
-            cartList.RemoveAll(item => item.Product.Id == productToRemove.Id);
-            Session[ "cart" ] = cartList;
+            __cartList = (List<CartItem>)Session[ "cart" ];
+            __cartList.RemoveAll(item => item.Product.Id == productToRemove.Id);
+            Session[ "cart" ] = __cartList;
             Session[ "count" ] = Convert.ToInt32(Session[ "count" ]) - 1;
 
             return RedirectToAction("CartView", "Shop");
         }
 
         [HttpGet]
-        [Route("RemoveProductById", Name = "RemoveProductById")]
+        //[Route("RemoveProductById/{productIdToRemove}", Name = "RemoveProductById")]
         [IsAuthorized("Administrator", "Moderator", "Normal")]
         public ActionResult RemoveProductById(string productIdToRemove) {
-            List<CartItem> cartList = (List<CartItem>)Session[ "cart" ];
+            __cartList = (List<CartItem>)Session[ "cart" ];
             int index = isExist(productIdToRemove);
-            cartList.RemoveAt(index); // TODO: Create issue for removing products
-            Session[ "cart" ] = cartList;
+            __cartList.RemoveAt(index); // TODO: Create issue for removing products
+            Session[ "cart" ] = __cartList;
             Session[ "count" ] = Convert.ToInt32(Session[ "count" ]) - 1;
 
             return RedirectToAction("CartView", "Shop");
         }
 
         private int isExist(string id) {
-            List<CartItem> cartList = (List<CartItem>)Session[ "cart" ];
-            for (int i = 0; i < cartList.Count; i++)
-                if (cartList[ i ].Product.Id.Equals(id))
+            __cartList = (List<CartItem>)Session[ "cart" ];
+            for (int i = 0; i < __cartList.Count; i++)
+                if (__cartList[ i ].Product.Id.Equals(id))
                     return i;
             return -1;
         }
