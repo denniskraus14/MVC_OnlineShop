@@ -1,15 +1,13 @@
 ﻿@using MVC_OnlineShop.Models
 @using System.Web.Optimization
 
-@*@model IEnumerable<MVC_OnlineShop.Models.Product>*@
 @model IEnumerable<MVC_OnlineShop.Models.CartItem>
 
 @{
-    @*var cartItem = ViewBag.cart;*@
-    //int subTotal = 0;
+    List<CartItem> cartList = Session[ "cart" ] as List<CartItem>;
 
     if (Session[ "cart" ] != null) {
-        using (Html.BeginForm("UpdateQuantity", "Shop", FormMethod.Post)) {
+        @*using (Html.BeginForm("UpdateQuantity", "Shop", FormMethod.Post)) {*@
             <section class="pt-5 pb-5">
                 <div class="container">
                     <div class="row w-100">
@@ -28,10 +26,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @*@foreach (var product in Session[ "cart" ] as List<Product>) {*@
-                                    @*@foreach (var product in Model) {*@
-                                    @*@foreach (var cartItem in Model) {*@
-                                    @foreach (var cartItem in (List<CartItem>)Session[ "cart" ]) {
+                                    @foreach (var cartItem in cartList) {
                                         <tr>
                                             <td data-th="Product">
                                                 <div class="row">
@@ -46,33 +41,28 @@
                                             </td>
                                             <td data-th="Price">$@(cartItem.Product.Price * cartItem.Quantity)</td>
                                             <td data-th="Quantity">
-                                                <input type="number" name="cartProductQuantity" class="form-control form-control-lg text-center" value="@cartItem.Quantity"> <!-- TODO: Get this working dynamically -->
+                                                <input type="number" id="cartProductQuantity" class="form-control form-control-lg text-center" value="@cartItem.Quantity"> <!-- TODO: Get this working dynamically -->
                                             </td>
                                             <td class="actions" data-th="">
                                                 <div class="text-right">
-                                                    <!-- TODO: Link for update quantity amount -->
-                                                    <button class="btn btn-white border-secondary bg-white btn-md mb-2" type="submit" onclick="location.href = '@Url.Action("UpdateQuantity", "Shop")'">
+                                                    <!--Update Button-->
+                                                    @*<button type="submit" class="btn btn-white border-secondary bg-white btn-md mb-2" onclick="location.href='@Url.Action("UpdateQuantity", "Shop")'">*@
+                                                    <button type="submit" id="product-quantity-update-cart" class="btn btn-white border-secondary bg-white btn-md mb-2" value="@cartItem.Quantity">
                                                         <i class="fa fa-refresh"></i>
                                                     </button>
-                                                    <!-- Remove Button -->
-                                                    <button type="button" class="btn btn-white border-secondary bg-white btn-md mb-2" data-Id="@cartItem.Product.Id" onclick="location.href='@Url.Action("RemoveProductById", "Shop", new { id = cartItem.Product.Id })'">
+                                                    <!--Remove Button-->
+                                                    @*<button type="button" id="delete-product-from-cart" value="@cartItem.Product.Id" class="btn btn-white border-secondary bg-white btn-md mb-2" data-Id="@cartItem.Product.Id" onclick="location.href='@Url.Action("RemoveProduct", "Shop", new { id = cartItem.Product.Id })'">*@
+                                                    <button type="submit" id="delete-product-from-cart" class="btn btn-white border-secondary bg-white btn-md mb-2" value="@cartItem.Product.Id">
                                                         <span class="fa fa-trash-o"></span>
                                                     </button>
                                                 </div>
                                             </td>
                                         </tr>
-                                    }
+                                     }
                                 </tbody>
                             </table>
                             <div class="float-right text-right">
-                                <!-- TODO: Create subtotal -->
-                                @*@foreach (var sum in Model) {
-                                        subTotal = Convert.ToInt32(sum.Product.Price) + subTotal;
-                                    }*@
-                                @{
-                                    List<CartItem> cartList = (List<CartItem>)Session[ "cart" ];
-                                    var subTotal = cartList.Sum(item => item.Product.Price * item.Quantity);
-                                }
+                                @{ var subTotal = cartList.Sum(item => item.Product.Price * item.Quantity); }
                                 <h4>Subtotal:</h4>
                                 <h1>$@subTotal</h1>
                             </div>
@@ -84,14 +74,14 @@
                         </div>
                         <div class="col-sm-6 mb-3 mb-m-1 order-md-1 text-md-left">
                             <a href="@Url.Action("Portal", "Shop")">
-                                <!-- TODO: Redirect to Shopping page -->
+                                <!--Continue Shopping Button-->
                                 <i class="fa fa-arrow-left mr-2"></i> Continue Shopping
                             </a>
                         </div>
                     </div>
                 </div>
             </section>
-        }
+        @*}*@
     } else {
         <section class="pt-5 pb-5">
             <div class="container">
@@ -110,14 +100,48 @@
                                     <th style="width:16%"></th>
                                 </tr>
                             </thead>
+                            <tbody>
+                                <tr>
+                                    <td data-th="Product">
+                                        <div class="row">
+                                            <div class="col-md-9 text-left mt-sm-2">
+                                                <h4>No items in your shopping cart!</h4>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td data-th="Price">$0.00</td>
+                                    <td data-th="Quantity">
+                                        <input type="number" name="cartProductQuantity" class="form-control form-control-lg text-center" value="0">
+                                    </td>
+                                    <td class="actions" data-th="">
+                                        <div class="text-right">
+                                            <!--Update Button-->
+                                            <button type="submit" class="btn btn-white border-secondary bg-white btn-md mb-2">
+                                                <i class="fa fa-refresh"></i>
+                                            </button>
+                                            <!--Remove Button-->
+                                            <button type="submit" class="btn btn-white border-secondary bg-white btn-md mb-2">
+                                                <span class="fa fa-trash-o"></span>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
                         </table>
-                        <h4 class="text-center">No items in your shopping cart!</h4>
+                        <!--Zero'd product sub-total-->
+                        <div class="float-right text-right">
+                            <h4>Subtotal:</h4>
+                            <h1>$0.00</h1>
+                        </div>
                     </div>
                 </div>
                 <div class="row mt-4 d-flex align-items-center">
+                    <div class="col-sm-6 order-md-2 text-right">
+                        <a href="#" class="btn btn-primary mb-4 btn-lg pl-5 pr-5">Checkout</a> <!-- TODO: Redirect to checkout page -->
+                    </div>
                     <div class="col-sm-6 mb-3 mb-m-1 order-md-1 text-md-left">
                         <a href="@Url.Action("Portal", "Shop")">
-                            <!-- TODO: Redirect to Shopping page -->
+                            <!--Continue Shopping Button-->
                             <i class="fa fa-arrow-left mr-2"></i> Continue Shopping
                         </a>
                     </div>
@@ -126,3 +150,32 @@
         </section>
     }
 }
+
+<script type="text/javascript">
+    $("#delete-product-from-cart").on("click", function () {
+        $.ajax({
+            url: '/Shop/RemoveProduct?Id=' + $("#delete-product-from-cart").val(),
+            type: "POST",
+            dataType: 'application/json; charset=utf-8',
+            beforeSend: function () { },
+            success: function (data, status, jqXHR) { },
+            error: function (jqXHR, status, err) { },
+            complete: function (jqXHR, status) { }
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $("#product-quantity-update-cart").on("click", function () {
+        $.ajax({
+            url: '/Shop/UpdateQuantity?Quantity=' + $("#cartProductQuantity").val(),
+            type: "POST",
+            dataType: 'application/json; charset=utf-8',
+            beforeSend: function () { },
+            success: function (data, status, jqXHR) { },
+            error: function (jqXHR, status, err) { },
+            complete: function (jqXHR, status) { }
+        });
+    });
+</script>
+
