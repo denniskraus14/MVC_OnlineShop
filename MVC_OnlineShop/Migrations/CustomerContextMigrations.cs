@@ -7,6 +7,7 @@ namespace MVC_OnlineShop.Migrations {
         public static void Migrations() {
             using (var context = new SiteContext()) {
                 //Laptops
+                /*
                 context.Products.Add(new Product { Name = "Acer", Description = "This is a sample description", Price = 150, Quantity = 1000, stringType = "Laptop", Image_Url= "https://images-na.ssl-images-amazon.com/images/I/71sesDsw95L._AC_SL1500_.jpg" });
                 context.Products.Add(new Product { Name = "Dell", Description = "This is a sample description", Price = 200, Quantity = 1000, stringType = "Laptop", Image_Url= "https://specials-images.forbesimg.com/imageserve/5d609f0668cb0a0008c045d2/960x0.jpg?cropX1=0&cropX2=1500&cropY1=327&cropY2=1171" });
                 context.Products.Add(new Product { Name = "Mac", Description = "This is a sample description", Price = 300, Quantity = 1000, stringType = "Laptop", Image_Url= "https://www.apple.com/newsroom/images/product/os/macos/standard/Apple_macOS-catalina-available-today_100719_big.jpg.large.jpg" });
@@ -83,6 +84,7 @@ namespace MVC_OnlineShop.Migrations {
                 context.SecurityQuestions.Add(new SecurityQuestion { Question = "What is your first pet name?" });
 
                 context.SaveChanges();
+                */
             }
 
 

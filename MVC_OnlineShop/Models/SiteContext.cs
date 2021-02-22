@@ -38,10 +38,10 @@ namespace MVC_OnlineShop.Models {
         /// <param name="modelBuilder"></param>
         protected override void OnModelCreating(DbModelBuilder modelBuilder) {
             // Drops the database and creates a new one with pre-defined options/settings
-            Database.SetInitializer<SiteContext>(new DropCreateDatabaseAlways<SiteContext>()); 
+            //Database.SetInitializer<SiteContext>(new DropCreateDatabaseAlways<SiteContext>()); 
 
             // Utilizes exisiting database with its content
-            //Database.SetInitializer<CustomerContext>(new CreateDatabaseIfNotExists<CustomerContext>());
+            Database.SetInitializer<SiteContext>(new CreateDatabaseIfNotExists<SiteContext>());
 
             //
             //Database.SetInitializer<CustomerContext>(new DropCreateDatabaseIfModelChanges<CustomerContext>());
