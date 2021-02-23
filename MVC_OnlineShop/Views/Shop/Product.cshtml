@@ -4,7 +4,7 @@
     var item = ViewBag.Item;
 }
     
-@Html.ActionLink("Back", "Page2","Shop", new { @class = "btn btn-dark" })
+@Html.ActionLink("Back", "Page","Shop", new {productType = item.stringType}, new { @class = "btn btn-dark" })
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6 col-xs-12">

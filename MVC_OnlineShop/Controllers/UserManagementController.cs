@@ -7,11 +7,13 @@ using MVC_OnlineShop.Infrastructure;
 using MVC_OnlineShop.Model;
 using System.Collections.Generic;
 
-namespace MVC_OnlineShop.Controllers {
+namespace MVC_OnlineShop.Controllers
+{
 
     [RoutePrefix("Account")]
     [Route("{action=Login}")]
-    public class UserManagementController : Controller {
+    public class UserManagementController : Controller
+    {
 
         private AES _encrypt = new AES();
         private ContentRepository _image = new ContentRepository();
@@ -19,33 +21,43 @@ namespace MVC_OnlineShop.Controllers {
         // GET: UserManagement
         [HttpGet]
         [Route("Login", Name = "Login")]
-        public ActionResult Login() {
+        public ActionResult Login()
+        {
             return View();
         }
 
         [HttpPost]
-        public ActionResult Login(Customer model) {
+        public ActionResult Login(Customer model)
+        {
             if (ModelState.IsValid) return View(model);
-            else {
-                using (var context = new SiteContext()) {
+            else
+            {
+                using (var context = new SiteContext())
+                {
                     //Customer user = context.Customers.Where(u => u.UserId == model.UserId).FirstOrDefault();
                     Customer user = context.Customers.Where(u => u.Email == model.Email).FirstOrDefault();
 
                     //model.Password = Encryption(model.Password);
                     model.Password = _encrypt.Encryption(model.Password);
 
-                    if (user == null) {
+                    if (user == null)
+                    {
                         ModelState.AddModelError("BadUser", $"User {model.UserId} not found");
                         return View(model);
-                    } else if (user.Password != model.Password) {
+                    }
+                    else if (user.Password != model.Password)
+                    {
                         ModelState.AddModelError("BadPassword", $"Incorrect password for user {model.UserId} ");
                         return View(model);
-                    } else {
+                    }
+                    else
+                    {
                         Session.Timeout = 10;
-                        Session[ "UserName" ] = user.UserName;
-                        Session[ "UserId" ] = user.UserId;
+                        Session["UserName"] = user.UserName;
+                        Session["UserId"] = user.UserId;
                         model.LastLoginDate = DateTime.Today;
-                        if(model.File == null){
+                        if (model.File == null)
+                        {
                             model.File = new byte[] { };
                         }
                         return RedirectToAction("Index", "Home");
@@ -56,7 +68,8 @@ namespace MVC_OnlineShop.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Logout() {
+        public ActionResult Logout()
+        {
             Session.Clear();
             Session.Abandon();
             return RedirectToAction("Index", "Home");
@@ -64,33 +77,42 @@ namespace MVC_OnlineShop.Controllers {
 
         [HttpGet]
         [Route("Register", Name = "Register")]
-        public ActionResult Register() {
+        public ActionResult Register()
+        {
             return View();
         }
 
         //[HttpPost]
         //[Route("Register")]
-        public ActionResult Register(Customer model) {
+        public ActionResult Register(Customer model)
+        {
             if (!ModelState.IsValid) return View(model);
-            else if (model.Password != model.ConfirmPassword) {
+            else if (model.Password != model.ConfirmPassword)
+            {
                 ModelState.AddModelError("PasswordsDoNotMatch", "Passwords do not match!");
                 return View(model);
-            } else {
-                using (var context = new SiteContext()) {
+            }
+            else
+            {
+                using (var context = new SiteContext())
+                {
                     //model.RoleId = context.Roles.Where(r => r.Name.ToLower().Equals("user")).FirstOrDefault().Id;
                     //model.RoleType = RoleType.Administrator;
                     model.RoleId = 3; // Role ID 3 =  Normal
 
                     Customer match = context.Customers.Where(u => u.UserName == model.UserName || u.Email == model.Email).FirstOrDefault();
 
-                    if (match != null) {
+                    if (match != null)
+                    {
                         ModelState.AddModelError("ExistingUser", "User Already Exists");
                         return View(model);
-                    } else {
+                    }
+                    else
+                    {
                         model.CreatedDate = DateTime.Today;
                         model.LastLoginDate = DateTime.Today;
 
-                        HttpPostedFileBase file = Request.Files[ "ImageData" ];
+                        HttpPostedFileBase file = Request.Files["ImageData"];
                         model.File = _image.ConvertToBytes(file);
 
                         //model.Password = Encryption(model.Password);
@@ -109,12 +131,17 @@ namespace MVC_OnlineShop.Controllers {
 
         //[HttpPost]
         [Route("RetrieveImage/{id}", Name = "RetrieveImage")]
-        public ActionResult RetrieveImage(int id) {
-            using (var context = new SiteContext()) {
+        public ActionResult RetrieveImage(int id)
+        {
+            using (var context = new SiteContext())
+            {
                 byte[] cover = context.Customers.Select(p => p).Where(p => id == p.UserId).FirstOrDefault().File;
-                if (cover != null) {
+                if (cover != null)
+                {
                     return File(cover, "image/jpeg");
-                } else {
+                }
+                else
+                {
                     return null;
                 }
             }
@@ -122,23 +149,29 @@ namespace MVC_OnlineShop.Controllers {
 
         [HttpGet]
         [Route("ForgotPassword", Name = "ForgotPassword")]
-        public ActionResult ForgotPassword() {
+        public ActionResult ForgotPassword()
+        {
             return View();
         }
 
         [HttpPost]
         [Route("ForgotPassword/{model}")]
-        public ActionResult ForgotPassword(ForgotPasswordViewModel model) {
+        public ActionResult ForgotPassword(ForgotPasswordViewModel model)
+        {
             Customer match;
-            using (var context = new SiteContext()) {
+            using (var context = new SiteContext())
+            {
                 match = context.Customers.Find(model.UserId);
             }
 
-            if (match != null && match.SecurityQuestion == model.QuestionId && match.QuestionAnswer.ToLower() == model.Answer.ToLower()) {
-                Session[ "UserId" ] = model.UserId;
-                Session[ "UserName" ] = match.UserName;
+            if (match != null && match.SecurityQuestion == model.QuestionId && match.QuestionAnswer.ToLower() == model.Answer.ToLower())
+            {
+                Session["UserId"] = model.UserId;
+                Session["UserName"] = match.UserName;
                 return RedirectToAction("ChangePassword", "User");
-            } else {
+            }
+            else
+            {
                 ModelState.AddModelError("QuestionAnswerUserMismatch", "User Id, Question, and answer did not all match");
                 return View(model);
             }
@@ -146,16 +179,20 @@ namespace MVC_OnlineShop.Controllers {
 
         [HttpGet]
         [Route("ChangePassword", Name = "ChangePassword")]
-        public ActionResult ChangePassword() {
+        public ActionResult ChangePassword()
+        {
             return View();
         }
 
         [HttpPost]
         //[Route("ChangePassword/{model}")]
-        public ActionResult ChangePassword(ChangePasswordViewModel model) {
-            if (model.NewPass == model.NewPassValidation && Session[ "UserId" ] != null) {
-                using (var context = new SiteContext()) {
-                    Customer cxLoggedIn = context.Customers.Find(Session[ "UserId" ]);
+        public ActionResult ChangePassword(ChangePasswordViewModel model)
+        {
+            if (model.NewPass == model.NewPassValidation && Session["UserId"] != null)
+            {
+                using (var context = new SiteContext())
+                {
+                    Customer cxLoggedIn = context.Customers.Find(Session["UserId"]);
                     //context.Customers.Remove(cxLoggedIn);
                     //context.SaveChanges();
                     //cxLoggedIn.Password = model.NewPass = Encryption(model.NewPass);
@@ -165,7 +202,9 @@ namespace MVC_OnlineShop.Controllers {
                     context.SaveChanges();
                 }
                 return RedirectToAction("Index", "Home");
-            } else {
+            }
+            else
+            {
                 ModelState.AddModelError("PasswordsDoNotMatch", "Passwords do not match");
                 return View(model);
             }
@@ -173,11 +212,13 @@ namespace MVC_OnlineShop.Controllers {
 
         [HttpGet]
         [Route("Profile", Name = "Profile")]
-        public ActionResult UserProfile(Customer customer) {
+        public ActionResult UserProfile(Customer customer)
+        {
             Customer match = null;
             //File file = null;
-            using (var context = new SiteContext()) {
-                match = context.Customers.Find(Session[ "UserId" ]);
+            using (var context = new SiteContext())
+            {
+                match = context.Customers.Find(Session["UserId"]);
                 //string id = Session["UserId"].ToString();
                 //file = context.Files.Select(p=>p).Where(p => p.PersonId==id).FirstOrDefault();
                 //CustomerWithFile result = new CustomerWithFile { Customer = match, File = file };
@@ -187,10 +228,12 @@ namespace MVC_OnlineShop.Controllers {
 
         [HttpGet]
         [Route("Edit", Name = "Edit")]
-        public ActionResult Edit() {
+        public ActionResult Edit()
+        {
             Customer cx = null;
-            using (var context = new SiteContext()) {
-                cx = context.Customers.Find(Session[ "UserId" ]);
+            using (var context = new SiteContext())
+            {
+                cx = context.Customers.Find(Session["UserId"]);
             }
             return View(cx);
         }
@@ -256,15 +299,16 @@ namespace MVC_OnlineShop.Controllers {
                 //profile photo
                 HttpPostedFileBase file = Request.Files["Avatar"];
                 byte[] temppic = _image.ConvertToBytes(file);
-                if (temppic != current.File && temppic != null)
+                //length of byte array must be less than 2000000 (2MB) to save to db
+                if (temppic != current.File && temppic != null && temppic.Length <= 2000000)
                 {
                     current.File = temppic;
                 }
+                //raise a warning otherwise ?
                 context.SaveChanges();
                 return RedirectToAction("UserProfile");
             }
-        
         }
-    }
 
+    }
 }
