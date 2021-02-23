@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace MVC_OnlineShop.Models {
-    public class Customer {
+    public class Customer: IValidatableObject
+    {
 
         [Key]
         [DisplayName("User Id: ")]
@@ -14,6 +17,8 @@ namespace MVC_OnlineShop.Models {
 
         [DisplayName("Username: ")]
         [Required(ErrorMessage = "required.")]
+        [StringLength(50)]
+        [Index("Ix_UserName", Order = 1, IsUnique = true)]
         public string UserName { get; set; }
 
         [DisplayName("First Name: ")]
@@ -40,6 +45,8 @@ namespace MVC_OnlineShop.Models {
         [DisplayName("Email: ")]
         [Required(ErrorMessage = "Required.")]
         [EmailAddress(ErrorMessage = "Invalid email address.")]
+        [StringLength(50)]
+        [Index("Ix_Email", Order = 2, IsUnique = true)]
         public string Email { get; set; }
 
         [Display(Name = "Security Question")]
@@ -59,5 +66,23 @@ namespace MVC_OnlineShop.Models {
         public int RoleId { get; set; }
 
         public virtual byte[] File { get; set; }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext){
+            SiteContext context = new SiteContext();
+            List<ValidationResult> validationResult = new List<ValidationResult>();
+            var validateName = context.Customers.FirstOrDefault(x => x.UserName == UserName);
+            if (validateName != null){
+                ValidationResult errorMessage = new ValidationResult
+                ("UserName already exists.", new[] { "UserName" });
+                yield return errorMessage;
+            }
+            var validateEmail = context.Customers.FirstOrDefault(x => x.Email == Email);
+            if (validateEmail != null){
+                ValidationResult errorMessage = new ValidationResult
+                ("Email already in use.", new[] { "Email" });
+                yield return errorMessage;
+            }
+            yield return ValidationResult.Success;
+        }
     }
 }

@@ -2,6 +2,7 @@
 using MVC_OnlineShop.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Web.Mvc;
@@ -92,9 +93,16 @@ namespace MVC_OnlineShop.Controllers
         public ViewResult Page(string productType) {
             ViewBag.pageType = productType;
             ViewBag.Item = productType;
-
             int BlockSize = 4; // Adds a row of products
-            var products = DataManager.GetProductTypes(1, BlockSize, productType);
+            var products = DataManager.GetProductTypes(1, BlockSize, productType);  //search:Lenovo
+            if (products.Count == 0){
+                //the inputted string is not a producttype and should be treated as a search
+                //fill var products based off of the search
+                using (var context = new SiteContext()){
+                    //search logic here
+                    products = (List<Product>)context.Products.Select(p => p).Where(p => DbFunctions.Like(p.Name,"%"+productType+"%"));
+                }
+            }
             return View(products);
         }
 
