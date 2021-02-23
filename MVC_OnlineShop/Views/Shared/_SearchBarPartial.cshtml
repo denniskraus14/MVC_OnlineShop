@@ -1,13 +1,38 @@
-﻿<div class="fixed-top searchBar-top-location">
-    <div class="container">
-        <!--Sub NavBar-->
-        <div class="flex-row">
-            <!--Search Bar-->
-            <form class="form-inline my-2 mt-lg-0 searchBar-background-color">
-                <input class="form-control mr-sm-2 search-bar" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
+﻿@{ 
+    AjaxOptions options = new AjaxOptions
+    {
+        UpdateTargetId = "",
+        InsertionMode = InsertionMode.Replace
+    };
+}
+
+
+
+    <div class="fixed-top searchBar-top-location">
+        <div class="container">
+            <!--Sub NavBar-->
+            @using (Ajax.BeginForm("Page", options)){
+                <div class="flex-row">
+                    <!--Search Bar-->
+                    <form class="form-inline my-2 mt-lg-0 searchBar-background-color">
+                        <input class="form-control mr-sm-2 search-bar" id="searchbarResults" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                </div>
+            }
         </div>
     </div>
-</div>
-
+@*
+    <script type="text/javascript">
+        $("#searchbarResults").on("click", function () {
+            $.ajax({
+                url: '/Shop/Page?productType=' + $("#searchbarResults").val(),
+                type: "GET",
+                dataType: 'application/json; charset=utf-8',
+                beforeSend: function () { },
+                success: function (data, status, jqXHR) { },
+                error: function (jqXHR, status, err) { },
+                complete: function (jqXHR, status) { }
+            });
+        });
+    </script>*@
