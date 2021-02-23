@@ -155,20 +155,20 @@ namespace MVC_OnlineShop.Controllers
         }
 
         [HttpPost]
-        [Route("ForgotPassword/{model}")]
+        [Route("ForgotPassword")]
         public ActionResult ForgotPassword(ForgotPasswordViewModel model)
         {
             Customer match;
             using (var context = new SiteContext())
             {
-                match = context.Customers.Find(model.UserId);
+                match = context.Customers.Select(cx=>cx).Where(cx => cx.Email==model.Email).FirstOrDefault(); //changed this to match based on Email rather than User Id- Dennis
             }
 
             if (match != null && match.SecurityQuestion == model.QuestionId && match.QuestionAnswer.ToLower() == model.Answer.ToLower())
             {
-                Session["UserId"] = model.UserId;
+                Session["UserId"] = match.UserId;
                 Session["UserName"] = match.UserName;
-                return RedirectToAction("ChangePassword", "User");
+                return RedirectToAction("ChangePassword");
             }
             else
             {

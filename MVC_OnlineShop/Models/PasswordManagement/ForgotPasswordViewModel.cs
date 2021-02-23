@@ -6,8 +6,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MVC_OnlineShop.Models {
     public class ForgotPasswordViewModel {
-        [Display(Name = "User Id")]
-        public string UserId { get; set; }
+        [Display(Name = "Email")]
+        public string Email { get; set; }
 
         [Display(Name = "Security Question")]
         public int QuestionId { get; set; }
