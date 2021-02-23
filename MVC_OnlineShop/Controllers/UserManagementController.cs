@@ -240,10 +240,13 @@ namespace MVC_OnlineShop.Controllers{
                 byte[] temppic = _image.ConvertToBytes(file);
 
                 //length of byte array must be less than 2000000 (2MB) to save to db
-                if (temppic != current.File && temppic != null && temppic.Length <= 2000000){
+                if (temppic != current.File && temppic.Length>0  && temppic.Length <= 2000000){
                     current.File = temppic;
                 }
                 //raise a warning otherwise ?
+                //context.Customers.Remove(context.Customers.Find(current.UserId)); //shouldn't have to do this..maybe it is treating the unique attributes as a PK?
+                //context.SaveChanges();
+                //context.Customers.Add(current);
                 context.SaveChanges();
                 return RedirectToAction("UserProfile");
             }
