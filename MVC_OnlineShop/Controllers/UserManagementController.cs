@@ -74,39 +74,56 @@ namespace MVC_OnlineShop.Controllers
         //[Route("Register")]
         public ActionResult Register(Customer model){
                 if (!ModelState.IsValid) return View(model);
-                else if (model.Password != model.ConfirmPassword){
+                //the password is checked using the [Compare] tag. (checked before this post method is invoked). See Customer
+                /*else if (model.Password != model.ConfirmPassword){
                     ModelState.AddModelError("PasswordsDoNotMatch", "Passwords do not match!");
                     return View(model);
-                }
+                }*/
                 else{
-                    using (var context = new SiteContext()){
+                using (var context = new SiteContext()) {
                     //model.RoleId = context.Roles.Where(r => r.Name.ToLower().Equals("user")).FirstOrDefault().Id;
                     //model.RoleType = RoleType.Administrator;
                     model.RoleId = 3; // Role ID 3 =  Normal
 
                     Customer match = context.Customers.Where(u => u.UserName == model.UserName || u.Email == model.Email).FirstOrDefault();
-
+                    //this is now being checked by the modelstate checker. see customer entity class
+                    /*
                     if (match != null){
                         ModelState.AddModelError("ExistingUser", "Please choose a different username");
                         return View(model);
                     }
-                    else{
-                        model.CreatedDate = DateTime.Today;
-                        model.LastLoginDate = DateTime.Today;
+                    else{*/
+                    model.CreatedDate = DateTime.Today;
+                    model.LastLoginDate = DateTime.Today;
 
-                        HttpPostedFileBase file = Request.Files["ImageData"];
-                        model.File = _image.ConvertToBytes(file);
-
-                        //model.Password = Encryption(model.Password);
-                        //model.ConfirmPassword = Encryption(model.ConfirmPassword);
-                        model.Password = _encrypt.Encryption(model.Password);
-                        model.ConfirmPassword = _encrypt.Encryption(model.ConfirmPassword);
-
-                        context.Customers.Add(model);
-                        context.SaveChanges();
-
-                        return Redirect("Login");
+                    HttpPostedFileBase file = Request.Files["ImageData"];
+                    if (file != null){
+                        byte[] arr = _image.ConvertToBytes(file);
+                        if (arr.Length <= 2000000){
+                            model.File = arr;
+                        }
+                        else{
+                            //display a warning and do not let the user register
+                            ModelState.AddModelError("File", "File too large. Upload limit: 2MB");
+                            return View(model);
+                        }
                     }
+                    else{
+                        model.File = new byte[] { };
+                    }
+         
+                    //model.Password = Encryption(model.Password);
+                    //model.ConfirmPassword = Encryption(model.ConfirmPassword);
+                    model.Password = _encrypt.Encryption(model.Password);
+                    model.ConfirmPassword = _encrypt.Encryption(model.ConfirmPassword);
+
+                    context.Customers.Add(model);
+                    try{
+                        context.SaveChanges();}
+                    catch{
+                        ModelState.AddModelError("File too large", "Please choose a different file");
+                        return View(model);}
+                    return Redirect("Login");
                 }
             }
         }
@@ -178,14 +195,11 @@ namespace MVC_OnlineShop.Controllers
 
         [HttpGet]
         [Route("Profile", Name = "Profile")]
-        public ActionResult UserProfile(Customer customer){
-            Customer match = null;
+        public ActionResult UserProfile(){
+            Customer match;
             //File file = null;
             using (var context = new SiteContext()){
                 match = context.Customers.Find(Session["UserId"]);
-                //string id = Session["UserId"].ToString();
-                //file = context.Files.Select(p=>p).Where(p => p.PersonId==id).FirstOrDefault();
-                //CustomerWithFile result = new CustomerWithFile { Customer = match, File = file };
                 return View(match);
             }
         }
@@ -203,64 +217,56 @@ namespace MVC_OnlineShop.Controllers
 
         [HttpPost]
         [Route("Edit")]
-        public ActionResult Edit(Customer model)
-        {
-            using (var context = new SiteContext())
-            {
+        public ActionResult Edit(Customer model){
+            using (var context = new SiteContext()){
                 Customer current = context.Customers.Find(Session["UserId"]);
 
                 //email
-                if (model.Email != current.Email)
-                {
+                if (model.Email != current.Email){
                     //check to see that the email is available
                     Customer temp = context.Customers.Select(p => p).Where(p => p.Email == model.Email).FirstOrDefault();
-                    if (temp == null)
-                    {
+                    if (temp == null){
                         //the email is available
                         current.Email = model.Email;
                     }
-                    else
-                    {
-                        ModelState.AddModelError("Pre-existing Email", "That email is already in use");
+                    else{
+                        ModelState.AddModelError("Email", "That email is already in use");
                         return View(model);
                     }
                 }
 
                 //username
-                if (model.UserName != current.UserName)
-                {
+                if (model.UserName != current.UserName){
                     //check to see that the email is available
                     Customer temp = context.Customers.Select(p => p).Where(p => p.UserName == model.UserName).FirstOrDefault();
-                    if (temp == null)
-                    {
+                    if (temp == null){
                         //the username is available
                         current.UserName = model.UserName;
                     }
-                    else
-                    {
-                        ModelState.AddModelError("Pre-existing Email", "That email is already in use");
+                    else{
+                        ModelState.AddModelError("UserName", "That Username is already in use");
                         return View(model);
                     }
                 }
 
                 //profile photo
                 HttpPostedFileBase file = Request.Files["Avatar"];
-                byte[] temppic = _image.ConvertToBytes(file);
-
-                //length of byte array must be less than 2000000 (2MB) to save to db
-                if (temppic != current.File && temppic.Length > 0 && temppic.Length <= 2000000)
-                {
-                    current.File = temppic;
+                if (file.ContentLength > 0){ //if they have uploaded something,
+                    byte[] arr = _image.ConvertToBytes(file);
+                    if (arr.Length <= 2000000){
+                        current.File = arr;
+                    }
+                    else{
+                        ModelState.AddModelError("File", "File too large. Upload limit: 2MB");
+                        return View(model);
+                    }
                 }
-                try
-                { //in case the model is not valid. it will force the correct input
-                    context.SaveChanges();
+                try{ 
+                    context.SaveChanges(); //in case the model is not valid. it will force the correct input
                 }
-                catch
-                {
+                catch{
                     return View(model);
                 }
-
                 return RedirectToAction("UserProfile");
             }
         }

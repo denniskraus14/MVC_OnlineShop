@@ -30,6 +30,7 @@
         <div class="col-md-10">
             @Html.TextBoxFor(model => model.Email, htmlAttributes: new { @class = "control" })
             @Html.ValidationMessageFor(model => model.Email, "", htmlAttributes: new { @class = "text-warning" })
+            @Html.ValidationMessageFor(model => model.Email, "", htmlAttributes: new { @class = "text-warning" })
         </div>
     </div>
 
@@ -105,7 +106,9 @@
         @Html.Label("Profile Picture", new { @class = "control-label col-md-2" })
         <div class="file btn btn-sm btn-primary">
             Change Photo
-            <input type="file" id="ImageData" name="ImageData" accept=".gif,.jpg,.jpeg,.jfif,.pjpeg,.pjp,.png"/>
+            <input type="file" id="ImageData" name="ImageData" accept=".gif,.jpg,.jpeg,.jfif,.pjpeg,.pjp,.png" />
+            @Html.ValidationMessageFor(model => model.File, "", htmlAttributes: new { @class = "text-warning" })
+
         </div>
     </div>
 

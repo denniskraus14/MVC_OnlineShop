@@ -1,7 +1,7 @@
 ﻿<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-@using MVC_OnlineShop.Models
+
 @model MVC_OnlineShop.Models.Customer
 
 
@@ -47,7 +47,7 @@
         {
             @Html.AntiForgeryToken();
             @*<div class="form-horizontal">*@
-            @Html.ValidationSummary(true, "Profile edits failed. Please enter valid information!", new { @class = "text-warning" })
+            @*@Html.ValidationSummary(true, "Profile edits failed. Please enter valid information!", new { @class = "text-warning" })*@
 
             //<!--This shouldn't be modified by a standard user, leaving here just in case -->
             @*<div class="form-group">
@@ -77,11 +77,13 @@
                 <br />
                 <div class="file btn btn-sm btn-primary">
                     <input type="file" id="Avatar" name="Avatar" accept=".gif,.jpg,.jpeg,.jfif,.pjpeg,.pjp,.png" />
+                    @Html.ValidationMessageFor(model => model.File, "", htmlAttributes: new { @class = "text-warning" })
+
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-md-10">
-                    <input type="submit" value="Save Changes" class="btn btn-light" />
+                    <input type="submit" value="Save Changes" class="btn btn-light"/>
                 </div>
             </div>
             @*</div>*@

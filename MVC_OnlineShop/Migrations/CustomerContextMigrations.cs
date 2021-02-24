@@ -74,7 +74,7 @@ namespace MVC_OnlineShop.Migrations {
                         CreatedDate = DateTime.Today,
                         LastLoginDate = DateTime.Today,
                         File = new byte[] { }
-                    });
+                    }); ;
 
                     context.SecurityQuestions.Add(new SecurityQuestion { Question = "What is your mother's maiden name?" });
                     context.SecurityQuestions.Add(new SecurityQuestion { Question = "What city was you born in?" });

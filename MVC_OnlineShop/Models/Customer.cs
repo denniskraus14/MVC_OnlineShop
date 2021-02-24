@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Web;
+using System.Web.Mvc;
 
 namespace MVC_OnlineShop.Models {
     public class Customer: IValidatableObject
@@ -39,7 +41,7 @@ namespace MVC_OnlineShop.Models {
         [DisplayName("Confirm Password: ")]
         [Required(ErrorMessage = "Required.")]
         [DataType(DataType.Password)]
-        [Compare("Password", ErrorMessage = "Passwords do not match.")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "Passwords do not match.")]
         public string ConfirmPassword { get; set; }
 
         [DisplayName("Email: ")]
@@ -65,28 +67,26 @@ namespace MVC_OnlineShop.Models {
 
         public int RoleId { get; set; }
 
-        [MaxLength(2000000, ErrorMessage = "File cannot be larger than 2MB.")]
+        [MaxLength(2000000000, ErrorMessage = "File is too large. (2MB limit)")]
         public virtual byte[] File { get; set; }
 
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext){
             Customer current = (Customer)validationContext.ObjectInstance;
             SiteContext context = new SiteContext();
             List<ValidationResult> validationResult = new List<ValidationResult>();
             var validateName = context.Customers.FirstOrDefault(x => x.UserName == UserName);
-            if (validateName != null && validateName.UserId != current.UserId)
-            {
+            if (validateName != null && validateName.UserId != current.UserId){
                 ValidationResult errorMessage = new ValidationResult
                 ("UserName already exists.", new[] { "UserName" });
                 yield return errorMessage;
             }
             var validateEmail = context.Customers.FirstOrDefault(x => x.Email == Email);
-            if (validateEmail != null && validateEmail.UserId != current.UserId)
-            {
+            if (validateEmail != null && validateEmail.UserId != current.UserId){
                 ValidationResult errorMessage = new ValidationResult
                 ("Email already in use.", new[] { "Email" });
                 yield return errorMessage;
             }
+
             yield return ValidationResult.Success;
         }
     }
