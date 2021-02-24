@@ -1,13 +1,13 @@
 ﻿using MVC_OnlineShop.Models;
-using System;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
 using MVC_OnlineShop.Infrastructure;
 using MVC_OnlineShop.Model;
-using System.Collections.Generic;
+using System.Web.Mvc;
+using System.Linq;
+using System;
+using System.Web;
 
-namespace MVC_OnlineShop.Controllers{
+namespace MVC_OnlineShop.Controllers
+{
 
     [RoutePrefix("Account")]
     [Route("{action=Login}")]
@@ -203,33 +203,41 @@ namespace MVC_OnlineShop.Controllers{
 
         [HttpPost]
         [Route("Edit")]
-        public ActionResult Edit(Customer model){
-            using (var context = new SiteContext()){
+        public ActionResult Edit(Customer model)
+        {
+            using (var context = new SiteContext())
+            {
                 Customer current = context.Customers.Find(Session["UserId"]);
 
                 //email
-                if (model.Email != current.Email){
+                if (model.Email != current.Email)
+                {
                     //check to see that the email is available
                     Customer temp = context.Customers.Select(p => p).Where(p => p.Email == model.Email).FirstOrDefault();
-                    if (temp == null){
+                    if (temp == null)
+                    {
                         //the email is available
                         current.Email = model.Email;
                     }
-                    else{
-                        ModelState.AddModelError("Pre-existing Email","That email is already in use");
+                    else
+                    {
+                        ModelState.AddModelError("Pre-existing Email", "That email is already in use");
                         return View(model);
                     }
                 }
 
                 //username
-                if (model.UserName != current.UserName){
+                if (model.UserName != current.UserName)
+                {
                     //check to see that the email is available
                     Customer temp = context.Customers.Select(p => p).Where(p => p.UserName == model.UserName).FirstOrDefault();
-                    if (temp == null){
+                    if (temp == null)
+                    {
                         //the username is available
                         current.UserName = model.UserName;
                     }
-                    else{
+                    else
+                    {
                         ModelState.AddModelError("Pre-existing Email", "That email is already in use");
                         return View(model);
                     }
@@ -240,14 +248,19 @@ namespace MVC_OnlineShop.Controllers{
                 byte[] temppic = _image.ConvertToBytes(file);
 
                 //length of byte array must be less than 2000000 (2MB) to save to db
-                if (temppic != current.File && temppic.Length>0  && temppic.Length <= 2000000){
+                if (temppic != current.File && temppic.Length > 0 && temppic.Length <= 2000000)
+                {
                     current.File = temppic;
                 }
-                //raise a warning otherwise ?
-                //context.Customers.Remove(context.Customers.Find(current.UserId)); //shouldn't have to do this..maybe it is treating the unique attributes as a PK?
-                //context.SaveChanges();
-                //context.Customers.Add(current);
-                context.SaveChanges();
+                try
+                { //in case the model is not valid. it will force the correct input
+                    context.SaveChanges();
+                }
+                catch
+                {
+                    return View(model);
+                }
+
                 return RedirectToAction("UserProfile");
             }
         }

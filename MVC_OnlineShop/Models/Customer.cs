@@ -65,19 +65,24 @@ namespace MVC_OnlineShop.Models {
 
         public int RoleId { get; set; }
 
+        [MaxLength(2000000, ErrorMessage = "File cannot be larger than 2MB.")]
         public virtual byte[] File { get; set; }
 
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext){
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            Customer current = (Customer)validationContext.ObjectInstance;
             SiteContext context = new SiteContext();
             List<ValidationResult> validationResult = new List<ValidationResult>();
             var validateName = context.Customers.FirstOrDefault(x => x.UserName == UserName);
-            if (validateName != null){
+            if (validateName != null && validateName.UserId != current.UserId)
+            {
                 ValidationResult errorMessage = new ValidationResult
                 ("UserName already exists.", new[] { "UserName" });
                 yield return errorMessage;
             }
             var validateEmail = context.Customers.FirstOrDefault(x => x.Email == Email);
-            if (validateEmail != null){
+            if (validateEmail != null && validateEmail.UserId != current.UserId)
+            {
                 ValidationResult errorMessage = new ValidationResult
                 ("Email already in use.", new[] { "Email" });
                 yield return errorMessage;
