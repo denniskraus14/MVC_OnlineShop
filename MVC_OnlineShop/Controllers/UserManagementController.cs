@@ -228,6 +228,7 @@ namespace MVC_OnlineShop.Controllers{
                     if (temp == null){
                         //the username is available
                         current.UserName = model.UserName;
+                        Session[ "UserName" ] = current.UserName;
                     }
                     else{
                         ModelState.AddModelError("Pre-existing Email", "That email is already in use");
